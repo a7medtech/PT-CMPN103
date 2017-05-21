@@ -220,6 +220,18 @@ ActionType Input::GetUserAction() const
 			}
 		}
 		break;
+	case MODE_PLAY_SCRAMBLE_FIND:
+		int ClickedItemOrder = (x / UI.MenuItemWidth);
+		switch (ClickedItemOrder)
+		{
+		case ITM_START: return START_SCRAMBLE;
+		case ITM_BACKSCRAMBLE: return BACKPLAY;
+		default:
+			return EMPTY;
+			break;
+		}
+
+		break;
 	}
 
 

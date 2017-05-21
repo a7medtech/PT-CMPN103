@@ -19,6 +19,13 @@
 #include "Actions/ChngFillClr.h"
 #include"Actions\Resize.h"
 #include "Actions\SendBack.h"
+#include "Actions/ScrambleAndFind.h"
+#include "Actions\StartScrumble.h"
+#include "Actions\BackPlayAction.h"
+#include <time.h>
+#include <windows.h>
+
+int ApplicationManager::counter = 0; //Initialize unique IDs
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -31,7 +38,9 @@ ApplicationManager::ApplicationManager()
 	FigCount = 0;
 	SelFigCount = 0;
 	CPIndex = 0;
-	
+	OriginalListCount = 0;
+	RandFigsCount = 0;
+
 	//Create an array of figure pointers and set them to NULL		
 	for (int i=0; i<MaxFigCount; i++)
 		FigList[i] = NULL;	
@@ -128,12 +137,19 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			case PICK_HIDE_MODE:
 				break;
 			case SCRAMBLE_FIND_MODE:
+				pAct = new ScrambleAndFind(this);
+				break;
+			case START_SCRAMBLE:
+				pAct = new StartScrumble(this);
 				break;
 			case TO_DRAW:
 				pAct = new BackAction(this);
 				break;
 			case BACK:
 				pAct = new BackAction(this);
+				break;
+			case BACKPLAY:
+				pAct = new BackPlayAction(this);
 				break;
 			case EXIT:
 				break;
@@ -146,6 +162,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	if(pAct != nullptr)
 	{
 		pAct->Execute();	//Execute
+		LastAction = ActType;
 		delete pAct;		//Action is not needed any more ==> delete it
 		pAct = nullptr;
 	}
@@ -226,9 +243,9 @@ void ApplicationManager:: SaveAction(ofstream&Outfile)
 //Add a figure to the list of figures
 void ApplicationManager::AddFigure(CFigure* pFig)
 {
-	if(FigCount < MaxFigCount ){
-		FigList[FigCount++] = pFig;	
-	    pFig->setID(FigCount);
+	if (FigCount < MaxFigCount) {
+		FigList[FigCount++] = pFig;
+		pFig->setID(++counter);
 	}
 }
 
@@ -296,6 +313,12 @@ void ApplicationManager::GetSelectedFigCount(int&size){
 	size = SelFigCount;
 }
 
+void ApplicationManager::GetCPIndex(int&size)
+{
+
+	size = CPIndex;
+}
+
 //Remember to remove get figure list!!!
 
 void ApplicationManager::CopySelFigToCP()
@@ -308,16 +331,48 @@ void ApplicationManager::CopySelFigToCP()
 	for (int i = 0; i < SelFigCount; i++)
 	{
 		Clipboard[CPIndex] = selectedFigs[i]->Copy();
-		Clipboard[CPIndex++]->setID(FigCount+1+i);
+		Clipboard[CPIndex++]->setID(i);
+		
 	}
 }
 
+
 void ApplicationManager::AddCPToFigList()
 {
-	for (int i = 0; i < CPIndex; i++)
+	for (int i = 0; i < FigCount; i++)
 	{
-		Clipboard[i]->SetSelected(true);
-		AddFigure(Clipboard[i]);
+		FigList[i]->SetSelected(false);
+	}
+		if (LastAction == CUT)
+		{
+
+			for (int i = 0; i < CPIndex; i++)
+			{
+				Clipboard[i]->SetSelected(true);
+				AddFigure(Clipboard[i]->Copy());
+				FigList[FigCount - 1]->setID(++counter);
+				FigList[FigCount - 1]->SetSelected(Clipboard[i]->IsSelected());
+
+			}
+			for (int i = 0; i < CPIndex; i++)
+			{
+				delete Clipboard[i];
+				Clipboard[i] = nullptr;
+			}
+			CPIndex = 0;
+	}
+	else
+	{
+
+		for (int i = 0; i < CPIndex; i++)
+		{
+			Clipboard[i]->SetSelected(true);
+			AddFigure(Clipboard[i]->Copy());
+			FigList[FigCount - 1]->setID(++counter);
+			FigList[FigCount - 1]->SetSelected(Clipboard[i]->IsSelected());
+			
+
+		}
 	}
 }
 
@@ -330,11 +385,13 @@ void ApplicationManager::CutSelFigToCP()
 	for (int i = 0; i < SelFigCount; i++)
 	{
 		Clipboard[CPIndex] = selectedFigs[i]->Copy();
-		Clipboard[CPIndex++]->setID(FigCount - SelFigCount + 1+i);
+		Clipboard[CPIndex++]->setID(FigCount - SelFigCount + 1 + i);
+
 	}
 	this->deleteSelected();
 	SelFigCount = 0;
 }
+
 void ApplicationManager::deleteSelected() {
 	CFigure** s;
 	CFigure* temp;
@@ -406,17 +463,158 @@ void ApplicationManager::SendToBack()
 }
 
 //==================================================================================//
+//							Play Mode Functions						            	//
+//==================================================================================//
+
+
+
+
+//Scramble and find mode
+
+void ApplicationManager::StartNewScrambleGame()
+{
+	pOut->StartScrambleGame();
+	Point P;
+	P.x = 700;
+	P.y = 700;
+	int i = 0;
+	while (P.x % UI.MenuItemWidth != 1 && P.y > UI.ToolBarHeight)
+	{
+		OriginalList[i]->SetSelected(true);
+		pOut->ClearDrawArea();
+		for (int i = 0; i < OriginalListCount; i++)
+		{
+			OriginalList[i]->Draw(pOut);		//Call Draw function (virtual member fn)
+			RandomizedFigures[i]->Draw(pOut);
+		}
+		pIn->GetPointClicked(P.x, P.y);
+		for (int j = 0; j < RandFigsCount; j++)
+		{
+			if (RandomizedFigures[j]->Select(P))
+			{
+				if (RandomizedFigures[i]->getID() == OriginalList[i]->getID())
+				{
+					CFigure* temp;
+					int index1, index2;
+					for (int k = 0; k<RandFigsCount; k++) {
+						temp = getFigureById(OriginalList[k]->getID(), index1);
+						OriginalList[index1] = OriginalList[(FigCount--) - 1];
+						/*///////////////////////////////////////////////////*/
+						temp = getFigureById(RandomizedFigures[k]->getID(), index2);
+						OriginalList[index2] = OriginalList[(FigCount--) - 1];
+					}
+				}
+			}
+			i++;
+		}
+
+	}
+
+}
+
+
+void ApplicationManager::AdjustOriginalList()
+{
+	Point T;
+	int x = 0;
+	for (int i = 0; i < MaxFigCount; i++)
+		OriginalList[i] = nullptr;
+	OriginalListCount = 0;
+
+	for (int i = 0; i < FigCount; i++)
+	{
+		OriginalList[OriginalListCount] = FigList[i]->Copy();
+		OriginalList[OriginalListCount++]->setID(++counter);
+
+	}
+	for (int i = 0; i < OriginalListCount; i++)
+	{
+		OriginalList[i]->getCenter(T);
+		x += T.x;
+	}
+	if (FigCount != 0)
+		x = (x / FigCount) / 2;
+	for (int i = 0; i < FigCount; i++)
+	{
+		OriginalList[i]->getCenter(T);
+		T.x -= x / 2;
+		OriginalList[i]->Move(T);
+		OriginalList[i]->Resize(50);
+	}
+
+}
+
+void random(int&Px, int&Py)
+{
+	int x = UI.width;
+	int y = UI.height;
+	Px = (rand() % x + 1);
+	if (Px < UI.width / 2)
+		Px += UI.width / 2;
+	Py = (rand() % y + 1);
+	if (Py <= UI.ToolBarHeight)
+		Py += UI.ToolBarHeight;
+}
+
+void ApplicationManager::RandomizeFigures()
+{
+	Point P;
+	srand(static_cast<unsigned int>(time(0)));
+	for (int i = 0; i < MaxFigCount; i++)
+		RandomizedFigures[i] = nullptr;
+	RandFigsCount = 0;
+	for (int i = 0; i < OriginalListCount; i++)
+	{
+		RandomizedFigures[RandFigsCount] = OriginalList[i]->Copy();
+		RandomizedFigures[RandFigsCount++]->setID(OriginalList[i]->getID());
+	}
+
+	for (int i = 0; i < RandFigsCount; i++)
+	{
+		random(P.x, P.y);
+		Sleep(20);
+		RandomizedFigures[i]->Move(P);
+	}
+}
+
+
+
+
+
+
+
+//==================================================================================//
 //							Interface Management Functions							//
 //==================================================================================//
+
+
 
 //Draw all figures on the user interface
 void ApplicationManager::UpdateInterface() const
 {
-	pOut->ClearDrawArea();
-	for(int i=0; i<FigCount; i++)
-		FigList[i]->Draw(pOut);		//Call Draw function (virtual member fn)
-}
-////////////////////////////////////////////////////////////////////////////////////
+		pOut->ClearDrawArea();
+		for (int i = 0; i < FigCount; i++)
+			FigList[i]->Draw(pOut);		//Call Draw function (virtual member fn)
+	
+	switch (UI.InterfaceMode)
+	{
+	case MODE_DRAW_MAIN: pOut->CreateMainToolBar();
+		break;
+	case MODE_DRAW_DRAW: pOut->CreateDrawMenuToolBar();
+		break;
+	case MODE_DRAW_EDIT: pOut->CreateEditToolBar();
+		break;
+	case MODE_PLAY: pOut->CreatePlayToolBar();
+		break;
+	case MODE_PLAY_PICK_HIDE:
+		break;
+	case MODE_PLAY_SCRAMBLE_FIND: pOut->ScrambleAndFindMain();
+		break;
+	default:
+		break;
+	}
+	pOut->ClearStatusBar();
+}////////////////////////////////////////////////////////////////////////////////
 //Return a pointer to the input
 Input *ApplicationManager::GetInput() const
 {	return pIn; }

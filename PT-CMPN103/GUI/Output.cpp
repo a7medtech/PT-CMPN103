@@ -149,6 +149,71 @@ void Output::CreateMainToolBar() const
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 
 }
+/*************************************************************************************/
+//Play Mode Graphics Function
+void Output::EnterScrambleAndFind() const
+{
+	int x = 0;
+	for (int i = 0; i < 145; i++)
+	{
+		pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\image.jpg", x, 0, 111, 85);
+		x += 10;
+		Sleep(10);
+	}
+	int R = UI.BkGrndColor.ucRed;
+	int G = UI.BkGrndColor.ucGreen;
+	int B = UI.BkGrndColor.ucBlue;
+	color C(R, G, B);
+	C = GREY;
+	while (C.ucBlue > 0)
+	{
+
+		C.ucBlue -= 2;
+		C.ucGreen -= 2;
+		C.ucRed -= 2;
+		UI.BkGrndColor = C;
+		ClearDrawArea();
+		Sleep(1);
+	}
+	Sleep(20);
+	for (int i = 0; i < 6; i++)
+	{
+		pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\main.jpg", 1400 - 665, 0, 670, 85);
+		for (int j = 0; j < 5; j++)
+		{
+
+			pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\imageflip.jpg", x - 568, 0, 568, 85);
+			x -= 20;
+			Sleep(5);
+		}
+	}
+	UI.InterfaceMode = MODE_PLAY_SCRAMBLE_FIND;
+	
+
+
+}
+
+void Output::ScrambleAndFindMain() const
+{
+	pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\start.jpg", 0, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+	pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\back.jpg", UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+}
+
+void Output::StartScrambleGame() const
+{
+	int x, y;
+	x = y = 0;
+	pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\back.jpg", UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+	pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\Right.jpg", 2 * UI.MenuItemWidth, 0, 2 * UI.MenuItemWidth, UI.ToolBarHeight);
+	pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\Wrong.jpg", 4 * UI.MenuItemWidth, 0, 2 * UI.MenuItemWidth, UI.ToolBarHeight);
+	pWind->SetPen(WHITE, 2);
+	for (int i = 0; i < UI.width; i++)
+	{
+		pWind->DrawLine(UI.width, UI.ToolBarHeight - 1, UI.width - x, UI.ToolBarHeight - 1);
+		x += 5;
+		Sleep(1);
+	}
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////
 void Output::CreateDrawMenuToolBar() const //creates Draw mode menu toolbar
@@ -229,84 +294,145 @@ int Output::getCrntPenWidth() const		//get current pen width
 void Output::DrawRect(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected) const
 {
 	color DrawingClr;
-	if(selected)	
+	if (selected)
 		DrawingClr = UI.HighlightColor; //Figure should be drawn highlighted
-	else			
+	else
 		DrawingClr = RectGfxInfo.DrawClr;
-	
+
 	pWind->SetPen(DrawingClr, RectGfxInfo.BorderWdth);	//Set Drawing color & width
 
 	drawstyle style;
-	if (RectGfxInfo.isFilled)	
+	if (RectGfxInfo.isFilled)
 	{
-		style = FILLED;		
+		style = FILLED;
 		pWind->SetBrush(RectGfxInfo.FillClr);
 	}
-	else	
+	else
 		style = FRAME;
 
-	
+
 	pWind->DrawRectangle(P1.x, P1.y, P2.x, P2.y, style);
-	
+	if (selected)
+	{
+		Point c;
+		c.x = (P1.x + P2.x) / 2;
+		c.y = (P1.y + P2.y) / 2;
+		pWind->SetPen(DARKGRAY, 1);
+		pWind->DrawLine(P1.x, P1.y, P2.x, P2.y);
+		pWind->DrawLine(P1.x, P2.y, P2.x, P1.y);
+		pWind->SetPen(BLACK, RectGfxInfo.BorderWdth);
+		pWind->DrawCircle(P1.x, P1.y, 4);
+		pWind->DrawCircle(P2.x, P2.y, 4);
+		pWind->DrawCircle(P1.x, P2.y, 4);
+		pWind->DrawCircle(P2.x, P1.y, 4);
+		pWind->DrawCircle(c.x, c.y, 4);
+	}
+
 }
 
 void Output::DrawLine(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected) const
 {
 	color DrawingClr;
 	if (selected)
+	{
 		DrawingClr = UI.HighlightColor; //Figure should be drawn highlighted
+	}
 	else
 		DrawingClr = RectGfxInfo.DrawClr;
 
 	pWind->SetPen(DrawingClr, RectGfxInfo.BorderWdth);	//Set Drawing color & width
 
 	pWind->DrawLine(P1.x, P1.y, P2.x, P2.y);
+	if (selected)
+	{
+		Point mid;
+		pWind->SetPen(BLACK, RectGfxInfo.BorderWdth);
+		pWind->DrawCircle(P1.x, P1.y, 4);
+		pWind->DrawCircle(P2.x, P2.y, 4);
+		mid.x = (P1.x + P2.x) / 2;
+		mid.y = (P1.y + P2.y) / 2;
+		pWind->DrawCircle(mid.x, mid.y, 4);
+	}
 }
-void Output::DrawTRI(Point P1, Point P2, Point P3, GfxInfo RectGfxInfo, bool selected ) const
+void Output::DrawTRI(Point P1, Point P2, Point P3, GfxInfo TriGfxInfo, bool selected) const
 {
 	color DrawingClr;
 	if (selected)
 		DrawingClr = UI.HighlightColor; //Figure should be drawn highlighted
 	else
-		DrawingClr = RectGfxInfo.DrawClr;
+		DrawingClr = TriGfxInfo.DrawClr;
 
-	pWind->SetPen(DrawingClr, RectGfxInfo.BorderWdth);	//Set Drawing color & width
+	pWind->SetPen(DrawingClr, TriGfxInfo.BorderWdth);	//Set Drawing color & width
 
 	drawstyle style;
-	if (RectGfxInfo.isFilled)
+	if (TriGfxInfo.isFilled)
 	{
 		style = FILLED;
-		pWind->SetBrush(RectGfxInfo.FillClr);
+		pWind->SetBrush(TriGfxInfo.FillClr);
 	}
 	else
 		style = FRAME;
 	pWind->DrawTriangle(P1.x, P1.y, P2.x, P2.y, P3.x, P3.y, style);
+	if (selected)
+	{
+		Point mid;
+		pWind->SetPen(BLACK, TriGfxInfo.BorderWdth);
+		pWind->DrawCircle(P1.x, P1.y, 4);
+		pWind->DrawCircle(P2.x, P2.y, 4);
+		pWind->DrawCircle(P3.x, P3.y, 4);
+		mid.x = (P1.x + P2.x + P3.x) / 3;
+		mid.y = (P1.y + P2.y + P3.y) / 3;
+
+		pWind->SetPen(DARKGRAY, 1);
+		pWind->DrawLine(P1.x, P1.y, mid.x, mid.y);
+		pWind->DrawLine(P2.x, P2.y, mid.x, mid.y);
+		pWind->DrawLine(P3.x, P3.y, mid.x, mid.y);
+		pWind->SetPen(BLACK, TriGfxInfo.BorderWdth);
+		pWind->DrawCircle(mid.x, mid.y, 4);
+	}
 }
 
 window* Output::getWindow(){
 	return pWind;
 }
 
-void Output::DrawCircle(Point P1, double rad, GfxInfo RectGfxInfo, bool selected) const
+void Output::DrawCircle(Point P1, double rad, GfxInfo CircleGfxInfo, bool selected) const
 {
 	color DrawingClr;
 	if (selected)
 		DrawingClr = UI.HighlightColor; //Figure should be drawn highlighted
 	else
-		DrawingClr = RectGfxInfo.DrawClr;
+		DrawingClr = CircleGfxInfo.DrawClr;
 
-	pWind->SetPen(DrawingClr, RectGfxInfo.BorderWdth);	//Set Drawing color & width
+	pWind->SetPen(DrawingClr, CircleGfxInfo.BorderWdth);	//Set Drawing color & width
 
 	drawstyle style;
-	if (RectGfxInfo.isFilled)
+	if (CircleGfxInfo.isFilled)
 	{
 		style = FILLED;
-		pWind->SetBrush(RectGfxInfo.FillClr);
+		pWind->SetBrush(CircleGfxInfo.FillClr);
 	}
 	else
 		style = FRAME;
 	pWind->DrawCircle(P1.x, P1.y, (const int)rad, style);
+	if (selected)
+	{
+		pWind->SetPen(BLACK, CircleGfxInfo.BorderWdth);
+		pWind->DrawCircle(P1.x + rad, P1.y, 4);
+		pWind->DrawCircle(P1.x, P1.y + rad, 4);
+		pWind->DrawCircle(P1.x - rad, P1.y, 4);
+		pWind->DrawCircle(P1.x, P1.y - rad, 4);
+
+		pWind->SetPen(DARKGRAY, 1);
+		pWind->DrawLine(P1.x, P1.y, P1.x + rad, P1.y);
+		pWind->DrawLine(P1.x, P1.y, P1.x, P1.y + rad);
+		pWind->DrawLine(P1.x, P1.y, P1.x - rad, P1.y);
+		pWind->DrawLine(P1.x, P1.y, P1.x, P1.y - rad);
+		pWind->SetPen(BLACK, CircleGfxInfo.BorderWdth);
+		pWind->DrawCircle(P1.x, P1.y, 4);
+	}
 }
+
 
 void Output::CHNG_BK_CLR(color clr)
 {

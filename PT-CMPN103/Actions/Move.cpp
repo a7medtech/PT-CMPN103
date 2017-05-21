@@ -6,6 +6,7 @@ Move::Move(ApplicationManager* pApp)
 }
 
 void Move::ReadActionParameters(){
+	pManager->FindSelFigList(selected);
 	pManager->GetSelectedFigCount(selectedCount);
 	pManager->GetOutput()->PrintMessage("Click anywhere in the Drawing Area to move the figures to");
 	pManager->GetInput()->GetPointClicked(p.x,p.y);
@@ -16,7 +17,7 @@ void Move::Execute(){
 	ReadActionParameters();
 	Point c0,c1,temp;
 	//int dist;
-	pManager->FindSelFigList(selected);
+	
 	pManager->GetSelectedFigCount(selectedCount);
 	if (selectedCount > 1){
 		selected[0]->getCenter(c0);

@@ -23,6 +23,7 @@ void CFigure::ChngFillClr(color Fclr)
 {	
 	FigGfxInfo.isFilled = true;
 	FigGfxInfo.FillClr = Fclr; 
+	isFill = true;
 }
 void CFigure::setID(int id)
 { 

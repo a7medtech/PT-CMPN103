@@ -13,14 +13,24 @@ class ApplicationManager
 public:
 	enum { MaxFigCount = 200 };	//Max no of figures
 private:
+	static int counter;    //To give any new figure a unique ID
 	int FigCount;		//Actual number of figures
 	CFigure* FigList[MaxFigCount];	//List of all figures (Array of pointers)
 	mqueue MouseClicks;
 	CFigure* selectedFigs[MaxFigCount]; //List of selected figures only.     {4EGYZOMBIE} 
 	CFigure* Clipboard[MaxFigCount];
 	int SelFigCount;
-	//deque<Action*> ClipBoard[MaxFigCount];  //Program ClipBoard memory.
 	int CPIndex;
+	int LastAction;
+
+	/****************************************************************************************/
+	//Scramble and find data structure.
+	CFigure* OriginalList[MaxFigCount];
+	CFigure* RandomizedFigures[MaxFigCount];
+	int OriginalListCount;
+	int RandFigsCount;
+
+
 	//Pointers to Input and Output classes
 	Input *pIn;
 	Output *pOut;
@@ -41,8 +51,8 @@ public:
 	void deleteforload();
 	void GetFigCount(int&size);
 	void GetSelectedFigCount(int&size);
-	CFigure** FindSelFigList();
-	void SelectFig(Point);
+	void GetCPIndex(int&size);
+	Action*GetLastAction() const;
 	void SaveAction(ofstream&Outfile);
 	void minusfigcount();
 	void FindSelFigList(CFigure**&);
@@ -57,7 +67,11 @@ public:
 	void BringtoFront();
 	void Resizefigures(int);
 	void SendToBack();
-	//void AddSelFiguresToCP();
+	/***************************************************************************/
+	//Scramble and find operating functions
+	void StartNewScrambleGame();
+	void AdjustOriginalList();
+	void RandomizeFigures();
 
 
 	// -- interface management functions

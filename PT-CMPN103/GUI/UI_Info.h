@@ -12,8 +12,10 @@ enum GUI_MODE	//Graphical user interface mode
 {
 	MODE_DRAW_MAIN,	//Drawing mode (startup mode) Main Menu
 	MODE_DRAW_DRAW, //Drawing mode Draw Menu
-	MODE_DRAW_EDIT, //Drawing mode Draw Menu
-	MODE_PLAY	//Playing mode
+	MODE_DRAW_EDIT, //Drawing mode Edit Menu
+	MODE_PLAY,	//Playing mode
+	MODE_PLAY_PICK_HIDE,	
+	MODE_PLAY_SCRAMBLE_FIND
 };
 
 
@@ -93,6 +95,19 @@ enum PlayMenuItem //The items of the Play menu (you should add more items)
 	PLAY_ITM_COUNT		//no. of menu items ==> This should be the last line in this enum
 	
 };
+
+
+
+enum ScrambleAndFindMenu
+{
+	ITM_START,     //Start the game
+	ITM_BACKSCRAMBLE,
+	ITM_RIGHT,     //Counter Icon for right choices
+	ITM_WRONG,     //Counter icon for wrong choices
+	SCRAMBLE_ITM_COUNT
+};
+
+
 enum ResizeItems //items for resize sub menu items
 
 {

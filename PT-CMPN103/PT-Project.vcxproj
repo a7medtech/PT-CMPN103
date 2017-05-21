@@ -18,7 +18,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -133,6 +133,7 @@
     <ClCompile Include="Actions\AddRectAction.cpp" />
     <ClCompile Include="Actions\AddTrianAction.cpp" />
     <ClCompile Include="Actions\BackAction.cpp" />
+    <ClCompile Include="Actions\BackPlayAction.cpp" />
     <ClCompile Include="Actions\BringFront.cpp" />
     <ClCompile Include="Actions\ChngBkClr.cpp" />
     <ClCompile Include="Actions\ChngDrawClr.cpp" />
@@ -146,8 +147,10 @@
     <ClCompile Include="Actions\PickHide.cpp" />
     <ClCompile Include="Actions\Resize.cpp" />
     <ClCompile Include="Actions\SaveAction.cpp" />
+    <ClCompile Include="Actions\ScrambleAndFind.cpp" />
     <ClCompile Include="Actions\Select.cpp" />
     <ClCompile Include="Actions\SendBack.cpp" />
+    <ClCompile Include="Actions\StartScrumble.cpp" />
     <ClCompile Include="ApplicationManager.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp" />
     <ClCompile Include="CMUgraphicsLib\CMUgraphics.cpp" />
@@ -200,6 +203,7 @@
     <ClInclude Include="Actions\AddRectAction.h" />
     <ClInclude Include="Actions\AddTrianAction.h" />
     <ClInclude Include="Actions\BackAction.h" />
+    <ClInclude Include="Actions\BackPlayAction.h" />
     <ClInclude Include="Actions\BringFront.h" />
     <ClInclude Include="Actions\ChngBkClr.h" />
     <ClInclude Include="Actions\ChngDrawClr.h" />
@@ -213,8 +217,10 @@
     <ClInclude Include="Actions\PickHide.h" />
     <ClInclude Include="Actions\Resize.h" />
     <ClInclude Include="Actions\SaveAction.h" />
+    <ClInclude Include="Actions\ScrambleAndFind.h" />
     <ClInclude Include="Actions\Select.h" />
     <ClInclude Include="Actions\SendBack.h" />
+    <ClInclude Include="Actions\StartScrumble.h" />
     <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />

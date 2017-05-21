@@ -16,6 +16,9 @@ public:
 	void CreateMainToolBar() const;     //Creates Main Tool Bar
 	void CreateEditToolBar() const;     //Creates Edit Tool bar
 	void CreatePlayToolBar() const;	//creates Play mode toolbar & menu
+	void EnterScrambleAndFind() const;
+	void ScrambleAndFindMain() const;
+	void StartScrambleGame() const;
 	void CreateStatusBar() const;	//create the status bar
 	void Output::ClearToolBar() const;
 

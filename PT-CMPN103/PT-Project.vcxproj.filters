@@ -19,9 +19,6 @@
     <ClCompile Include="Actions\Move.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\Paste.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
     <ClCompile Include="Actions\PickHide.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
@@ -35,12 +32,6 @@
       <Filter>Actions</Filter>
     </ClCompile>
     <ClCompile Include="Actions\ChngFillClr.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\Copy.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\Cut.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
     <ClCompile Include="Actions\Delete.cpp">
@@ -191,6 +182,24 @@
     <ClCompile Include="ApplicationManager.cpp">
       <Filter>ApplicationManager</Filter>
     </ClCompile>
+    <ClCompile Include="Actions\Copy.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Cut.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Paste.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ScrambleAndFind.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\StartScrumble.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\BackPlayAction.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DEFS.h" />
@@ -218,9 +227,6 @@
     <ClInclude Include="Actions\Move.h">
       <Filter>Actions</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\Paste.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
     <ClInclude Include="Actions\PickHide.h">
       <Filter>Actions</Filter>
     </ClInclude>
@@ -234,12 +240,6 @@
       <Filter>Actions</Filter>
     </ClInclude>
     <ClInclude Include="Actions\ChngFillClr.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\Copy.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\Cut.h">
       <Filter>Actions</Filter>
     </ClInclude>
     <ClInclude Include="Actions\Delete.h">
@@ -343,6 +343,24 @@
     </ClInclude>
     <ClInclude Include="ApplicationManager.h">
       <Filter>ApplicationManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Copy.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Cut.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Paste.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ScrambleAndFind.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\StartScrumble.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\BackPlayAction.h">
+      <Filter>Actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
