@@ -30,6 +30,8 @@ void CFigure::setID(int id)
 	ID=id;
 }
 int CFigure::getID(){
+	if (this == nullptr)
+		return 0;
 	return ID;
 }
 

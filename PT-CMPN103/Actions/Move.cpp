@@ -15,20 +15,30 @@ void Move::ReadActionParameters(){
 
 void Move::Execute(){
 	ReadActionParameters();
-	Point c0,c1,temp;
-	//int dist;
+	Point c0,c00,c1,temp;
 	
 	pManager->GetSelectedFigCount(selectedCount);
 	if (selectedCount > 1){
 		selected[0]->getCenter(c0);
 		selected[0]->Move(p);
+		selected[0]->getCenter(c00);
 		for (int i=1;i<selectedCount;i++){
 			selected[i]->getCenter(c1);
 			temp.x = abs(c0.x-c1.x);
 			temp.y = abs(c0.y-c1.y);
-			
-			temp.x = p.x + temp.x;
-			temp.y = p.y - temp.y;
+			if (c0.x >= c1.x && c0.y >= c1.y){
+				temp.x = c00.x - temp.x;
+				temp.y = c00.y - temp.y;
+			}else if(c0.x <= c1.x && c0.y >= c1.y){
+				temp.x = c00.x + temp.x;
+				temp.y = c00.y - temp.y;
+			}else if(c0.x <= c1.x && c0.y <= c1.y ){
+				temp.x = c00.x + temp.x;
+				temp.y = c00.y + temp.y;
+			}else {
+				temp.x = c00.x - temp.x;
+				temp.y = c00.y + temp.y;
+			}
 			
 			selected[i]->Move(temp);
 		}

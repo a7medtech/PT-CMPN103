@@ -171,6 +171,7 @@ if(c==DARKBLUE) return"DARKBLUE" ;
 if(c==DARKMAGENTA) return"DARKMAGENTA" ;
 if(c==DARKRED) return"DARKRED" ;
 if(c==LIGHTGREEN) return"LIGHTGREEN" ;
+return "";
 }
 
   color Save::tocolor(string c)
@@ -319,6 +320,7 @@ if(c=="DARKCYAN") return DARKCYAN;
 if(c=="DARKMAGENTA") return DARKMAGENTA ;
 if(c=="DARKRED") return DARKRED ;
 if(c=="LIGHTGREEN") return LIGHTGREEN ;
+return NULL;
 }
 
  

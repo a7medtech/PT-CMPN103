@@ -200,7 +200,7 @@ void ApplicationManager::deleteforload()
 	int n=0;this->GetFigCount(n);
 	for(int i=0;i<n;i++)
 	{
-		FigList[i]=NULL;
+		FigList[i]=nullptr;
 	 this->minusfigcount();
 	}
 }
@@ -213,8 +213,10 @@ void ApplicationManager::SelectFigs(Point p)
 	for (int i = FigCount-1; i >= 0; i--) {
 		check = FigList[i]->Select(p);
 		if(check){
-			if(FigList[i]->IsSelected())
+			if(FigList[i]->IsSelected()){
 				displayFigParam(FigList[i]);
+				selectedFigs[SelFigCount++] = FigList[i];
+			}
 			else 
 				GetOutput()->ClearStatusBar();
 			return;
@@ -259,16 +261,21 @@ void ApplicationManager::Resizefigures(int n)
 
 
 void ApplicationManager::FindSelFigList(CFigure** &s){
-	int i;
+	/*int i;
 	for(i=0; i<MaxFigCount ;i++){
 		selectedFigs[i] = nullptr;
 	}
 	SelFigCount = 0;
-	for (i=0; i<FigCount ;i++){
-		if (FigList[i]->IsSelected())
-			selectedFigs[SelFigCount++] = (FigList[i]);
-		
-	}
+	bool check = false;
+	for (int i=0; i<FigCount ;i++){
+		if(FigList[i]->IsSelected()){
+			for(int j=0;j<SelFigCount;j++){
+				if (FigList[i]->getID() == selectedFigs[j]->getID()){
+					
+				}
+			}	
+		}
+	}*/
 	s = selectedFigs;
 }
 ////////////////////////////////////////////////////////////////////////////////////
@@ -400,21 +407,11 @@ void ApplicationManager::deleteSelected() {
 
 	for (int i = 0; i<SelFigCount; i++) {
 		temp = getFigureById(selectedFigs[i]->getID(), index);
-		FigList[index] = FigList[(FigCount--) - 1];
+		move(FigList + (index+1) , FigList + FigCount-- , FigList + index);
+		//FigList[index] = FigList[(FigCount--) - 1];
 	}
 	for (int i = 0; i<MaxFigCount; i++) {
 		selectedFigs[i] = nullptr;
-	}
-}
-
-void ApplicationManager::cleanFigList(){
-	for(int i=0;i<FigCount;i++){
-		if (FigList[i] == nullptr){
-			while(FigList[i+1]){
-				FigList[i] = FigList[i++]; 
-			}
-			return;
-		}
 	}
 }
 
@@ -475,111 +472,41 @@ void ApplicationManager::StartNewScrambleGame()
 {
 	pOut->StartScrambleGame();
 	Point P;
-	int Right = 0;
-	int Wrong = 0;
 	P.x = 700;
 	P.y = 700;
-	while ((P.x / UI.MenuItemWidth != 1 || P.y > UI.ToolBarHeight) && 0 < OriginalListCount)
+	int i = 0;
+	while (P.x % UI.MenuItemWidth != 1 && P.y > UI.ToolBarHeight)
 	{
-		OriginalList[0]->ChngDrawClr(PINK);
-		OriginalList[0]->Draw(pOut);
+		OriginalList[i]->SetSelected(true);
 		pOut->ClearDrawArea();
 		for (int i = 0; i < OriginalListCount; i++)
 		{
+			OriginalList[i]->Draw(pOut);		//Call Draw function (virtual member fn)
 			RandomizedFigures[i]->Draw(pOut);
 		}
-		pOut->BlockRandomizedFigs();
-		for (int i = 0; i < OriginalListCount; i++)
-		{
-			OriginalList[i]->Draw(pOut);		//Call Draw function (virtual member fn)
-		}
-
-		pOut->ClearStatusBar();
-		pOut->StartScrambleGame();
-		pOut->getWindow()->SetFont(80, NONE, ROMAN, PLAIN);
-		pOut->getWindow()->SetPen(BLACK, 2);
-		pOut->getWindow()->DrawInteger(2 * UI.MenuItemWidth + 100, 10, Right);
-		pOut->getWindow()->DrawInteger(4 * UI.MenuItemWidth + 100, 10, Wrong);
+		i = 0;
 		pIn->GetPointClicked(P.x, P.y);
-		
-		
 		for (int j = 0; j < RandFigsCount; j++)
 		{
 			if (RandomizedFigures[j]->Select(P))
 			{
-				if (RandomizedFigures[j]->getID() == OriginalList[0]->getID())
+				if (RandomizedFigures[i]->getID() == OriginalList[i]->getID())
 				{
-					RandomizedFigures[j] = RandomizedFigures[RandFigsCount-1];
-					RandomizedFigures[RandFigsCount - 1] = nullptr;
-					RandFigsCount--;
-					OriginalList[0] = OriginalList[OriginalListCount-1];
-					OriginalList[OriginalListCount - 1] = nullptr;
-					OriginalListCount--;
-					Right++;
+					CFigure* temp;
+					int index1, index2;
+					for (int k = 0; k<RandFigsCount; k++) {
+						temp = getFigureById(OriginalList[k]->getID(), index1);
+						OriginalList[index1] = OriginalList[(FigCount--) - 1];
+						/*///////////////////////////////////////////////////*/
+						temp = getFigureById(RandomizedFigures[k]->getID(), index2);
+						OriginalList[index2] = OriginalList[(FigCount--) - 1];
+					}
 				}
-				else
-				{
-					RandomizedFigures[j]->SetSelected(false);
-					
-					RandomizedFigures[j]->ChngDrawClr(RED);
-					Sleep(100);
-					RandomizedFigures[j]->Draw(pOut);
-					RandomizedFigures[j]->ChngDrawClr(BLACK);
-					Sleep(100);
-					RandomizedFigures[j]->Draw(pOut);
-					RandomizedFigures[j]->ChngDrawClr(RED);
-					Sleep(100);
-					RandomizedFigures[j]->Draw(pOut);
-					RandomizedFigures[j]->ChngDrawClr(BLACK);
-					Sleep(100);
-					RandomizedFigures[j]->Draw(pOut);
-					RandomizedFigures[j]->ChngDrawClr(RED);
-					Sleep(100);
-					RandomizedFigures[j]->Draw(pOut);
-					RandomizedFigures[j]->ChngDrawClr(BLACK);
-					Sleep(100);
-					RandomizedFigures[j]->Draw(pOut);
-					Wrong++;
-				}
-				
 			}
-			
+			i++;
 		}
+
 	}
-	pOut->ClearStatusBar();
-	pOut->StartScrambleGame();
-	pOut->getWindow()->SetFont(80, NONE, ROMAN, PLAIN);
-	pOut->getWindow()->SetPen(BLACK, 2);
-	pOut->getWindow()->DrawInteger(2 * UI.MenuItemWidth + 100, 10, Right);
-	pOut->getWindow()->DrawInteger(4 * UI.MenuItemWidth + 100, 10, Wrong);
-	pOut->ClearDrawArea();
-	/**************************************************************************/
-	if (P.x / UI.MenuItemWidth != 1 && P.y > UI.ToolBarHeight)
-	{
-		pOut->getWindow()->SetPen(VIOLET, 2);
-		pOut->getWindow()->DrawString(100, 360, "Final Grade: ");
-		pOut->getWindow()->SetPen(SKYBLUE, 2);
-		pOut->getWindow()->DrawInteger(360 + 100, 360, Right);
-		pOut->getWindow()->SetPen(BLUE, 2);
-		pOut->getWindow()->DrawString(100, 440, "From: ");
-		pOut->getWindow()->SetPen(GREEN, 2);
-		pOut->getWindow()->DrawInteger(270, 440, Right + Wrong);
-		pOut->getWindow()->SetPen(ORANGE, 2);
-		pOut->getWindow()->DrawString(320, 440, "Clicks");
-	}
-	while (UI.InterfaceMode !=MODE_PLAY)
-	{
-		pIn->GetPointClicked(P.x, P.y);
-		if ((P.y < UI.ToolBarHeight) && ((P.x / UI.MenuItemWidth) == 0))
-		{
-			this->AdjustOriginalList();
-			this->RandomizeFigures();
-			this->StartNewScrambleGame();
-		}
-		if (P.y < UI.ToolBarHeight && P.x / UI.MenuItemWidth == 1)
-			UI.InterfaceMode = MODE_PLAY;
-	}
-	
 
 }
 
@@ -595,20 +522,20 @@ void ApplicationManager::AdjustOriginalList()
 	for (int i = 0; i < FigCount; i++)
 	{
 		OriginalList[OriginalListCount] = FigList[i]->Copy();
-		OriginalList[OriginalListCount++]->setID(FigList[i]->getID());
+		OriginalList[OriginalListCount++]->setID(++counter);
 
 	}
-	//for (int i = 0; i < OriginalListCount; i++)
-	//{
-	//	OriginalList[i]->getCenter(T);
-	//	x += T.x;
-	//}
-	//if (FigCount != 0)
-	//	x = (x / FigCount) / 2;
+	for (int i = 0; i < OriginalListCount; i++)
+	{
+		OriginalList[i]->getCenter(T);
+		x += T.x;
+	}
+	if (FigCount != 0)
+		x = (x / FigCount) / 2;
 	for (int i = 0; i < FigCount; i++)
 	{
 		OriginalList[i]->getCenter(T);
-		T.x = T.x/2;
+		T.x -= x / 2;
 		OriginalList[i]->Move(T);
 		OriginalList[i]->Resize(50);
 	}
@@ -643,6 +570,7 @@ void ApplicationManager::RandomizeFigures()
 	for (int i = 0; i < RandFigsCount; i++)
 	{
 		random(P.x, P.y);
+		Sleep(20);
 		RandomizedFigures[i]->Move(P);
 	}
 }
@@ -697,12 +625,6 @@ ApplicationManager::~ApplicationManager()
 {
 	for(int i=0; i<FigCount; i++)
 		delete FigList[i];
-	for (int i = 0; i<OriginalListCount; i++)
-		delete OriginalList[i];
-	for (int i = 0; i<RandFigsCount; i++)
-		delete RandomizedFigures[i];
-	for (int i = 0; i<CPIndex; i++)
-		delete Clipboard[i];
 	delete pIn;
 	delete pOut;
 	
