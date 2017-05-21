@@ -12,9 +12,19 @@ void StartScrumble::ReadActionParameters()
 }
 void StartScrumble::Execute()
 {
-	pManager->AdjustOriginalList();
-	 pManager->RandomizeFigures();
-	 pManager->StartNewScrambleGame();
+	int c;
+	pManager->GetFigCount(c);
+	if (c == 0)
+	{
+		pManager->GetOutput()->PrintMessage("Draw some figures in the draw mode first ;)!");
+		Sleep(1200);
+	}
+	else
+	{
+		pManager->AdjustOriginalList();
+		pManager->RandomizeFigures();
+		pManager->StartNewScrambleGame();
+	}
 	 
 
 }

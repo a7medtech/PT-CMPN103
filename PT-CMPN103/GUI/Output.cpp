@@ -165,7 +165,7 @@ void Output::EnterScrambleAndFind() const
 	int B = UI.BkGrndColor.ucBlue;
 	color C(R, G, B);
 	C = GREY;
-	while (C.ucBlue > 0)
+	while (C.ucBlue > 50)
 	{
 
 		C.ucBlue -= 2;
@@ -199,20 +199,31 @@ void Output::ScrambleAndFindMain() const
 	pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\back.jpg", UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
 }
 
+void Output::BlockRandomizedFigs() const
+{
+	pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\block.jpg", 0, UI.ToolBarHeight, 720, 720);
+}
+
 void Output::StartScrambleGame() const
 {
 	int x, y;
 	x = y = 0;
+	for (int i = 0; i < 6; i++)
+	{
+		pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\main.jpg", 1400 - 665, 0, 670, 85);
+		for (int j = 0; j < 5; j++)
+		{
+
+			pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\imageflip.jpg", x - 568, 0, 568, 85);
+			x -= 20;
+			Sleep(5);
+		}
+	}
 	pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\back.jpg", UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
 	pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\Right.jpg", 2 * UI.MenuItemWidth, 0, 2 * UI.MenuItemWidth, UI.ToolBarHeight);
 	pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\Wrong.jpg", 4 * UI.MenuItemWidth, 0, 2 * UI.MenuItemWidth, UI.ToolBarHeight);
 	pWind->SetPen(WHITE, 2);
-	for (int i = 0; i < UI.width; i++)
-	{
-		pWind->DrawLine(UI.width, UI.ToolBarHeight - 1, UI.width - x, UI.ToolBarHeight - 1);
-		x += 5;
-		Sleep(1);
-	}
+		pWind->DrawLine(UI.width, UI.ToolBarHeight - 1, UI.width , UI.ToolBarHeight - 1);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
