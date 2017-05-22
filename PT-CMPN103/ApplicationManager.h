@@ -76,7 +76,8 @@ public:
 	void StartNewScrambleGame();
 	void AdjustOriginalList();
 	void RandomizeFigures();
-
+	//Pick and Hide operating functions
+	void countFigs(int,int,int,int);
 
 	// -- interface management functions
 

@@ -369,8 +369,17 @@ void ApplicationManager::FindSelFigList(CFigure** &s){
 	SelFigCount = 0;
 	bool check = false;
 	for (int i=0; i<FigCount ;i++){
-		if (FigList[i]->IsSelected())
- 			selectedFigs[SelFigCount++] = (FigList[i]);
+		if (FigList[i]->IsSelected()){
+			for(int j = 0;j<SelFigCount;j++){
+				if(FigList[i]->getID() == selectedFigs[j]->getID()){
+					check = true;
+					break;
+				}
+			}
+			if(!check){
+				selectedFigs[SelFigCount++] = FigList[i];
+			}
+		}
 	}
 	s = selectedFigs;
 }
@@ -736,6 +745,8 @@ void ApplicationManager::RandomizeFigures()
 	}
 }
 
+
+//Pick and Hide mode
 
 
 
