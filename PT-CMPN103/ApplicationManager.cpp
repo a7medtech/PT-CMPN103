@@ -309,19 +309,19 @@ void ApplicationManager::zoomin()
 			FigList[i]->getCenter(c);
 			if (c.x>CenterDrawing.x)
 			{
-				nc.x = (c.x - CenterDrawing.x); m.x = c.x + nc.x;
+				nc.x = (c.x - CenterDrawing.x); m.x = c.x + (0.25)*nc.x;
 			}
 			if (c.x<CenterDrawing.x)
 			{
-				nc.x = (CenterDrawing.x - c.x); m.x = c.x - nc.x;
+				nc.x = (CenterDrawing.x - c.x); m.x = c.x - (0.25)*nc.x;
 			}
 			if (c.y>CenterDrawing.y)
 			{
-				nc.y = (c.y - CenterDrawing.y); m.y = c.y + nc.y;
+				nc.y = (c.y - CenterDrawing.y); m.y = c.y + (0.25)* nc.y;
 			}
 			if (c.y<CenterDrawing.y)
 			{
-				nc.y = (CenterDrawing.y - c.y); m.y = c.y - nc.y;
+				nc.y = (CenterDrawing.y - c.y); m.y = c.y - (0.25)* nc.y;
 			}
 			FigList[i]->Move(m);
 		}
@@ -343,19 +343,19 @@ void ApplicationManager::zoomout()
 			FigList[i]->getCenter(c);
 			if (c.x>CenterDrawing.x)
 			{
-				nc.x = (c.x - CenterDrawing.x); m.x = c.x - 0.5*nc.x;
+				nc.x = (c.x - CenterDrawing.x); m.x = c.x - (0.25)*nc.x;
 			}
 			if (c.x<CenterDrawing.x)
 			{
-				nc.x = (CenterDrawing.x - c.x); m.x = c.x + 0.5*nc.x;
+				nc.x = (CenterDrawing.x - c.x); m.x = c.x + (0.25)*nc.x;
 			}
 			if (c.y>CenterDrawing.y)
 			{
-				nc.y = (c.y - CenterDrawing.y); m.y = c.y - 0.5*nc.y;
+				nc.y = (c.y - CenterDrawing.y); m.y = c.y - (0.25)*nc.y;
 			}
 			if (c.y<CenterDrawing.y)
 			{
-				nc.y = (CenterDrawing.y - c.y); m.y = c.y + 0.5*nc.y;
+				nc.y = (CenterDrawing.y - c.y); m.y = c.y + (0.25)*nc.y;
 			}
 			FigList[i]->Move(m);
 		}
