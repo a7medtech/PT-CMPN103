@@ -159,12 +159,18 @@ void CCircle::Resize(int prec)
 			Distance = Distance * 2;
 		}
 	}
+	if (prec == 15)  //to be used in zoom without validations to draw it clipped
+	{
+		Distance = Distance*(sqrt(2));
+	}
 }
 
 void CCircle::SetBorder(int n)
 {
-	if (this->FigGfxInfo.BorderWdth < 30 && this->FigGfxInfo.BorderWdth>0)
-	this->FigGfxInfo.BorderWdth += n;
+	if (this->FigGfxInfo.BorderWdth < 30 && n>0)
+		this->FigGfxInfo.BorderWdth += n;
+	if (this->FigGfxInfo.BorderWdth>0 && n<0)
+		this->FigGfxInfo.BorderWdth += n;
 }
 
 	 

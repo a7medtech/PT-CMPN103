@@ -138,72 +138,92 @@ void CRectangle::getCenter(Point& c){
 }
 
 void CRectangle::Move(Point p){
-	const int halfHeight = abs(Corner1.y - Corner2.y)/2;
-	const int halfWidth = abs(Corner1.x - Corner2.x)/2;
-	Corner1.x = p.x -halfWidth;
-	Corner1.y = p.y - halfHeight;
-	Corner2.x = p.x + halfWidth;
-	Corner2.y = p.y + halfHeight;
+			const int halfHeight = abs(Corner1.y - Corner2.y) / 2;
+			const int halfWidth = abs(Corner1.x - Corner2.x) / 2;
+			Corner1.x = p.x - halfWidth;
+			Corner1.y = p.y - halfHeight;
+			Corner2.x = p.x + halfWidth;
+			Corner2.y = p.y + halfHeight;
+		
 }
 
 
 void CRectangle::Resize(int prec)
 {
-	int startx = Corner1.x; int starty = Corner1.y; int endx = Corner2.x; int endy = Corner2.y;
+
+	Point center; this->getCenter(center);
 	if (prec == 50)
 	{
-		Corner2.x = (0.14645*startx + 0.8535*endx);
-		Corner2.y = (0.14645*starty + 0.8535*endy);
-		Corner1.x = (0.8535*startx + 0.14645*endx);
-		Corner1.y = (0.8535*starty + 0.14645*endy);
+		Corner1.x = (0.7071067812)*Corner1.x + (0.2928932188)*center.x;
+		Corner1.y = (0.7071067812)*Corner1.y + (0.2928932188)*center.y;
+		Corner2.x = (0.7071067812)*Corner2.x + (0.2928932188)*center.x;
+		Corner2.y = (0.7071067812)*Corner2.y + (0.2928932188)*center.y;
 	}
 	if (prec == 25)
 	{
-		Corner2.x = (0.14645*startx + 0.8535*endx);
-		Corner2.y = (0.14645*starty + 0.8535*endy);
-		Corner1.x = (0.8535*startx + 0.14645*endx);
-		Corner1.y = (0.8535*starty + 0.14645*endy);
-		int startx = Corner1.x; int starty = Corner1.y; int endx = Corner2.x; int endy = Corner2.y;
-		Corner2.x = (0.14645*startx + 0.8535*endx);
-		Corner2.y = (0.14645*starty + 0.8535*endy);
-		Corner1.x = (0.8535*startx + 0.14645*endx);
-		Corner1.y = (0.8535*starty + 0.14645*endy);
+		Corner1.x = (0.7071067812)*Corner1.x + (0.2928932188)*center.x;
+		Corner1.y = (0.7071067812)*Corner1.y + (0.2928932188)*center.y;
+		Corner2.x = (0.7071067812)*Corner2.x + (0.2928932188)*center.x;
+		Corner2.y = (0.7071067812)*Corner2.y + (0.2928932188)*center.y;
+		Corner1.x = (0.7071067812)*Corner1.x + (0.2928932188)*center.x;
+		Corner1.y = (0.7071067812)*Corner1.y + (0.2928932188)*center.y;
+		Corner2.x = (0.7071067812)*Corner2.x + (0.2928932188)*center.x;
+		Corner2.y = (0.7071067812)*Corner2.y + (0.2928932188)*center.y;
 	}
 	if (prec == 200)
 	{
-		if (((-0.2071*startx + 1.2071067*endx) >= 0) && ((-0.2071*startx + 1.2071067*endx) <= 1440) && ((1.2071067*startx + -0.2071*endx) >= 0) && ((1.2071067*startx + -0.2071*endx) <= 1440))
+		if (((1.4142135624)*Corner1.x + (-0.4142135624)*center.x)>0 && ((1.4142135624)*Corner1.y + (-0.4142135624)*center.y)>85 && ((1.4142135624)*Corner2.x + (-0.4142135624)*center.x)>0 && ((1.4142135624)*Corner2.y + (-0.4142135624)*center.y)>85)
 		{
-			if (((-0.2071*starty + 1.2071067*endy) >= 85) && ((-0.2071*starty + 1.2071067*endy) <= 670) && ((1.2071067*starty + -0.2071*endy) >= 85) && ((1.2071067*starty + -0.2071*endy) <= 670))
+			if (((1.4142135624)*Corner1.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*Corner1.y + (-0.4142135624)*center.y)<670 && ((1.4142135624)*Corner2.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*Corner2.y + (-0.4142135624)*center.y)<670)
 			{
-				Corner2.x = (-0.2071*startx + 1.2071067*endx); Corner2.y = (-0.2071*starty + 1.2071067*endy);
-				Corner1.x = (1.2071067*startx + -0.2071*endx); Corner1.y = (1.2071067*starty + -0.2071*endy);
+
+				Corner1.x = (1.4142135624)*Corner1.x + (-0.4142135624)*center.x;
+				Corner1.y = (1.4142135624)*Corner1.y + (-0.4142135624)*center.y;
+				Corner2.x = (1.4142135624)*Corner2.x + (-0.4142135624)*center.x;
+				Corner2.y = (1.4142135624)*Corner2.y + (-0.4142135624)*center.y;
 			}
 		}
 	}
 	if (prec == 400)
 	{
-		if (((-0.2071*startx + 1.2071067*endx) >= 0) && ((-0.2071*startx + 1.2071067*endx) <= 1440) && ((1.2071067*startx + -0.2071*endx) >= 0) && ((1.2071067*startx + -0.2071*endx) <= 1440))
+		Point c1 = Corner1; Point c2 = Corner2;
+		if (((1.4142135624)*Corner1.x + (-0.4142135624)*center.x)>0 && ((1.4142135624)*Corner1.y + (-0.4142135624)*center.y)>85 && ((1.4142135624)*Corner2.x + (-0.4142135624)*center.x)>0 && ((1.4142135624)*Corner2.y + (-0.4142135624)*center.y)>85)
 		{
-			if (((-0.2071*starty + 1.2071067*endy) >= 85) && ((-0.2071*starty + 1.2071067*endy) <= 670) && ((1.2071067*starty + -0.2071*endy) >= 85) && ((1.2071067*starty + -0.2071*endy) <= 670))
+			if (((1.4142135624)*Corner1.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*Corner1.y + (-0.4142135624)*center.y)<670 && ((1.4142135624)*Corner2.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*Corner2.y + (-0.4142135624)*center.y)<670)
 			{
-				endx = (-0.2071*startx + 1.2071067*endx); endy = (-0.2071*starty + 1.2071067*endy);
-				startx = (1.2071067*startx + -0.2071*endx); starty = (1.2071067*starty + -0.2071*endy);
+
+				c1.x = (1.4142135624)*Corner1.x + (-0.4142135624)*center.x;
+				c1.y = (1.4142135624)*Corner1.y + (-0.4142135624)*center.y;
+				c2.x = (1.4142135624)*Corner2.x + (-0.4142135624)*center.x;
+				c2.y = (1.4142135624)*Corner2.y + (-0.4142135624)*center.y;
 			}
 		}
-
-		if (((-0.2071*startx + 1.2071067*endx) >= 0) && ((-0.2071*startx + 1.2071067*endx) <= 1440) && ((1.2071067*startx + -0.2071*endx) >= 0) && ((1.2071067*startx + -0.2071*endx) <= 1440))
+		if (((1.4142135624)*c1.x + (-0.4142135624)*center.x)>0 && ((1.4142135624)*c1.y + (-0.4142135624)*center.y)>85 && ((1.4142135624)*c2.x + (-0.4142135624)*center.x)>0 && ((1.4142135624)*c2.y + (-0.4142135624)*center.y)>85)
 		{
-			if (((-0.2071*starty + 1.2071067*endy) >= 85) && ((-0.2071*starty + 1.2071067*endy) <= 670) && ((1.2071067*starty + -0.2071*endy) >= 85) && ((1.2071067*starty + -0.2071*endy) <= 670))
+			if (((1.4142135624)*c1.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*c1.y + (-0.4142135624)*center.y)<670 && ((1.4142135624)*c2.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*c2.y + (-0.4142135624)*center.y)<670)
 			{
-				Corner2.x = (-0.2071*startx + 1.2071067*endx); Corner2.y = (-0.2071*starty + 1.2071067*endy);
-				Corner1.x = (1.2071067*startx + -0.2071*endx); Corner1.y = (1.2071067*starty + -0.2071*endy);
+
+				Corner1.x = (1.4142135624)*c1.x + (-0.4142135624)*center.x;
+				Corner1.y = (1.4142135624)*c1.y + (-0.4142135624)*center.y;
+				Corner2.x = (1.4142135624)*c2.x + (-0.4142135624)*center.x;
+				Corner2.y = (1.4142135624)*c2.y + (-0.4142135624)*center.y;
 			}
 		}
 	}
+	if (prec == 15) //to be used in zoom without validations to draw it clipped
+	{
+		Corner1.x = (1.4142135624)*Corner1.x + (-0.4142135624)*center.x;
+		Corner1.y = (1.4142135624)*Corner1.y + (-0.4142135624)*center.y;
+		Corner2.x = (1.4142135624)*Corner2.x + (-0.4142135624)*center.x;
+		Corner2.y = (1.4142135624)*Corner2.y + (-0.4142135624)*center.y;
+	}
+
 }
 void CRectangle::SetBorder(int n)
 {
-	if (this->FigGfxInfo.BorderWdth < 30 && this->FigGfxInfo.BorderWdth>0)
-	this->FigGfxInfo.BorderWdth += n;
+	if (this->FigGfxInfo.BorderWdth < 30 && n>0)
+		this->FigGfxInfo.BorderWdth += n;
+	if (this->FigGfxInfo.BorderWdth>0 && n<0)
+		this->FigGfxInfo.BorderWdth += n;
 
 }

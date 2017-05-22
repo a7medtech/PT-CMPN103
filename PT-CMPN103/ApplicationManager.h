@@ -23,6 +23,7 @@ private:
 	int CPIndex;
 	int LastAction;
 	Point CenterDrawing;
+	int zoomcontrol;
 
 	/****************************************************************************************/
 	//Scramble and find data structure.
@@ -72,6 +73,8 @@ public:
 	void zoomin();
 	void zoomout();
 	void exit(string);
+	void zoomcontrolsave(int); // to save the original data
+	void zoomcontrolinterface() const; // to hide the actions which i don't want it in zoom mode 
 	/***************************************************************************/
 	//Scramble and find operating functions
 	void StartNewScrambleGame();

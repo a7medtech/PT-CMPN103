@@ -117,6 +117,47 @@ void Output::CreateEditToolBar() const
 
 }
 //////////////////////////////////////////////////////////////////////////////////////////
+void Output::CreateEditToolBarZoom() const
+{
+	UI.InterfaceMode = MODE_DRAW_EDIT;
+
+	//You can draw the tool bar icons in any way you want.
+	//Below is one possible way
+
+	//First prepare List of images for each menu item
+	//To control the order of these images in the menu, 
+	//reoder them in UI_Info.h ==> enum DrawMenuItem
+	string MenuItemImages[EDIT_ITM_COUNTZOOM];
+	this->ClearToolBar();
+	MenuItemImages[ITM_DEL] = "images\\EditMenuItemszoom\\delete.jpg";
+	MenuItemImages[ITM_MOVEZOOM] = "images\\EditMenuItemszoom\\move.jpg";
+	MenuItemImages[ITM_RESIZEZOOM] = "images\\EditMenuItemszoom\\resize.jpg";
+	MenuItemImages[ITM_ROTATEZOOM] = "images\\EditMenuItemszoom\\rotate.jpg";
+	MenuItemImages[ITM_SEND_BACKZOOM] = "images\\EditMenuItemszoom\\sendback.jpg";
+	MenuItemImages[ITM_BRNG_FRNTZOOM] = "images\\EditMenuItemszoom\\bringfront.jpg";
+	MenuItemImages[ITM_COPYZOOM] = "images\\EditMenuItemszoom\\copy.jpg";
+	MenuItemImages[ITM_CUTZOOM] = "images\\EditMenuItemszoom\\cut.jpg";
+	MenuItemImages[ITM_PASTEZOOM] = "images\\EditMenuItemszoom\\paste.jpg";
+	MenuItemImages[ITM_BORDERZOOM] = "images\\EditMenuItemszoom\\border.jpg";
+	MenuItemImages[ITM_BACKEDIT] = "images\\EditMenuItemszoom\\back.jpg";
+
+	//TODO: Prepare images for each menu item and add it to the list
+
+	//Draw menu item one image at a time
+	for (int i = 0; i<EDIT_ITM_COUNT; i++)
+		pWind->DrawImage(MenuItemImages[i], i*UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+
+
+
+	//Draw a line under the toolbar
+	pWind->SetPen(WHITE, 3);
+	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
+
+}
+
+
+//////////////////////////////////////////////////////
+
 void Output::CreateMainToolBar() const
 {
 	UI.InterfaceMode = MODE_DRAW_MAIN;

@@ -15,6 +15,7 @@ public:
 	void CreateDrawMenuToolBar() const;	//creates Draw mode toolbar & menu
 	void CreateMainToolBar() const;     //Creates Main Tool Bar
 	void CreateEditToolBar() const;     //Creates Edit Tool bar
+	void CreateEditToolBarZoom() const; //  create edit tool bar of zoom mode
 	void CreatePlayToolBar() const;	//creates Play mode toolbar & menu
 	void EnterScrambleAndFind() const;
 	void ScrambleAndFindMain() const;

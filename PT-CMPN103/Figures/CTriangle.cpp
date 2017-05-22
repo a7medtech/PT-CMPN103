@@ -148,14 +148,15 @@ void CTriangle::getCenter(Point& c){
 }
 
 void CTriangle::Move(Point p){
-	Point mid;
-	getCenter(mid);
-	Corner1.x = p.x + (Corner1.x-mid.x);
-	Corner2.x = p.x + (Corner2.x-mid.x);
-	Corner3.x = p.x + (Corner3.x-mid.x);
-	Corner1.y = p.y + (Corner1.y-mid.y);
-	Corner2.y = p.y + (Corner2.y-mid.y);
-	Corner3.y = p.y + (Corner3.y-mid.y);
+
+			Point mid;
+			getCenter(mid);
+			Corner1.x = p.x + (Corner1.x - mid.x);
+			Corner2.x = p.x + (Corner2.x - mid.x);
+			Corner3.x = p.x + (Corner3.x - mid.x);
+			Corner1.y = p.y + (Corner1.y - mid.y);
+			Corner2.y = p.y + (Corner2.y - mid.y);
+			Corner3.y = p.y + (Corner3.y - mid.y);
 }
 
 void CTriangle::Resize(int prec)
@@ -165,71 +166,81 @@ void CTriangle::Resize(int prec)
 	this->getCenter(center);
 	if (prec == 50)
 	{
-		Corner1.x = (0.5)*Corner1.x + (0.5)*center.x;
-		Corner1.y = (0.5)*Corner1.y + (0.5)*center.y;
-		Corner2.x = (0.5)*Corner2.x + (0.5)*center.x;
-		Corner2.y = (0.5)*Corner2.y + (0.5)*center.y;
-		Corner3.x = (0.5)*Corner3.x + (0.5)*center.x;
-		Corner3.y = (0.5)*Corner3.y + (0.5)*center.y;
+		Corner1.x = (0.7071067812)*Corner1.x + (0.2928932188)*center.x;
+		Corner1.y = (0.7071067812)*Corner1.y + (0.2928932188)*center.y;
+		Corner2.x = (0.7071067812)*Corner2.x + (0.2928932188)*center.x;
+		Corner2.y = (0.7071067812)*Corner2.y + (0.2928932188)*center.y;
+		Corner3.x = (0.7071067812)*Corner3.x + (0.2928932188)*center.x;
+		Corner3.y = (0.7071067812)*Corner3.y + (0.2928932188)*center.y;
 
 	}
 	if (prec == 25)
 	{
-		Corner1.x = (0.5)*Corner1.x + (0.5)*center.x;
-		Corner1.y = (0.5)*Corner1.y + (0.5)*center.y;
-		Corner2.x = (0.5)*Corner2.x + (0.5)*center.x;
-		Corner2.y = (0.5)*Corner2.y + (0.5)*center.y;
-		Corner3.x = (0.5)*Corner3.x + (0.5)*center.x;
-		Corner3.y = (0.5)*Corner3.y + (0.5)*center.y;
-		Corner1.x = (0.5)*Corner1.x + (0.5)*center.x;
-		Corner1.y = (0.5)*Corner1.y + (0.5)*center.y;
-		Corner2.x = (0.5)*Corner2.x + (0.5)*center.x;
-		Corner2.y = (0.5)*Corner2.y + (0.5)*center.y;
-		Corner3.x = (0.5)*Corner3.x + (0.5)*center.x;
-		Corner3.y = (0.5)*Corner3.y + (0.5)*center.y;
+		Corner1.x = (0.7071067812)*Corner1.x + (0.2928932188)*center.x;
+		Corner1.y = (0.7071067812)*Corner1.y + (0.2928932188)*center.y;
+		Corner2.x = (0.7071067812)*Corner2.x + (0.2928932188)*center.x;
+		Corner2.y = (0.7071067812)*Corner2.y + (0.2928932188)*center.y;
+		Corner3.x = (0.7071067812)*Corner3.x + (0.2928932188)*center.x;
+		Corner3.y = (0.7071067812)*Corner3.y + (0.2928932188)*center.y;
+		Corner1.x = (0.7071067812)*Corner1.x + (0.2928932188)*center.x;
+		Corner1.y = (0.7071067812)*Corner1.y + (0.2928932188)*center.y;
+		Corner2.x = (0.7071067812)*Corner2.x + (0.2928932188)*center.x;
+		Corner2.y = (0.7071067812)*Corner2.y + (0.2928932188)*center.y;
+		Corner3.x = (0.7071067812)*Corner3.x + (0.2928932188)*center.x;
+		Corner3.y = (0.7071067812)*Corner3.y + (0.2928932188)*center.y;
 	}
 	if (prec == 200)
 	{
-		if (((2)*Corner1.x + (-1)*center.x)>0 && ((2)*Corner1.y + (-1)*center.y)>85 && ((2)*Corner2.x + (-1)*center.x)>0 && ((2)*Corner2.y + (-1)*center.y)>85 && ((2)*Corner3.x + (-1)*center.x)>0 && ((2)*Corner3.y + (-1)*center.y)>85)
+		if (((1.4142135624)*Corner1.x + (-0.4142135624)*center.x)>0 && ((1.4142135624)*Corner1.y + (-0.4142135624)*center.y)>85 && ((1.4142135624)*Corner2.x + (-0.4142135624)*center.x)>0 && ((2)*Corner2.y + (-0.4142135624)*center.y)>85 && ((1.4142135624)*Corner3.x + (-0.4142135624)*center.x)>0 && ((1.4142135624)*Corner3.y + (-0.4142135624)*center.y)>85)
 		{
-			if (((2)*Corner1.x + (-1)*center.x)<1440 && ((2)*Corner1.y + (-1)*center.y)<670 && ((2)*Corner2.x + (-1)*center.x)<1440 && ((2)*Corner2.y + (-1)*center.y)<670 && ((2)*Corner3.x + (-1)*center.x)<1440 && ((2)*Corner3.y + (-1)*center.y)<670)
+			if (((1.4142135624)*Corner1.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*Corner1.y + (-0.4142135624)*center.y)<670 && ((1.4142135624)*Corner2.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*Corner2.y + (-0.4142135624)*center.y)<670 && ((1.4142135624)*Corner3.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*Corner3.y + (-0.4142135624)*center.y)<670)
 			{
-				Corner1.x = (2)*Corner1.x + (-1)*center.x;
-				Corner1.y = (2)*Corner1.y + (-1)*center.y;
-				Corner2.x = (2)*Corner2.x + (-1)*center.x;
-				Corner2.y = (2)*Corner2.y + (-1)*center.y;
-				Corner3.x = (2)*Corner3.x + (-1)*center.x;
-				Corner3.y = (2)*Corner3.y + (-1)*center.y;
+				Corner1.x = (1.4142135624)*Corner1.x + (-0.4142135624)*center.x;
+				Corner1.y = (1.4142135624)*Corner1.y + (-0.4142135624)*center.y;
+				Corner2.x = (1.4142135624)*Corner2.x + (-0.4142135624)*center.x;
+				Corner2.y = (1.4142135624)*Corner2.y + (-0.4142135624)*center.y;
+				Corner3.x = (1.4142135624)*Corner3.x + (-0.4142135624)*center.x;
+				Corner3.y = (1.4142135624)*Corner3.y + (-0.4142135624)*center.y;
 			}
 		}
 	}
 	if (prec == 400)
 	{
 		Point c1 = Corner1; Point c2 = Corner2; Point c3 = Corner3;
-		if (((2)*Corner1.x + (-1)*center.x)>0 && ((2)*Corner1.y + (-1)*center.y)>85 && ((2)*Corner2.x + (-1)*center.x)>0 && ((2)*Corner2.y + (-1)*center.y)>85 && ((2)*Corner3.x + (-1)*center.x)>0 && ((2)*Corner3.y + (-1)*center.y)>85)
+		if (((1.4142135624)*Corner1.x + (-0.4142135624)*center.x)>0 && ((1.4142135624)*Corner1.y + (-0.4142135624)*center.y)>85 && ((1.4142135624)*Corner2.x + (-0.4142135624)*center.x)>0 && ((2)*Corner2.y + (-0.4142135624)*center.y)>85 && ((1.4142135624)*Corner3.x + (-0.4142135624)*center.x)>0 && ((1.4142135624)*Corner3.y + (-0.4142135624)*center.y)>85)
 		{
-			if (((2)*Corner1.x + (-1)*center.x)<1440 && ((2)*Corner1.y + (-1)*center.y)<670 && ((2)*Corner2.x + (-1)*center.x)<1440 && ((2)*Corner2.y + (-1)*center.y)<670 && ((2)*Corner3.x + (-1)*center.x)<1440 && ((2)*Corner3.y + (-1)*center.y)<670)
+			if (((1.4142135624)*Corner1.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*Corner1.y + (-0.4142135624)*center.y)<670 && ((1.4142135624)*Corner2.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*Corner2.y + (-0.4142135624)*center.y)<670 && ((1.4142135624)*Corner3.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*Corner3.y + (-0.4142135624)*center.y)<670)
 			{
-				c1.x = (2)*Corner1.x + (-1)*center.x;
-				c1.y = (2)*Corner1.y + (-1)*center.y;
-				c2.x = (2)*Corner2.x + (-1)*center.x;
-				c2.y = (2)*Corner2.y + (-1)*center.y;
-				c3.x = (2)*Corner3.x + (-1)*center.x;
-				c3.y = (2)*Corner3.y + (-1)*center.y;
+				c1.x = (1.4142135624)*Corner1.x + (-0.4142135624)*center.x;
+				c1.y = (1.4142135624)*Corner1.y + (-0.4142135624)*center.y;
+				c2.x = (1.4142135624)*Corner2.x + (-0.4142135624)*center.x;
+				c2.y = (1.4142135624)*Corner2.y + (-0.4142135624)*center.y;
+				c3.x = (1.4142135624)*Corner3.x + (-0.4142135624)*center.x;
+				c3.y = (1.4142135624)*Corner3.y + (-0.4142135624)*center.y;
 			}
 		}
-		if (((2)*c1.x + (-1)*center.x)>0 && ((2)*c1.y + (-1)*center.y)>85 && ((2)*c2.x + (-1)*center.x)>0 && ((2)*c2.y + (-1)*center.y)>85 && ((2)*c3.x + (-1)*center.x)>0 && ((2)*c3.y + (-1)*center.y)>85)
+		if (((1.4142135624)*c1.x + (-0.4142135624)*center.x)>0 && ((1.4142135624)*c1.y + (-0.4142135624)*center.y)>85 && ((1.4142135624)*c2.x + (-0.4142135624)*center.x)>0 && ((2)*c2.y + (-0.4142135624)*center.y)>85 && ((1.4142135624)*c3.x + (-0.4142135624)*center.x)>0 && ((1.4142135624)*c3.y + (-0.4142135624)*center.y)>85)
 		{
-			if (((2)*c1.x + (-1)*center.x)<1440 && ((2)*c1.y + (-1)*center.y)<670 && ((2)*c2.x + (-1)*center.x)<1440 && ((2)*c2.y + (-1)*center.y)<670 && ((2)*c3.x + (-1)*center.x)<1440 && ((2)*Corner3.y + (-1)*center.y)<670)
+			if (((1.4142135624)*c1.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*c1.y + (-0.4142135624)*center.y)<670 && ((1.4142135624)*c2.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*c2.y + (-0.4142135624)*center.y)<670 && ((1.4142135624)*c3.x + (-0.4142135624)*center.x)<1440 && ((1.4142135624)*c3.y + (-0.4142135624)*center.y)<670)
 			{
-				Corner1.x = (2)*c1.x + (-1)*center.x;
-				Corner1.y = (2)*c1.y + (-1)*center.y;
-				Corner2.x = (2)*c2.x + (-1)*center.x;
-				Corner2.y = (2)*c2.y + (-1)*center.y;
-				Corner3.x = (2)*c3.x + (-1)*center.x;
-				Corner3.y = (2)*c3.y + (-1)*center.y;
+				Corner1.x = (1.4142135624)*c1.x + (-0.4142135624)*center.x;
+				Corner1.y = (1.4142135624)*c1.y + (-0.4142135624)*center.y;
+				Corner2.x = (1.4142135624)*c2.x + (-0.4142135624)*center.x;
+				Corner2.y = (1.4142135624)*c2.y + (-0.4142135624)*center.y;
+				Corner3.x = (1.4142135624)*c3.x + (-0.4142135624)*center.x;
+				Corner3.y = (1.4142135624)*c3.y + (-0.4142135624)*center.y;
 			}
 		}
+	}
+	if (prec == 15) //to be used in zoom without validations to draw it clipped
+	{
+		Corner1.x = (1.4142135624)*Corner1.x + (-0.4142135624)*center.x;
+		Corner1.y = (1.4142135624)*Corner1.y + (-0.4142135624)*center.y;
+		Corner2.x = (1.4142135624)*Corner2.x + (-0.4142135624)*center.x;
+		Corner2.y = (1.4142135624)*Corner2.y + (-0.4142135624)*center.y;
+		Corner3.x = (1.4142135624)*Corner3.x + (-0.4142135624)*center.x;
+		Corner3.y = (1.4142135624)*Corner3.y + (-0.4142135624)*center.y;
+
 	}
 }
 

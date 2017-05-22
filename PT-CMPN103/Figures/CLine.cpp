@@ -114,30 +114,33 @@ void CLine::getCenter(Point& mid){
 	mid.y = abs(start.y + end.y) /2;
 }
 void CLine::Move(Point p){
-	Point mid;
-	mid.x = abs(start.x - end.x) /2;
-	mid.y = abs(start.y - end.y) /2;
-	if (start.x <= end.x && start.y <= end.y){
-		end.x = p.x + mid.x;
-		end.y = p.y + mid.y;
-		start.x = p.x - mid.x;
-		start.y = p.y - mid.y;
-	}else if(start.x >= end.x && start.y <= end.y){
-		end.x = p.x - mid.x;
-		end.y = p.y + mid.y;
-		start.x = p.x + mid.x;
-		start.y = p.y - mid.y;
-	}else if(start.x <= end.x && start.y >= end.y){
-		end.x = p.x + mid.x;
-		end.y = p.y - mid.y;
-		start.x = p.x - mid.x;
-		start.y = p.y + mid.y;
-	}else {
-		end.x = p.x - mid.x;
-		end.y = p.y - mid.y;
-		start.x = p.x + mid.x;
-		start.y = p.y + mid.y;
-	}
+			Point mid;
+			mid.x = abs(start.x - end.x) / 2;
+			mid.y = abs(start.y - end.y) / 2;
+			if (start.x <= end.x && start.y <= end.y) {
+				end.x = p.x + mid.x;
+				end.y = p.y + mid.y;
+				start.x = p.x - mid.x;
+				start.y = p.y - mid.y;
+			}
+			else if (start.x >= end.x && start.y <= end.y) {
+				end.x = p.x - mid.x;
+				end.y = p.y + mid.y;
+				start.x = p.x + mid.x;
+				start.y = p.y - mid.y;
+			}
+			else if (start.x <= end.x && start.y >= end.y) {
+				end.x = p.x + mid.x;
+				end.y = p.y - mid.y;
+				start.x = p.x - mid.x;
+				start.y = p.y + mid.y;
+			}
+			else {
+				end.x = p.x - mid.x;
+				end.y = p.y - mid.y;
+				start.x = p.x + mid.x;
+				start.y = p.y + mid.y;
+			}
 }
 
 void CLine::Resize(int prec)
@@ -191,10 +194,19 @@ void CLine::Resize(int prec)
 			start.y = ((1.5)*(starty)-0.5*endy);
 		}
 	}
+	if (prec == 15)  //to be used in zoom without validations to draw it clipped
+	{
+		end.x = ((-0.5)*(startx)+(1.5)*endx);
+		end.y = ((-0.5)*(starty)+(1.5)*endy);
+		start.x = ((1.5)*(startx)-0.5*endx);
+		start.y = ((1.5)*(starty)-0.5*endy);
+	}
 }
 
 void CLine::SetBorder(int n)
 {
-	if (this->FigGfxInfo.BorderWdth < 30 && this->FigGfxInfo.BorderWdth>0)
-	this->FigGfxInfo.BorderWdth += n;
+	if (this->FigGfxInfo.BorderWdth < 30 && n>0)
+		this->FigGfxInfo.BorderWdth += n;
+	if (this->FigGfxInfo.BorderWdth>0 && n<0)
+		this->FigGfxInfo.BorderWdth += n;
 }

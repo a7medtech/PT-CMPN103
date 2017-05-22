@@ -27,4 +27,8 @@ Zoomout::Zoomout(ApplicationManager*pApp):Action(pApp)
  {
 	 zoomoutcounter++;
  }
+ void Zoomout::resetzoomoutcounter()
+ {
+	 zoomoutcounter = 0;
+ }
   int Zoomout::zoomoutcounter=0;

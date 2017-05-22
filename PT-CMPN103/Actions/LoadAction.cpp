@@ -8,6 +8,8 @@
 #include"../Figures\CLine.h"
 #include"../Figures\CRectangle.h"
 #include"../Figures\CTriangle.h"
+#include"zoom.h"
+#include"Zoomout.h"
 
 LoadAction::LoadAction(ApplicationManager *pApp):Action(pApp)
 {
@@ -98,4 +100,6 @@ void LoadAction::Execute()
 	}
 		(*In).close();
 }
+   Zoom::resetzoomcounter();
+   Zoomout::resetzoomoutcounter();
 }

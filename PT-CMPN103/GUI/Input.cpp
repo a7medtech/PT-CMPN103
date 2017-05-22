@@ -7,6 +7,8 @@ Input::Input(window* pW, Output*pO)
 	pWind = pW; //point to the passed window
 	pOut = pO;
 	saved = false;
+	zoomcheck = false;
+
 }
 
 void Input::GetPointClicked(int &x, int &y) const
@@ -40,6 +42,10 @@ string Input::GetSrting(Output *pO) const
 	}
 }
 
+bool Input::GetZoomCheck()
+{
+	return zoomcheck;
+}
 
 ActionType Input::GetItemAction(ActionType Selected) const
 {
@@ -66,29 +72,60 @@ ActionType Input::GetItemAction(ActionType Selected) const
 		}
 		
 	case EDIT_FIGURE:
-		pOut->CreateEditToolBar();
-		pWind->WaitMouseClick(x, y);	//Get the coordinates of the user click
-		if (y >= 0 && y < UI.ToolBarHeight)
+		if (zoomcheck == false)
 		{
-			//Check whick Menu item was clicked
-			//==> This assumes that EDIT menu items are lined up horizontally <==
-			int ClickedItemOrder = (x / UI.MenuItemWidth);
-			switch (ClickedItemOrder)
+			pOut->CreateEditToolBar();
+			pWind->WaitMouseClick(x, y);	//Get the coordinates of the user click
+			if (y >= 0 && y < UI.ToolBarHeight)
 			{
-			case ITM_DEL:		return DEL;			    //DEL figure(s)
-			case ITM_MOVE:		return MOVE;			//MOVE figure(s)
-			case ITM_RESIZE:	return RESIZE;			//Resize a figure(s)
-			case ITM_ROTATE:	return ROTATE;			//Rotate a figure(s)
-			case ITM_SEND_BACK: return SEND_BACK;		//Send a figure to the back of all figures
-			case ITM_BRNG_FRNT: return BRNG_FRNT;		//Bring a figure to the front of all figures
-			case ITM_COPY:      return COPY;			//Copy the figure
-			case ITM_CUT:       return CUT;				//Cut the figure
-			case ITM_PASTE:     return PASTE;
-			case ITM_BORDER:    return BORDER;
-			case ITM_BACKEDIT:		return BACK;
-			default:			return EMPTY;
+				//Check whick Menu item was clicked
+				//==> This assumes that EDIT menu items are lined up horizontally <==
+				int ClickedItemOrder = (x / UI.MenuItemWidth);
+				switch (ClickedItemOrder)
+				{
+				case ITM_DEL:		return DEL;			    //DEL figure(s)
+				case ITM_MOVE:		return MOVE;			//MOVE figure(s)
+				case ITM_RESIZE:	return RESIZE;			//Resize a figure(s)
+				case ITM_ROTATE:	return ROTATE;			//Rotate a figure(s)
+				case ITM_SEND_BACK: return SEND_BACK;		//Send a figure to the back of all figures
+				case ITM_BRNG_FRNT: return BRNG_FRNT;		//Bring a figure to the front of all figures
+				case ITM_COPY:      return COPY;			//Copy the figure
+				case ITM_CUT:       return CUT;				//Cut the figure
+				case ITM_PASTE:     return PASTE;
+				case ITM_BORDER:    return BORDER;
+				case ITM_BACKEDIT:		return BACK;
+				default:			return EMPTY;
+				}
 			}
 		}
+
+		else
+			{
+				pOut->CreateEditToolBarZoom();
+				pWind->WaitMouseClick(x, y);	//Get the coordinates of the user click
+				if (y >= 0 && y < UI.ToolBarHeight)
+				{
+					//Check whick Menu item was clicked
+					//==> This assumes that EDIT menu items are lined up horizontally <==
+					int ClickedItemOrder = (x / UI.MenuItemWidth);
+					switch (ClickedItemOrder)
+					{
+					case ITM_DELZOOM:		return DEL;			    //DEL figure(s)
+					case ITM_MOVEZOOM:		return EMPTY;			//NOT ALLOWED
+					case ITM_RESIZEZOOM:	return EMPTY;			//NOT ALLOWED
+					case ITM_ROTATEZOOM:	return EMPTY;			//NOT ALLOWED
+					case ITM_SEND_BACKZOOM: return EMPTY;		//NOT ALLOWED
+					case ITM_BRNG_FRNTZOOM: return EMPTY;		//NOT ALLOWED
+					case ITM_COPYZOOM:      return EMPTY;			//NOT ALLOWED
+					case ITM_CUTZOOM:       return EMPTY;				//NOT ALLOWED
+					case ITM_PASTEZOOM:     return EMPTY;              //NOT ALLOWED
+					case ITM_BORDERZOOM:    return EMPTY;               //NOT ALLOWED
+					case ITM_BACKEDITZOOM:		return BACK;              //ALLOWED BACK
+					default:			return EMPTY;
+					}
+				}
+			}
+		
 		break;
 
 	case CHNG_DRAW_CLR:
@@ -131,7 +168,6 @@ ActionType Input::GetItemAction(ActionType Selected) const
 			}
 		}
 	}
-	return EMPTY;
 }
 
 //This function reads the position where the user clicks to determine the desired action
@@ -193,25 +229,52 @@ ActionType Input::GetUserAction() const
 		}
 		break;
 	case MODE_DRAW_EDIT:        //if interface mode is edit
-		if (y >= 0 && y < UI.ToolBarHeight)
+		if (zoomcheck == false)
 		{
-			//Check whick Menu item was clicked
-			//==> This assumes that EDIT menu items are lined up horizontally <==
-			int ClickedItemOrder = (x / UI.MenuItemWidth);
-			switch (ClickedItemOrder)
+			if (y >= 0 && y < UI.ToolBarHeight)
 			{
-			case ITM_DEL:		return DEL;			    //DEL figure(s)
-			case ITM_MOVE:		return MOVE;			//MOVE figure(s)
-			case ITM_RESIZE:	return RESIZE;			//Resize a figure(s)
-			case ITM_ROTATE:	return ROTATE;			//Rotate a figure(s)
-			case ITM_SEND_BACK: return SEND_BACK;		//Send a figure to the back of all figures
-			case ITM_BRNG_FRNT: return BRNG_FRNT;		//Bring a figure to the front of all figures
-			case ITM_COPY:      return COPY;			//Copy the figure
-			case ITM_CUT:       return CUT;				//Cut the figure
-			case ITM_PASTE:     return PASTE;
-			case ITM_BORDER:    return BORDER;
-			case ITM_BACKEDIT:		return BACK;
-			default:			return EMPTY;
+				//Check whick Menu item was clicked
+				//==> This assumes that EDIT menu items are lined up horizontally <==
+				int ClickedItemOrder = (x / UI.MenuItemWidth);
+				switch (ClickedItemOrder)
+				{
+				case ITM_DEL:		return DEL;			    //DEL figure(s)
+				case ITM_MOVE:		return MOVE;			//MOVE figure(s)
+				case ITM_RESIZE:	return RESIZE;			//Resize a figure(s)
+				case ITM_ROTATE:	return ROTATE;			//Rotate a figure(s)
+				case ITM_SEND_BACK: return SEND_BACK;		//Send a figure to the back of all figures
+				case ITM_BRNG_FRNT: return BRNG_FRNT;		//Bring a figure to the front of all figures
+				case ITM_COPY:      return COPY;			//Copy the figure
+				case ITM_CUT:       return CUT;				//Cut the figure
+				case ITM_PASTE:     return PASTE;
+				case ITM_BORDER:    return BORDER;
+				case ITM_BACKEDIT:		return BACK;
+				default:			return EMPTY;
+				}
+			}
+		}
+		else
+		{
+			if (y >= 0 && y < UI.ToolBarHeight)
+			{
+				//Check whick Menu item was clicked
+				//==> This assumes that EDIT menu items are lined up horizontally <==
+				int ClickedItemOrder = (x / UI.MenuItemWidth);
+				switch (ClickedItemOrder)
+				{
+				case ITM_DELZOOM:		return DEL;			    //DEL figure(s)
+				case ITM_MOVEZOOM:		return EMPTY;			//NOT ALLOWED
+				case ITM_RESIZEZOOM:	return EMPTY;			//NOT ALLOWED
+				case ITM_ROTATEZOOM:	return EMPTY;			//NOT ALLOWED
+				case ITM_SEND_BACKZOOM: return EMPTY;		//NOT ALLOWED
+				case ITM_BRNG_FRNTZOOM: return EMPTY;		//NOT ALLOWED
+				case ITM_COPYZOOM:      return EMPTY;			//NOT ALLOWED
+				case ITM_CUTZOOM:       return EMPTY;				//NOT ALLOWED
+				case ITM_PASTEZOOM:     return EMPTY;              //NOT ALLOWED
+				case ITM_BORDERZOOM:    return EMPTY;               //NOT ALLOWED
+				case ITM_BACKEDITZOOM:		return BACK;              //ALLOWED BACK
+				default:			return EMPTY;
+				}
 			}
 		}
 		break;
@@ -259,7 +322,14 @@ ActionType Input::GetUserAction() const
 		return STATUS;
 	}
 /////////////////////////////////
-	
+
+	void Input::setzoomcheck(int n)
+	{
+		if (n == 0)zoomcheck = true;
+		else if (n == 1) zoomcheck = false;
+	}
+	/////////////////////////////////
+
 Input::~Input()
 {
 }

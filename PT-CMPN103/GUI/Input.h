@@ -12,16 +12,18 @@ private:
 	window *pWind;	//Pointer to the Graphics Window
 	Output* pOut;   //Pointer to output function in order to communicate with it directly to draw toolbars.
 	bool saved; //check before exit if the current file saved or not 
+	bool zoomcheck; // check if zoomed or not
 public:
 	Input(window *pW, Output*pO);		//Consturctor
 	void GetPointClicked(int &x, int &y) const;//Get coordinate where user clicks
 	
 	string GetSrting(Output* pO) const ;	 //Returns a string entered by the user
+	bool GetZoomCheck();
 
 	ActionType GetUserAction() const; //Read the user click and map to an action
 	ActionType GetItemAction(ActionType Selected) const;
 	void setsaved();
-
+	void setzoomcheck(int);  //to be used in application manger
 	~Input();
 };
 
