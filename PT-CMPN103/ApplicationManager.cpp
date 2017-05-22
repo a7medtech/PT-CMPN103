@@ -227,7 +227,6 @@ void ApplicationManager::SelectFigs(Point p)
 		if(check){
 			if(FigList[i]->IsSelected()){
 				displayFigParam(FigList[i]);
-				selectedFigs[SelFigCount++] = FigList[i];
 			}
 			else 
 				GetOutput()->ClearStatusBar();
@@ -365,21 +364,16 @@ void ApplicationManager::zoomout()
 
 
 void ApplicationManager::FindSelFigList(CFigure** &s){
-	/*int i;
+	int i;
 	for(i=0; i<MaxFigCount ;i++){
 		selectedFigs[i] = nullptr;
 	}
 	SelFigCount = 0;
 	bool check = false;
 	for (int i=0; i<FigCount ;i++){
-		if(FigList[i]->IsSelected()){
-			for(int j=0;j<SelFigCount;j++){
-				if (FigList[i]->getID() == selectedFigs[j]->getID()){
-					
-				}
-			}	
-		}
-	}*/
+		if (FigList[i]->IsSelected())
+ 			selectedFigs[SelFigCount++] = (FigList[i]);
+	}
 	s = selectedFigs;
 }
 ////////////////////////////////////////////////////////////////////////////////////
