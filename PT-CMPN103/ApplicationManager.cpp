@@ -22,6 +22,10 @@
 #include "Actions/ScrambleAndFind.h"
 #include "Actions\StartScrumble.h"
 #include "Actions\BackPlayAction.h"
+#include"Actions\chngBorderWidth.h"
+#include"Actions\zoom.h"
+#include"Actions\Zoomout.h"
+#include"Actions\Exit.h"
 #include <time.h>
 #include <windows.h>
 
@@ -85,8 +89,10 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pAct = new ChngBkClr(this);
 				break;
 			case ZOOM_IN:
+				pAct = new Zoom(this);
 				break;
 			case ZOOM_OUT:
+				pAct = new Zoomout(this);
 				break;
 			case SAVE:
 				 pAct=new Save(this);
@@ -120,6 +126,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			case PASTE:
 				pAct = new Paste(this);
 				break;
+			case BORDER:
+				pAct = new chngBorderWidth(this);
+				break;
 			case DRAWING_AREA:
 				Point p;
  				button clickT;
@@ -150,6 +159,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				break;
 			case BACKPLAY:
 				pAct = new BackPlayAction(this);
+				break;
+			case EXITSAVE:
+				pAct = new  ExitAction(this);
 				break;
 			case EXIT:
 				break;
@@ -238,9 +250,20 @@ void ApplicationManager:: SaveAction(ofstream&Outfile)
 	   	pOut->PrintMessage("You Saved to file Succesfully");
 
 }
-//==================================================================================//
-//						Figures Management Functions								//
-//==================================================================================//
+
+
+void ApplicationManager::exit(string yesno)
+{
+	if (yesno.compare("YES") == NULL)
+	{
+		this->ExecuteAction(SAVE);
+		this->GetInput()->setsaved();
+	}
+	if (yesno.compare("NO") == NULL)
+	{
+		this->GetInput()->setsaved();
+	}
+}
 
 //Add a figure to the list of figures
 void ApplicationManager::AddFigure(CFigure* pFig)
@@ -257,6 +280,87 @@ void ApplicationManager::Resizefigures(int n)
 	{
 		selectedFigs[i]->Resize(n);
 	}
+}
+
+void ApplicationManager::chngeborder(int n)
+{
+
+	for (int i = 0; i<SelFigCount; i++)
+	{
+
+		selectedFigs[i]->SetBorder(n);
+
+	}
+}
+
+void ApplicationManager::zoomin()
+{
+	int c;
+	c = Zoom::getzoomcounter();
+	if (c<2)
+	{
+		Zoom::pluszoomcounter();
+		Zoomout::minuszoomoutcounter();
+		for (int i = 0; i<FigCount; i++)
+		{
+			Point c; Point nc; Point m;
+			FigList[i]->SetBorder(2);
+			FigList[i]->Resize(200);
+			FigList[i]->getCenter(c);
+			if (c.x>CenterDrawing.x)
+			{
+				nc.x = (c.x - CenterDrawing.x); m.x = c.x + nc.x;
+			}
+			if (c.x<CenterDrawing.x)
+			{
+				nc.x = (CenterDrawing.x - c.x); m.x = c.x - nc.x;
+			}
+			if (c.y>CenterDrawing.y)
+			{
+				nc.y = (c.y - CenterDrawing.y); m.y = c.y + nc.y;
+			}
+			if (c.y<CenterDrawing.y)
+			{
+				nc.y = (CenterDrawing.y - c.y); m.y = c.y - nc.y;
+			}
+			FigList[i]->Move(m);
+		}
+	}
+}
+void ApplicationManager::zoomout()
+{
+	int c;
+	c = Zoomout::getzoomoutcounter();
+	if (c<2)
+	{
+		Zoomout::pluszoomoutcounter();
+		Zoom::minuszoomcounter();
+		for (int i = 0; i<FigCount; i++)
+		{
+			Point c; Point nc; Point m;
+			FigList[i]->SetBorder(-2);
+			FigList[i]->Resize(50);
+			FigList[i]->getCenter(c);
+			if (c.x>CenterDrawing.x)
+			{
+				nc.x = (c.x - CenterDrawing.x); m.x = c.x - 0.5*nc.x;
+			}
+			if (c.x<CenterDrawing.x)
+			{
+				nc.x = (CenterDrawing.x - c.x); m.x = c.x + 0.5*nc.x;
+			}
+			if (c.y>CenterDrawing.y)
+			{
+				nc.y = (c.y - CenterDrawing.y); m.y = c.y - 0.5*nc.y;
+			}
+			if (c.y<CenterDrawing.y)
+			{
+				nc.y = (CenterDrawing.y - c.y); m.y = c.y + 0.5*nc.y;
+			}
+			FigList[i]->Move(m);
+		}
+	}
+
 }
 
 
@@ -470,43 +574,133 @@ void ApplicationManager::SendToBack()
 
 void ApplicationManager::StartNewScrambleGame()
 {
+
 	pOut->StartScrambleGame();
 	Point P;
+	-int Right = 0;
+	-int Wrong = 0;
 	P.x = 700;
 	P.y = 700;
-	int i = 0;
-	while (P.x % UI.MenuItemWidth != 1 && P.y > UI.ToolBarHeight)
+	-while ((P.x / UI.MenuItemWidth != 1 || P.y > UI.ToolBarHeight) && 0 < OriginalListCount)
+		+ int i = 0;
+	+while (P.x % UI.MenuItemWidth != 1 && P.y > UI.ToolBarHeight)
 	{
-		OriginalList[i]->SetSelected(true);
+		-OriginalList[0]->ChngDrawClr(PINK);
+		-OriginalList[0]->Draw(pOut);
+		+OriginalList[i]->SetSelected(true);
 		pOut->ClearDrawArea();
 		for (int i = 0; i < OriginalListCount; i++)
 		{
+			-RandomizedFigures[i]->Draw(pOut);
+			-
+		}
+		-pOut->BlockRandomizedFigs();
+		-for (int i = 0; i < OriginalListCount; i++)
+			- {
 			OriginalList[i]->Draw(pOut);		//Call Draw function (virtual member fn)
-			RandomizedFigures[i]->Draw(pOut);
+			+RandomizedFigures[i]->Draw(pOut);
 		}
-		i = 0;
+		-
+			-pOut->ClearStatusBar();
+		-pOut->StartScrambleGame();
+		-pOut->getWindow()->SetFont(80, NONE, ROMAN, PLAIN);
+		-pOut->getWindow()->SetPen(BLACK, 2);
+		-pOut->getWindow()->DrawInteger(2 * UI.MenuItemWidth + 100, 10, Right);
+		-pOut->getWindow()->DrawInteger(4 * UI.MenuItemWidth + 100, 10, Wrong);
+		+i = 0;
 		pIn->GetPointClicked(P.x, P.y);
-		for (int j = 0; j < RandFigsCount; j++)
-		{
-			if (RandomizedFigures[j]->Select(P))
+		-
+			-
+			for (int j = 0; j < RandFigsCount; j++)
 			{
-				if (RandomizedFigures[i]->getID() == OriginalList[i]->getID())
+				if (RandomizedFigures[j]->Select(P))
 				{
-					CFigure* temp;
-					int index1, index2;
-					for (int k = 0; k<RandFigsCount; k++) {
-						temp = getFigureById(OriginalList[k]->getID(), index1);
-						OriginalList[index1] = OriginalList[(FigCount--) - 1];
-						/*///////////////////////////////////////////////////*/
-						temp = getFigureById(RandomizedFigures[k]->getID(), index2);
-						OriginalList[index2] = OriginalList[(FigCount--) - 1];
+					-if (RandomizedFigures[j]->getID() == OriginalList[0]->getID())
+						+ if (RandomizedFigures[i]->getID() == OriginalList[i]->getID())
+					{
+						-RandomizedFigures[j] = RandomizedFigures[RandFigsCount - 1];
+						-RandomizedFigures[RandFigsCount - 1] = nullptr;
+						-RandFigsCount--;
+						-OriginalList[0] = OriginalList[OriginalListCount - 1];
+						-OriginalList[OriginalListCount - 1] = nullptr;
+						-OriginalListCount--;
+						-Right++;
+						+CFigure* temp;
+						+int index1, index2;
+						+for (int k = 0; k<RandFigsCount; k++) {
+							+temp = getFigureById(OriginalList[k]->getID(), index1);
+							+OriginalList[index1] = OriginalList[(FigCount--) - 1];
+							+						/*///////////////////////////////////////////////////*/
+								+temp = getFigureById(RandomizedFigures[k]->getID(), index2);
+							+OriginalList[index2] = OriginalList[(FigCount--) - 1];
+							+
+						}
 					}
+					-else
+						- {
+						-RandomizedFigures[j]->SetSelected(false);
+						-
+							-RandomizedFigures[j]->ChngDrawClr(RED);
+						-Sleep(100);
+						-RandomizedFigures[j]->Draw(pOut);
+						-RandomizedFigures[j]->ChngDrawClr(BLACK);
+						-Sleep(100);
+						-RandomizedFigures[j]->Draw(pOut);
+						-RandomizedFigures[j]->ChngDrawClr(RED);
+						-Sleep(100);
+						-RandomizedFigures[j]->Draw(pOut);
+						-RandomizedFigures[j]->ChngDrawClr(BLACK);
+						-Sleep(100);
+						-RandomizedFigures[j]->Draw(pOut);
+						-RandomizedFigures[j]->ChngDrawClr(RED);
+						-Sleep(100);
+						-RandomizedFigures[j]->Draw(pOut);
+						-RandomizedFigures[j]->ChngDrawClr(BLACK);
+						-Sleep(100);
+						-RandomizedFigures[j]->Draw(pOut);
+						-Wrong++;
+						-}
+					-
 				}
+				-
+					+i++;
 			}
-			i++;
-		}
-
+		+
 	}
+	-pOut->ClearStatusBar();
+	-pOut->StartScrambleGame();
+	-pOut->getWindow()->SetFont(80, NONE, ROMAN, PLAIN);
+	-pOut->getWindow()->SetPen(BLACK, 2);
+	-pOut->getWindow()->DrawInteger(2 * UI.MenuItemWidth + 100, 10, Right);
+	-pOut->getWindow()->DrawInteger(4 * UI.MenuItemWidth + 100, 10, Wrong);
+	-pOut->ClearDrawArea();
+	-	/**************************************************************************/
+		-if (P.x / UI.MenuItemWidth != 1 && P.y > UI.ToolBarHeight)
+		- {
+		-pOut->getWindow()->SetPen(VIOLET, 2);
+		-pOut->getWindow()->DrawString(100, 360, "Final Grade: ");
+		-pOut->getWindow()->SetPen(SKYBLUE, 2);
+		-pOut->getWindow()->DrawInteger(360 + 100, 360, Right);
+		-pOut->getWindow()->SetPen(BLUE, 2);
+		-pOut->getWindow()->DrawString(100, 440, "From: ");
+		-pOut->getWindow()->SetPen(GREEN, 2);
+		-pOut->getWindow()->DrawInteger(270, 440, Right + Wrong);
+		-pOut->getWindow()->SetPen(ORANGE, 2);
+		-pOut->getWindow()->DrawString(320, 440, "Clicks");
+		-}
+	-while (UI.InterfaceMode != MODE_PLAY)
+		- {
+		-pIn->GetPointClicked(P.x, P.y);
+		-if ((P.y < UI.ToolBarHeight) && ((P.x / UI.MenuItemWidth) == 0))
+			- {
+			-this->AdjustOriginalList();
+			-this->RandomizeFigures();
+			-this->StartNewScrambleGame();
+			-}
+		-if (P.y < UI.ToolBarHeight && P.x / UI.MenuItemWidth == 1)
+			- UI.InterfaceMode = MODE_PLAY;
+		-}
+	-
 
 }
 

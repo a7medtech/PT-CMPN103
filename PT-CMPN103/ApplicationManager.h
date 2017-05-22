@@ -22,6 +22,7 @@ private:
 	int SelFigCount;
 	int CPIndex;
 	int LastAction;
+	Point CenterDrawing;
 
 	/****************************************************************************************/
 	//Scramble and find data structure.
@@ -52,7 +53,6 @@ public:
 	void GetFigCount(int&size);
 	void GetSelectedFigCount(int&size);
 	void GetCPIndex(int&size);
-	Action*GetLastAction() const;
 	void SaveAction(ofstream&Outfile);
 	void minusfigcount();
 	void FindSelFigList(CFigure**&);
@@ -67,6 +67,10 @@ public:
 	void BringtoFront();
 	void Resizefigures(int);
 	void SendToBack();
+	void chngeborder(int);
+	void zoomin();
+	void zoomout();
+	void exit(string);
 	/***************************************************************************/
 	//Scramble and find operating functions
 	void StartNewScrambleGame();

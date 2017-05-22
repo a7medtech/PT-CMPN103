@@ -18,7 +18,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -136,11 +136,13 @@
     <ClCompile Include="Actions\BackPlayAction.cpp" />
     <ClCompile Include="Actions\BringFront.cpp" />
     <ClCompile Include="Actions\ChngBkClr.cpp" />
+    <ClCompile Include="Actions\chngBorderWidth.cpp" />
     <ClCompile Include="Actions\ChngDrawClr.cpp" />
     <ClCompile Include="Actions\ChngFillClr.cpp" />
     <ClCompile Include="Actions\Copy.cpp" />
     <ClCompile Include="Actions\Cut.cpp" />
     <ClCompile Include="Actions\Delete.cpp" />
+    <ClCompile Include="Actions\Exit.cpp" />
     <ClCompile Include="Actions\LoadAction.cpp" />
     <ClCompile Include="Actions\Move.cpp" />
     <ClCompile Include="Actions\Paste.cpp" />
@@ -151,6 +153,8 @@
     <ClCompile Include="Actions\Select.cpp" />
     <ClCompile Include="Actions\SendBack.cpp" />
     <ClCompile Include="Actions\StartScrumble.cpp" />
+    <ClCompile Include="Actions\zoom.cpp" />
+    <ClCompile Include="Actions\Zoomout.cpp" />
     <ClCompile Include="ApplicationManager.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp" />
     <ClCompile Include="CMUgraphicsLib\CMUgraphics.cpp" />
@@ -206,11 +210,13 @@
     <ClInclude Include="Actions\BackPlayAction.h" />
     <ClInclude Include="Actions\BringFront.h" />
     <ClInclude Include="Actions\ChngBkClr.h" />
+    <ClInclude Include="Actions\chngBorderWidth.h" />
     <ClInclude Include="Actions\ChngDrawClr.h" />
     <ClInclude Include="Actions\ChngFillClr.h" />
     <ClInclude Include="Actions\Copy.h" />
     <ClInclude Include="Actions\Cut.h" />
     <ClInclude Include="Actions\Delete.h" />
+    <ClInclude Include="Actions\Exit.h" />
     <ClInclude Include="Actions\LoadAction.h" />
     <ClInclude Include="Actions\Move.h" />
     <ClInclude Include="Actions\Paste.h" />
@@ -221,6 +227,8 @@
     <ClInclude Include="Actions\Select.h" />
     <ClInclude Include="Actions\SendBack.h" />
     <ClInclude Include="Actions\StartScrumble.h" />
+    <ClInclude Include="Actions\zoom.h" />
+    <ClInclude Include="Actions\Zoomout.h" />
     <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />

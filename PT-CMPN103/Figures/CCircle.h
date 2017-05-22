@@ -24,5 +24,6 @@ public:
 	virtual void Load(ifstream &Infile) ;
 	virtual void Resize(int);
 	virtual void Move(Point);
+	void SetBorder(int n);
 };
 

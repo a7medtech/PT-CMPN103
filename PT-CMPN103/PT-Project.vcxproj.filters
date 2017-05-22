@@ -167,9 +167,6 @@
     <ClCompile Include="Actions\LoadAction.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\Resize.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
     <ClCompile Include="Actions\SaveAction.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
@@ -198,6 +195,21 @@
       <Filter>Actions</Filter>
     </ClCompile>
     <ClCompile Include="Actions\BackPlayAction.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\chngBorderWidth.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Exit.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\zoom.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Zoomout.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Resize.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
   </ItemGroup>
@@ -332,9 +344,6 @@
     <ClInclude Include="Actions\LoadAction.h">
       <Filter>Actions</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\Resize.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
     <ClInclude Include="Actions\SaveAction.h">
       <Filter>Actions</Filter>
     </ClInclude>
@@ -360,6 +369,21 @@
       <Filter>Actions</Filter>
     </ClInclude>
     <ClInclude Include="Actions\BackPlayAction.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\chngBorderWidth.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Exit.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\zoom.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Zoomout.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Resize.h">
       <Filter>Actions</Filter>
     </ClInclude>
   </ItemGroup>

@@ -73,6 +73,7 @@ enum EditMenuItrem
 	ITM_COPY,           //Copy the figure
 	ITM_CUT,            //Cut the figure
 	ITM_PASTE,          //Paste figure from clipboard
+	ITM_BORDER, //changer border width
 	ITM_BACKEDIT,
 	EDIT_ITM_COUNT
 
@@ -107,6 +108,19 @@ enum ScrambleAndFindMenu
 	SCRAMBLE_ITM_COUNT
 };
 
+enum BorderItems
+{
+	Item_plus,
+	Item_minus,
+	Border_item_count
+};
+
+enum ExitItems
+{
+	Item_Yes,
+	Item_No,
+	Exit_item_count
+};
 
 enum ResizeItems //items for resize sub menu items
 

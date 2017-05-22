@@ -22,6 +22,7 @@ public:
     virtual void Save(ofstream &OutFile);
 	virtual void Load(ifstream &Infile);
 	virtual void Resize(int);
+	void SetBorder(int n);
 };
 
 #endif

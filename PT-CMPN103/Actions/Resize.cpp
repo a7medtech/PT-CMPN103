@@ -10,6 +10,13 @@ void ResizeAction::ReadActionParameters()
 {
 	Point p;
 	 Output* pOut = pManager->GetOutput();
+	int size;
+	pManager->GetSelectedFigCount(size);
+	if(size==0)
+	{ pOut->PrintMessage("ERROR !!! the chosen operation will make no change ");}
+	else
+	{
+
 	 string ResizeItems[Resize_item_count];
 	 ResizeItems[Item_quarter] = "images\\Resize\\quarter.jpg";
 	 ResizeItems[Item_half] = "images\\Resize\\half.jpg";
@@ -29,12 +36,12 @@ void ResizeAction::ReadActionParameters()
 	   if(p.y>=4*UI.ToolBarHeight&&p.y<=5*UI.ToolBarHeight)          //clicked on fourth
 		   this->resizeprec=400;
 	}
+	}
 	pManager->GetOutput()->ClearDrawArea();
 }
 void ResizeAction::Execute()
 {
 	ReadActionParameters();
 	pManager->Resizefigures(this->resizeprec);
-	
 }
 

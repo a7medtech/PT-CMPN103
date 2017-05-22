@@ -100,6 +100,7 @@ void Output::CreateEditToolBar() const
 	MenuItemImages[ITM_COPY] = "images\\EditMenuItems\\copy.jpg";
 	MenuItemImages[ITM_CUT] = "images\\EditMenuItems\\cut.jpg";
 	MenuItemImages[ITM_PASTE] = "images\\EditMenuItems\\paste.jpg";
+	MenuItemImages[ITM_BORDER] = "images\\EditMenuItems\\border.jpg";
 	MenuItemImages[ITM_BACKEDIT] = "images\\EditMenuItems\\back.jpg";
 	
 	//TODO: Prepare images for each menu item and add it to the list

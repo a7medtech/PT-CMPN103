@@ -69,35 +69,41 @@ double CTriangle::getArea(double,Point p1,Point p2,Point p3){
 	return abs((p1.x*(p2.y-p3.y) + p2.x*(p3.y-p1.y) + p3.x*(p1.y-p2.y))/2.0);
 }
 
-void CTriangle:: Save(ofstream &OutFile) 
+void CTriangle::Save(ofstream &OutFile)
 {
-    OutFile <<"TRIANGLE"<<"\t"<<ID<<"\t"<<Corner1.x<<"\t"<<Corner1.y<<"\t"<<Corner2.x<<"\t"<<Corner2.y<<"\t" 
-        <<Corner3.x<<"\t"<<Corner3.y
-		<<Save::tostringg(FigGfxInfo.DrawClr)<<"\t";
-	if(FigGfxInfo.isFilled){ OutFile << Save::tostringg(FigGfxInfo.FillClr)<<endl;}
-     else{OutFile << "NO_FILL" <<endl;}
+	OutFile << "TRIANGLE" << "\t" << ID << "\t" << Corner1.x << "\t" << Corner1.y << "\t" << Corner2.x << "\t" << Corner2.y << "\t"
+		<< Corner3.x << "\t" << Corner3.y << "\t" << FigGfxInfo.BorderWdth << "\t" <<
+		(int)FigGfxInfo.DrawClr.ucBlue << "\t" << (int)FigGfxInfo.DrawClr.ucGreen << "\t" << (int)FigGfxInfo.DrawClr.ucRed << "\t";
+	if (FigGfxInfo.isFilled) {
+		OutFile << (int)FigGfxInfo.FillClr.ucBlue << "\t" << (int)FigGfxInfo.FillClr.ucGreen
+			<< "\t" << (int)FigGfxInfo.FillClr.ucRed << endl;
+	}
+	else {
+		OutFile << (int)UI.BkGrndColor.ucBlue << "\t" << (int)UI.BkGrndColor.ucGreen
+			<< "\t" << (int)UI.BkGrndColor.ucRed << endl;
+	}
 
 }
-  void CTriangle ::Load(ifstream &Infile)
-  {
-			 char Dr[40]; char fill[40];
-			 Infile>>ID>>Corner1.x>>Corner1.y>>Corner2.x>>Corner2.y>>Corner3.x>>Corner3.y;
-			 			 Infile.getline(Dr,40,'\t');
-			 Infile.getline(fill,40,'\n');
-						 string Drs=Dr;string fills=fill;
-						 FigGfxInfo.DrawClr=Save::tocolor(Drs);
+void CTriangle::Load(ifstream &Infile)
+{
+	int db, dg, dr, fb, fg, fr; char space[5];
 
-						 if(fills.compare("NO_FILL")==NULL)
-						 { 
-						 FigGfxInfo.isFilled=false;
-						 FigGfxInfo.FillClr=UI.BkGrndColor;
-						 }
-						 else 
-							 {
-								 FigGfxInfo.FillClr=Save::tocolor(fills);
-								 FigGfxInfo.isFilled=true;
-						 }
-  }
+	Infile >> ID >> Corner1.x >> Corner1.y >> Corner2.x >> Corner2.y >> Corner3.x >> Corner3.y >> FigGfxInfo.BorderWdth >> db >> dg >> dr >> fb >> fg >> fr;
+	FigGfxInfo.DrawClr.ucBlue = (char)db;
+	FigGfxInfo.DrawClr.ucGreen = (char)dg;
+	FigGfxInfo.DrawClr.ucRed = (char)dr;
+	FigGfxInfo.FillClr.ucBlue = (char)fb;
+	FigGfxInfo.FillClr.ucGreen = (char)fg;
+	FigGfxInfo.FillClr.ucRed = (char)fr;
+	if (FigGfxInfo.FillClr == UI.BkGrndColor)
+	{
+		FigGfxInfo.isFilled = false;
+	}
+	else { FigGfxInfo.isFilled = true; }
+	Infile.getline(space, 5, '\n');
+}
+
+
 void CTriangle::getCenter(Point& c){
 	c.x = (Corner1.x + Corner2.x + Corner3.x)/3;
 	c.y = (Corner1.y + Corner2.y + Corner3.y)/3;
@@ -113,61 +119,85 @@ void CTriangle::Move(Point p){
 	Corner2.y = p.y + (Corner2.y-mid.y);
 	Corner3.y = p.y + (Corner3.y-mid.y);
 }
+
 void CTriangle::Resize(int prec)
 {
 	//New = (1-t)*(Moved) + t*(Reference)
- Point center;
- this->getCenter(center);
- if (prec==50)
+	Point center;
+	this->getCenter(center);
+	if (prec == 50)
 	{
-	 Corner1.x=(int) ((0.5)*Corner1.x+(0.5)*center.x);
-     Corner1.y=(int) ((0.5)*Corner1.y+(0.5)*center.y);
-	 Corner2.x=(int) ((0.5)*Corner2.x+(0.5)*center.x);
-     Corner2.y=(int) ((0.5)*Corner2.y+(0.5)*center.y);
-	 Corner3.x=(int) ((0.5)*Corner3.x+(0.5)*center.x);
-     Corner3.y=(int) ((0.5)*Corner3.y+(0.5)*center.y);
+		Corner1.x = (0.5)*Corner1.x + (0.5)*center.x;
+		Corner1.y = (0.5)*Corner1.y + (0.5)*center.y;
+		Corner2.x = (0.5)*Corner2.x + (0.5)*center.x;
+		Corner2.y = (0.5)*Corner2.y + (0.5)*center.y;
+		Corner3.x = (0.5)*Corner3.x + (0.5)*center.x;
+		Corner3.y = (0.5)*Corner3.y + (0.5)*center.y;
 
-}
-  if (prec==25)
+	}
+	if (prec == 25)
 	{
-	 Corner1.x=(int) ((0.5)*Corner1.x+(0.5)*center.x);
-     Corner1.y=(int) ((0.5)*Corner1.y+(0.5)*center.y);
-	 Corner2.x=(int) ((0.5)*Corner2.x+(0.5)*center.x);
-     Corner2.y=(int) ((0.5)*Corner2.y+(0.5)*center.y);
-	 Corner3.x=(int) ((0.5)*Corner3.x+(0.5)*center.x);
-     Corner3.y=(int) ((0.5)*Corner3.y+(0.5)*center.y);
-	 Corner1.x=(int) ((0.5)*Corner1.x+(0.5)*center.x);
-     Corner1.y=(int) ((0.5)*Corner1.y+(0.5)*center.y);
-	 Corner2.x=(int) ((0.5)*Corner2.x+(0.5)*center.x);
-     Corner2.y=(int) ((0.5)*Corner2.y+(0.5)*center.y);
-	 Corner3.x=(int) ((0.5)*Corner3.x+(0.5)*center.x);
-     Corner3.y=(int) ((0.5)*Corner3.y+(0.5)*center.y);
-  }
-  if(prec==200)
-  {
-     Corner1.x=(int) ((2)*Corner1.x+(-1)*center.x);
-     Corner1.y=(int) ((2)*Corner1.y+(-1)*center.y);
-	 Corner2.x=(int) ((2)*Corner2.x+(-1)*center.x);
-     Corner2.y=(int) ((2)*Corner2.y+(-1)*center.y);
-	 Corner3.x=(int) ((2)*Corner3.x+(-1)*center.x);
-     Corner3.y=(int) ((2)*Corner3.y+(-1)*center.y);
-  }
-  if(prec==400)
-  {
-  
-     Corner1.x=(int) ((2)*Corner1.x+(-1)*center.x);
-     Corner1.y=(int) ((2)*Corner1.y+(-1)*center.y);
-	 Corner2.x=(int) ((2)*Corner2.x+(-1)*center.x);
-     Corner2.y=(int) ((2)*Corner2.y+(-1)*center.y);
-	 Corner3.x=(int) ((2)*Corner3.x+(-1)*center.x);
-     Corner3.y=(int) ((2)*Corner3.y+(-1)*center.y);
-	 Corner1.x=(int) ((2)*Corner1.x+(-1)*center.x);
-     Corner1.y=(int) ((2)*Corner1.y+(-1)*center.y);
-	 Corner2.x=(int) ((2)*Corner2.x+(-1)*center.x);
-     Corner2.y=(int) ((2)*Corner2.y+(-1)*center.y);
-	 Corner3.x=(int) ((2)*Corner3.x+(-1)*center.x);
-     Corner3.y=(int) ((2)*Corner3.y+(-1)*center.y);
-  }
+		Corner1.x = (0.5)*Corner1.x + (0.5)*center.x;
+		Corner1.y = (0.5)*Corner1.y + (0.5)*center.y;
+		Corner2.x = (0.5)*Corner2.x + (0.5)*center.x;
+		Corner2.y = (0.5)*Corner2.y + (0.5)*center.y;
+		Corner3.x = (0.5)*Corner3.x + (0.5)*center.x;
+		Corner3.y = (0.5)*Corner3.y + (0.5)*center.y;
+		Corner1.x = (0.5)*Corner1.x + (0.5)*center.x;
+		Corner1.y = (0.5)*Corner1.y + (0.5)*center.y;
+		Corner2.x = (0.5)*Corner2.x + (0.5)*center.x;
+		Corner2.y = (0.5)*Corner2.y + (0.5)*center.y;
+		Corner3.x = (0.5)*Corner3.x + (0.5)*center.x;
+		Corner3.y = (0.5)*Corner3.y + (0.5)*center.y;
+	}
+	if (prec == 200)
+	{
+		if (((2)*Corner1.x + (-1)*center.x)>0 && ((2)*Corner1.y + (-1)*center.y)>85 && ((2)*Corner2.x + (-1)*center.x)>0 && ((2)*Corner2.y + (-1)*center.y)>85 && ((2)*Corner3.x + (-1)*center.x)>0 && ((2)*Corner3.y + (-1)*center.y)>85)
+		{
+			if (((2)*Corner1.x + (-1)*center.x)<1440 && ((2)*Corner1.y + (-1)*center.y)<670 && ((2)*Corner2.x + (-1)*center.x)<1440 && ((2)*Corner2.y + (-1)*center.y)<670 && ((2)*Corner3.x + (-1)*center.x)<1440 && ((2)*Corner3.y + (-1)*center.y)<670)
+			{
+				Corner1.x = (2)*Corner1.x + (-1)*center.x;
+				Corner1.y = (2)*Corner1.y + (-1)*center.y;
+				Corner2.x = (2)*Corner2.x + (-1)*center.x;
+				Corner2.y = (2)*Corner2.y + (-1)*center.y;
+				Corner3.x = (2)*Corner3.x + (-1)*center.x;
+				Corner3.y = (2)*Corner3.y + (-1)*center.y;
+			}
+		}
+	}
+	if (prec == 400)
+	{
+		Point c1 = Corner1; Point c2 = Corner2; Point c3 = Corner3;
+		if (((2)*Corner1.x + (-1)*center.x)>0 && ((2)*Corner1.y + (-1)*center.y)>85 && ((2)*Corner2.x + (-1)*center.x)>0 && ((2)*Corner2.y + (-1)*center.y)>85 && ((2)*Corner3.x + (-1)*center.x)>0 && ((2)*Corner3.y + (-1)*center.y)>85)
+		{
+			if (((2)*Corner1.x + (-1)*center.x)<1440 && ((2)*Corner1.y + (-1)*center.y)<670 && ((2)*Corner2.x + (-1)*center.x)<1440 && ((2)*Corner2.y + (-1)*center.y)<670 && ((2)*Corner3.x + (-1)*center.x)<1440 && ((2)*Corner3.y + (-1)*center.y)<670)
+			{
+				c1.x = (2)*Corner1.x + (-1)*center.x;
+				c1.y = (2)*Corner1.y + (-1)*center.y;
+				c2.x = (2)*Corner2.x + (-1)*center.x;
+				c2.y = (2)*Corner2.y + (-1)*center.y;
+				c3.x = (2)*Corner3.x + (-1)*center.x;
+				c3.y = (2)*Corner3.y + (-1)*center.y;
+			}
+		}
+		if (((2)*c1.x + (-1)*center.x)>0 && ((2)*c1.y + (-1)*center.y)>85 && ((2)*c2.x + (-1)*center.x)>0 && ((2)*c2.y + (-1)*center.y)>85 && ((2)*c3.x + (-1)*center.x)>0 && ((2)*c3.y + (-1)*center.y)>85)
+		{
+			if (((2)*c1.x + (-1)*center.x)<1440 && ((2)*c1.y + (-1)*center.y)<670 && ((2)*c2.x + (-1)*center.x)<1440 && ((2)*c2.y + (-1)*center.y)<670 && ((2)*c3.x + (-1)*center.x)<1440 && ((2)*Corner3.y + (-1)*center.y)<670)
+			{
+				Corner1.x = (2)*c1.x + (-1)*center.x;
+				Corner1.y = (2)*c1.y + (-1)*center.y;
+				Corner2.x = (2)*c2.x + (-1)*center.x;
+				Corner2.y = (2)*c2.y + (-1)*center.y;
+				Corner3.x = (2)*c3.x + (-1)*center.x;
+				Corner3.y = (2)*c3.y + (-1)*center.y;
+			}
+		}
+	}
+}
+
+void CTriangle::SetBorder(int n)
+{
+	this->FigGfxInfo.BorderWdth += n;
 }
 
 

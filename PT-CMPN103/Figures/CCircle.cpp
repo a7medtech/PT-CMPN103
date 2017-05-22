@@ -64,34 +64,6 @@ void CCircle::GetFigureParameters(Point&P1, Point&P2, Point&P3, GfxInfo&Gfx){
 }
 
  
-	 void  CCircle::Save(ofstream &OutFile)
- {
-
-	 OutFile <<"CIRCLE"<<"\t"<<ID<<"\t"<<Center.x<<"\t"<<Center.y<<"\t"<<Distance<<Save::tostringg(FigGfxInfo.DrawClr)<<"\t";
-     if(FigGfxInfo.isFilled){ OutFile <<Save::tostringg(FigGfxInfo.FillClr) <<endl;}
-     else{OutFile << "NO_FILL" <<endl;}
-
-}
-	 void CCircle::Load(ifstream &Infile)
-	 {
-			 char Dr[40]; char fill[40];
-			 Infile>>ID>>Center.x>>Center.y>>Distance;
-			 Infile.getline(Dr,40,'\t');
-			 Infile.getline(fill,40,'\n');
-						 string Drs=Dr;string fills=fill;
-						 FigGfxInfo.DrawClr=Save::tocolor(Drs);
-
-						 if(fills.compare("NO_FILL")==NULL)
-						 { 
-						 FigGfxInfo.isFilled=false;
-						 FigGfxInfo.FillClr=UI.BkGrndColor;
-						 }
-						 else 
-							 {
-								 FigGfxInfo.FillClr=Save::tocolor(fills);
-								 FigGfxInfo.isFilled=true;
-						 }
-  }
 
 void CCircle::Move(Point p)
 {
@@ -100,19 +72,69 @@ void CCircle::Move(Point p)
 void CCircle::getCenter(Point& c){
 	c = Center;
 }
+void  CCircle::Save(ofstream &OutFile)
+{
+
+	OutFile << "CIRCLE" << "\t" << ID << "\t" << Center.x << "\t" << Center.y << "\t" << Distance << "\t" << FigGfxInfo.BorderWdth << "\t" <<
+		(int)FigGfxInfo.DrawClr.ucBlue << "\t" << (int)FigGfxInfo.DrawClr.ucGreen << "\t" << (int)FigGfxInfo.DrawClr.ucRed << "\t";
+	if (FigGfxInfo.isFilled) {
+		OutFile << (int)FigGfxInfo.FillClr.ucBlue << "\t" << (int)FigGfxInfo.FillClr.ucGreen
+			<< "\t" << (int)FigGfxInfo.FillClr.ucRed << endl;
+	}
+	else {
+		OutFile << (int)UI.BkGrndColor.ucBlue << "\t" << (int)UI.BkGrndColor.ucGreen
+			<< "\t" << (int)UI.BkGrndColor.ucRed << endl;
+	}
+
+}
+void CCircle::Load(ifstream &Infile)
+{
+	int db, dg, dr, fb, fg, fr; char space[5];
+
+	Infile >> ID >> Center.x >> Center.y >> Distance >> FigGfxInfo.BorderWdth >> db >> dg >> dr >> fb >> fg >> fr;
+	FigGfxInfo.DrawClr.ucBlue = (char)db;
+	FigGfxInfo.DrawClr.ucGreen = (char)dg;
+	FigGfxInfo.DrawClr.ucRed = (char)dr;
+	FigGfxInfo.FillClr.ucBlue = (char)fb;
+	FigGfxInfo.FillClr.ucGreen = (char)fg;
+	FigGfxInfo.FillClr.ucRed = (char)fr;
+	if (FigGfxInfo.FillClr == UI.BkGrndColor)
+	{
+		FigGfxInfo.isFilled = false;
+	}
+	else { FigGfxInfo.isFilled = true; }
+	Infile.getline(space, 5, '\n');
+}
 void CCircle::Resize(int prec)
 {
-		if(prec==25)
-		{ Distance=Distance/2; }
 
-	if(prec==50)
-	{ Distance=Distance/(sqrt(2));  }
-	if(prec==200)
-	{  Distance=Distance*(sqrt(2)); }
-	if(prec==400)
-	{ Distance=Distance*2; }
+	if (prec == 25)
+	{
+		Distance = Distance / 2;
+	}
+	if (prec == 50)
+	{
+		Distance = Distance / (sqrt(2));
+	}
+	if (prec == 200)
+	{
+		if (((Center.x + Distance*(sqrt(2)))>0) && ((Center.x + Distance*(sqrt(2)))<1440) && ((Center.y - Distance*(sqrt(2)))>85) && ((Center.y + Distance*(sqrt(2)))<670))
+		{
+			Distance = Distance*(sqrt(2));
+		}
+	}
+	if (prec == 400)
+	{
+		if (((Center.x + Distance * 2)>0) && ((Center.x + Distance * 2)<1440) && ((Center.y - Distance * 2)>85) && ((Center.y + Distance * 2)<670))
+		{
+			Distance = Distance * 2;
+		}
+	}
 }
 
-
+void CCircle::SetBorder(int n)
+{
+	this->FigGfxInfo.BorderWdth += n;
+}
 
 	 

@@ -15,6 +15,7 @@ enum ActionType //The actions supported (you can add more if needed)
 	ZOOM_OUT,       //Zoom out from the figures
 	SAVE,			//Save the whole graph to a file
 	LOAD,			//Load a graph from a file
+	EXITSAVE,
 	EXIT,			//Exit the application
 	//////////////////////////////////////////////////
 	DRAW_LINE,		//Draw Line
@@ -25,6 +26,7 @@ enum ActionType //The actions supported (you can add more if needed)
 	MOVE,			//Move a figure(s)
 	RESIZE,			//Resize a figure(s)
 	ROTATE,			//Rotate a figure(s)
+	BORDER,
 	SEND_BACK,		//Send a figure to the back of all figures
 	BRNG_FRNT,		//Bring a figure to the front of all figures
 	COPY,           //Copy the figure

@@ -54,33 +54,37 @@ string CRectangle::printInfo(){
 double CRectangle::getArea(double,Point,Point,Point){
 	return abs(Corner1.x - Corner2.x)*abs(Corner2.y - Corner2.y);
 }
-
-void CRectangle :: Save(ofstream &OutFile)
+void CRectangle::Save(ofstream &OutFile)
 {
-	OutFile <<"RECTANGLE"<<"\t"<<ID<<"\t"<<Corner1.x<<"\t"<<Corner1.y<<"\t"<<Corner2.x<<"\t"<<Corner2.y <<Save::tostringg(FigGfxInfo.DrawClr)<<"\t";
-	if(FigGfxInfo.isFilled){ OutFile << Save::tostringg(FigGfxInfo.FillClr) <<endl;}
-     else{OutFile << "NO_FILL" <<endl;}
+	OutFile << "RECTANGLE" << "\t" << ID << "\t" << Corner1.x << "\t" << Corner1.y << "\t" << Corner2.x << "\t" << Corner2.y << "\t" << FigGfxInfo.BorderWdth << "\t" <<
+		(int)FigGfxInfo.DrawClr.ucBlue << "\t" << (int)FigGfxInfo.DrawClr.ucGreen << "\t" << (int)FigGfxInfo.DrawClr.ucRed << "\t";
+	if (FigGfxInfo.isFilled) {
+		OutFile << (int)FigGfxInfo.FillClr.ucBlue << "\t" << (int)FigGfxInfo.FillClr.ucGreen
+			<< "\t" << (int)FigGfxInfo.FillClr.ucRed << endl;
+	}
+	else {
+		OutFile << (int)UI.BkGrndColor.ucBlue << "\t" << (int)UI.BkGrndColor.ucGreen
+			<< "\t" << (int)UI.BkGrndColor.ucRed << endl;
+	}
 }
 void CRectangle::Load(ifstream &Infile)
-  {
-			 char Dr[40]; char fill[40];
-			 Infile>>ID>>Corner1.x>>Corner1.y>>Corner2.x>>Corner2.y;
-			 			 Infile.getline(Dr,40,'\t');
-			             Infile.getline(fill,40,'\n');
-						 string Drs=Dr;string fills=fill;
-						 FigGfxInfo.DrawClr=Save::tocolor(Drs);
+{
+	int db, dg, dr, fb, fg, fr; char space[5];
 
-						 if(fills.compare("NO_FILL")==NULL)
-						 { 
-						 FigGfxInfo.isFilled=false;
-						 FigGfxInfo.FillClr=UI.BkGrndColor;
-						 }
-						 else 
-							 {
-								 FigGfxInfo.FillClr=Save::tocolor(fills);
-								 FigGfxInfo.isFilled=true;
-						 }
-  }
+	Infile >> ID >> Corner1.x >> Corner1.y >> Corner2.x >> Corner2.y >> FigGfxInfo.BorderWdth >> db >> dg >> dr >> fb >> fg >> fr;
+	FigGfxInfo.DrawClr.ucBlue = (char)db;
+	FigGfxInfo.DrawClr.ucGreen = (char)dg;
+	FigGfxInfo.DrawClr.ucRed = (char)dr;
+	FigGfxInfo.FillClr.ucBlue = (char)fb;
+	FigGfxInfo.FillClr.ucGreen = (char)fg;
+	FigGfxInfo.FillClr.ucRed = (char)fr;
+	if (FigGfxInfo.FillClr == UI.BkGrndColor)
+	{
+		FigGfxInfo.isFilled = false;
+	}
+	else { FigGfxInfo.isFilled = true; }
+	Infile.getline(space, 5, '\n');
+}
 
 void CRectangle::getCenter(Point& c){
 	c.x = (Corner1.x + Corner2.x)/2;
@@ -95,65 +99,64 @@ void CRectangle::Move(Point p){
 	Corner2.x = p.x + halfWidth;
 	Corner2.y = p.y + halfHeight;
 }
+
+
 void CRectangle::Resize(int prec)
 {
-	int startx=Corner1.x;int starty=Corner1.y;int endx=Corner2.x;int endy=Corner2.y;
-    if(prec==50)
-	{  
-	 Corner2.x=int (0.14645*startx+0.8535*endx);
-	 Corner2.y=int (0.14645*starty+0.8535*endy);
-	 Corner1.x=int (0.8535*startx+0.14645*endx);
-	 Corner1.y=int (0.8535*starty+0.14645*endy);
-	}
-	if(prec==25)
+	int startx = Corner1.x; int starty = Corner1.y; int endx = Corner2.x; int endy = Corner2.y;
+	if (prec == 50)
 	{
-		 Corner2.x=int (0.14645*startx+0.8535*endx);
-	     Corner2.y=int (0.14645*starty+0.8535*endy);
-	     Corner1.x=int (0.8535*startx+0.14645*endx);
-	     Corner1.y=int (0.8535*starty+0.14645*endy);
-		 int startx=Corner1.x;
-		 int starty=Corner1.y;
-		 int endx=Corner2.x;
-		 int endy=Corner2.y;
-		 Corner2.x=int (0.14645*startx+0.8535*endx);
-	     Corner2.y=int (0.14645*starty+0.8535*endy);
-	     Corner1.x=int (0.8535*startx+0.14645*endx);
-	     Corner1.y=int (0.8535*starty+0.14645*endy);
+		Corner2.x = (0.14645*startx + 0.8535*endx);
+		Corner2.y = (0.14645*starty + 0.8535*endy);
+		Corner1.x = (0.8535*startx + 0.14645*endx);
+		Corner1.y = (0.8535*starty + 0.14645*endy);
 	}
-	if(prec==200)
+	if (prec == 25)
 	{
-		 if((-0.2071*startx+1.2071067*endx)>=0&&(-0.2071*startx+1.2071067*endx)<=1440)
-	     { Corner2.x=int (-0.2071*startx+1.2071067*endx); Corner2.y=int (-0.2071*starty+1.2071067*endy);}
-		 else if((-0.2071*startx+1.2071067*endx)<0){Corner2.x=0;}
-		 else if((-0.2071*startx+1.2071067*endx)>1440){Corner2.x=1440;}
-	     if ((1.2071067*startx+-0.2071*endx)>=0&&(1.2071067*startx+-0.2071*endx)<=1440)
-		 { Corner1.x=int (1.2071067*startx+-0.2071*endx);Corner1.y=int (1.2071067*starty+-0.2071*endy);}
-		 else if((1.2071067*startx+-0.2071*endx)<0){Corner1.x=0;}
-		 else if((1.2071067*startx+-0.2071*endx)){Corner1.x=1440;}
-
+		Corner2.x = (0.14645*startx + 0.8535*endx);
+		Corner2.y = (0.14645*starty + 0.8535*endy);
+		Corner1.x = (0.8535*startx + 0.14645*endx);
+		Corner1.y = (0.8535*starty + 0.14645*endy);
+		int startx = Corner1.x; int starty = Corner1.y; int endx = Corner2.x; int endy = Corner2.y;
+		Corner2.x = (0.14645*startx + 0.8535*endx);
+		Corner2.y = (0.14645*starty + 0.8535*endy);
+		Corner1.x = (0.8535*startx + 0.14645*endx);
+		Corner1.y = (0.8535*starty + 0.14645*endy);
 	}
-	if(prec==400)
+	if (prec == 200)
 	{
-	     if((-0.2071*startx+1.2071067*endx)>=0&&(-0.2071*startx+1.2071067*endx)<=1440)
-	     { Corner2.x=int (-0.2071*startx+1.2071067*endx); Corner2.y=int (-0.2071*starty+1.2071067*endy);}
-		 else if((-0.2071*startx+1.2071067*endx)<0){Corner2.x=0;}
-		 else if((-0.2071*startx+1.2071067*endx)>1440){Corner2.x=1440;}
-	     if ((1.2071067*startx+-0.2071*endx)>=0&&(1.2071067*startx+-0.2071*endx)<=1440)
-		 { Corner1.x=int (1.2071067*startx+-0.2071*endx);Corner1.y=int (1.2071067*starty+-0.2071*endy);}
-		 else if((1.2071067*startx+-0.2071*endx)<0){Corner1.x=0;}
-		 else if((1.2071067*startx+-0.2071*endx)){Corner1.x=1440;}
-		 int startx=Corner1.x;int starty=Corner1.y;int endx=Corner2.x;int endy=Corner2.y;
-		 if((-0.2071*startx+1.2071067*endx)>=0&&(-0.2071*startx+1.2071067*endx)<=1440)
-	     { Corner2.x=int (-0.2071*startx+1.2071067*endx); Corner2.y=int (-0.2071*starty+1.2071067*endy);}
-		 else if((-0.2071*startx+1.2071067*endx)<0){Corner2.x=0;}
-		 else if((-0.2071*startx+1.2071067*endx)>1440){Corner2.x=1440;}
-	     if ((1.2071067*startx+-0.2071*endx)>=0&&(1.2071067*startx+-0.2071*endx)<=1440)
-		 { Corner1.x=int (1.2071067*startx+-0.2071*endx);Corner1.y=int (1.2071067*starty+-0.2071*endy);}
-		 else if((1.2071067*startx+-0.2071*endx)<0){Corner1.x=0;}
-		 else if((1.2071067*startx+-0.2071*endx)){Corner1.x=1440;}
-
+		if (((-0.2071*startx + 1.2071067*endx) >= 0) && ((-0.2071*startx + 1.2071067*endx) <= 1440) && ((1.2071067*startx + -0.2071*endx) >= 0) && ((1.2071067*startx + -0.2071*endx) <= 1440))
+		{
+			if (((-0.2071*starty + 1.2071067*endy) >= 85) && ((-0.2071*starty + 1.2071067*endy) <= 670) && ((1.2071067*starty + -0.2071*endy) >= 85) && ((1.2071067*starty + -0.2071*endy) <= 670))
+			{
+				Corner2.x = (-0.2071*startx + 1.2071067*endx); Corner2.y = (-0.2071*starty + 1.2071067*endy);
+				Corner1.x = (1.2071067*startx + -0.2071*endx); Corner1.y = (1.2071067*starty + -0.2071*endy);
+			}
+		}
 	}
+	if (prec == 400)
+	{
+		if (((-0.2071*startx + 1.2071067*endx) >= 0) && ((-0.2071*startx + 1.2071067*endx) <= 1440) && ((1.2071067*startx + -0.2071*endx) >= 0) && ((1.2071067*startx + -0.2071*endx) <= 1440))
+		{
+			if (((-0.2071*starty + 1.2071067*endy) >= 85) && ((-0.2071*starty + 1.2071067*endy) <= 670) && ((1.2071067*starty + -0.2071*endy) >= 85) && ((1.2071067*starty + -0.2071*endy) <= 670))
+			{
+				endx = (-0.2071*startx + 1.2071067*endx); endy = (-0.2071*starty + 1.2071067*endy);
+				startx = (1.2071067*startx + -0.2071*endx); starty = (1.2071067*starty + -0.2071*endy);
+			}
+		}
 
-	
+		if (((-0.2071*startx + 1.2071067*endx) >= 0) && ((-0.2071*startx + 1.2071067*endx) <= 1440) && ((1.2071067*startx + -0.2071*endx) >= 0) && ((1.2071067*startx + -0.2071*endx) <= 1440))
+		{
+			if (((-0.2071*starty + 1.2071067*endy) >= 85) && ((-0.2071*starty + 1.2071067*endy) <= 670) && ((1.2071067*starty + -0.2071*endy) >= 85) && ((1.2071067*starty + -0.2071*endy) <= 670))
+			{
+				Corner2.x = (-0.2071*startx + 1.2071067*endx); Corner2.y = (-0.2071*starty + 1.2071067*endy);
+				Corner1.x = (1.2071067*startx + -0.2071*endx); Corner1.y = (1.2071067*starty + -0.2071*endy);
+			}
+		}
+	}
 }
- 
+void CRectangle::SetBorder(int n)
+{
+	this->FigGfxInfo.BorderWdth += n;
+
+}

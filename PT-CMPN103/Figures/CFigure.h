@@ -27,6 +27,7 @@ public:
 	void ChngDrawClr(color Dclr);	//changes the figure's drawing color
 	void ChngFillClr(color Fclr);	//changes the figure's filling color
 	virtual void GetFigureParameters(Point&P1, Point&P2, Point&P3, GfxInfo&Gfx) = 0;
+	virtual void SetBorder(int) = 0;
 	static bool isFill; //to change the default status of isFilled to true
 	///The following functions should be supported by the figure class
 	///It should be overridden by each inherited figure

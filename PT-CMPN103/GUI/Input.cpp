@@ -14,6 +14,12 @@ void Input::GetPointClicked(int &x, int &y) const
 }
 
 
+void Input::setsaved()
+{
+	saved = true;
+}
+
+
 string Input::GetSrting(Output *pO) const 
 {
 	string Label;
@@ -77,6 +83,7 @@ ActionType Input::GetItemAction(ActionType Selected) const
 			case ITM_COPY:      return COPY;			//Copy the figure
 			case ITM_CUT:       return CUT;				//Cut the figure
 			case ITM_PASTE:     return PASTE;
+			case ITM_BORDER:    return BORDER;
 			case ITM_BACKEDIT:		return BACK;
 			default:			return EMPTY;
 			}
@@ -98,7 +105,12 @@ ActionType Input::GetItemAction(ActionType Selected) const
 	case LOAD:
 		return LOAD;
 	case EXIT:
-		return EXIT;
+		if (saved == false)
+		{
+			return EXITSAVE;
+		}
+		else { return EXIT; }
+
 	case TO_PLAY:
 		pOut->CreatePlayToolBar();	
 		pWind->WaitMouseClick(x, y);	//Get the coordinates of the user click
