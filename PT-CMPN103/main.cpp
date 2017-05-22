@@ -19,7 +19,7 @@ int main()
 		//Update the interface
 		AppManager.UpdateInterface();	
 
-	}while(ActType != EXIT);
+	}while(ActType != EXIT && ActType != EXITSAVE);
 	
 
 	

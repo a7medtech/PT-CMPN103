@@ -156,5 +156,6 @@ void CLine::Resize(int prec)
 
 void CLine::SetBorder(int n)
 {
+	if (this->FigGfxInfo.BorderWdth < 30 && this->FigGfxInfo.BorderWdth>0)
 	this->FigGfxInfo.BorderWdth += n;
 }

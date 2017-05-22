@@ -134,6 +134,7 @@ void CCircle::Resize(int prec)
 
 void CCircle::SetBorder(int n)
 {
+	if (this->FigGfxInfo.BorderWdth < 30 && this->FigGfxInfo.BorderWdth>0)
 	this->FigGfxInfo.BorderWdth += n;
 }
 

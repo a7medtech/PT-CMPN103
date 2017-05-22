@@ -197,7 +197,10 @@ void CTriangle::Resize(int prec)
 
 void CTriangle::SetBorder(int n)
 {
+	if (this->FigGfxInfo.BorderWdth < 30 && n>0)
 	this->FigGfxInfo.BorderWdth += n;
+	if (this->FigGfxInfo.BorderWdth>0 && n<0)
+		this->FigGfxInfo.BorderWdth += n;
 }
 
 
