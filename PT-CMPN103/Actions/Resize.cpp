@@ -12,8 +12,11 @@ void ResizeAction::ReadActionParameters()
 	 Output* pOut = pManager->GetOutput();
 	int size;
 	pManager->GetSelectedFigCount(size);
-	if(size==0)
-	{ pOut->PrintMessage("ERROR !!! the chosen operation will make no change ");}
+	if (size == 0)
+	{
+		pOut->PrintMessage("ERROR !!! the chosen operation will make no change ");
+		Sleep(1500);
+	}
 	else
 	{
 
