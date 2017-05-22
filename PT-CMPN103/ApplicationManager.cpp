@@ -26,6 +26,7 @@
 #include"Actions\zoom.h"
 #include"Actions\Zoomout.h"
 #include"Actions\Exit.h"
+#include "Actions\FigureInteractiveControl.h"
 #include <time.h>
 #include <windows.h>
 
@@ -133,7 +134,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				Point p;
  				button clickT;
  				pOut->getWindow()->GetButtonState(clickT, p.x, p.y);
-				pAct = new Select(this,p);
+				pAct = new FigureInteractiveControl(this,p);
 				break;
 			case STATUS:
 				break;
@@ -234,6 +235,110 @@ void ApplicationManager::SelectFigs(Point p)
 		}
 	}
 }
+
+
+
+
+
+void ApplicationManager::ReferenceActionToClick(Point P)
+{
+	button tempB = LEFT_BUTTON;
+	buttonstate tempState = BUTTON_UP;
+	Point p;
+	Point temp;
+	for (int i = 0; i < FigCount; i++)
+	{
+		if (FigList[i]->IsSelected())
+		{
+			switch (FigList[i]->ReferFigure(P))
+			{
+			case CENTER:
+				Sleep(30);
+				while (tempState == BUTTON_UP)
+				{
+					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+					FigList[i]->Move(p);
+					UpdateInterface();
+					Sleep(30);
+				}
+
+				pOut->ClearStatusBar();
+				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+				break;
+
+			case CORNER1:
+				Sleep(30);
+				while (tempState == BUTTON_UP)
+				{
+					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+					FigList[i]->ResizePoint(p, CORNER1);
+					UpdateInterface();
+					Sleep(30);
+				}
+
+				pOut->ClearStatusBar();
+				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+				break;
+				
+			case CORNER2:
+				Sleep(30);
+				while (tempState == BUTTON_UP)
+				{
+					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+					FigList[i]->ResizePoint(p, CORNER2);
+					UpdateInterface();
+					Sleep(30);
+				}
+
+				pOut->ClearStatusBar();
+				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+				break;
+			case CORNER3:
+				Sleep(30);
+				while (tempState == BUTTON_UP)
+				{
+					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+					FigList[i]->ResizePoint(p, CORNER3);
+					UpdateInterface();
+					Sleep(30);
+				}
+
+				pOut->ClearStatusBar();
+				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+				break;
+			case CORNER4:
+				Sleep(30);
+				while (tempState == BUTTON_UP)
+				{
+					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+					FigList[i]->ResizePoint(p, CORNER4);
+					UpdateInterface();
+					Sleep(30);
+				}
+
+				pOut->ClearStatusBar();
+				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+				break;
+			case NONEREF:
+				FigList[i]->Select(P);
+				CFigure** dummy;
+				FindSelFigList(dummy);
+				break;
+			}
+		}
+		else
+		{
+			FigList[i]->Select(P);
+			CFigure** dummy;
+			FindSelFigList(dummy);
+		}
+	}
+}
+
+
+
+
+
 
 void ApplicationManager:: SaveAction(ofstream&Outfile)
 {

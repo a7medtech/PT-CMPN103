@@ -28,7 +28,7 @@ void LoadAction::Execute()
 	{
 		pManager->GetOutput()->PrintMessage("Do you want to save the current figures (y/n) ? "	);
 		string s= filename=pManager->GetInput()->GetSrting(pManager->GetOutput());
-		if(s.compare("y")==NULL)
+		if (s.compare("y")==NULL)
 		{
 			pManager->ExecuteAction(SAVE);
 		}

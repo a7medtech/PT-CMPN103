@@ -44,6 +44,8 @@ public:
 	
 	//virtual void Rotate() = 0;	//Rotate the figure
 	virtual void Resize(int ) = 0;	//Resize the figure
+	virtual FigReference ReferFigure(Point P) = 0;
+	virtual void ResizePoint(Point P, FigReference FigRef) = 0;
 
 	virtual void Save(ofstream &OutFile) = 0;	//Save the figure parameters to the file
 	virtual void Load(ifstream &Infile) = 0;	//Load the figure parameters to the file
