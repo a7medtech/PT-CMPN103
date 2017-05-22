@@ -200,7 +200,7 @@ void ApplicationManager::deleteforload()
 	int n=0;this->GetFigCount(n);
 	for(int i=0;i<n;i++)
 	{
-		FigList[i]=NULL;
+		FigList[i]=nullptr;
 	 this->minusfigcount();
 	}
 }
@@ -213,8 +213,10 @@ void ApplicationManager::SelectFigs(Point p)
 	for (int i = FigCount-1; i >= 0; i--) {
 		check = FigList[i]->Select(p);
 		if(check){
-			if(FigList[i]->IsSelected())
+			if(FigList[i]->IsSelected()){
 				displayFigParam(FigList[i]);
+				selectedFigs[SelFigCount++] = FigList[i];
+			}
 			else 
 				GetOutput()->ClearStatusBar();
 			return;
@@ -259,16 +261,21 @@ void ApplicationManager::Resizefigures(int n)
 
 
 void ApplicationManager::FindSelFigList(CFigure** &s){
-	int i;
+	/*int i;
 	for(i=0; i<MaxFigCount ;i++){
 		selectedFigs[i] = nullptr;
 	}
 	SelFigCount = 0;
-	for (i=0; i<FigCount ;i++){
-		if (FigList[i]->IsSelected())
-			selectedFigs[SelFigCount++] = (FigList[i]);
-		
-	}
+	bool check = false;
+	for (int i=0; i<FigCount ;i++){
+		if(FigList[i]->IsSelected()){
+			for(int j=0;j<SelFigCount;j++){
+				if (FigList[i]->getID() == selectedFigs[j]->getID()){
+					
+				}
+			}	
+		}
+	}*/
 	s = selectedFigs;
 }
 ////////////////////////////////////////////////////////////////////////////////////
@@ -400,21 +407,11 @@ void ApplicationManager::deleteSelected() {
 
 	for (int i = 0; i<SelFigCount; i++) {
 		temp = getFigureById(selectedFigs[i]->getID(), index);
-		FigList[index] = FigList[(FigCount--) - 1];
+		move(FigList + (index+1) , FigList + FigCount-- , FigList + index);
+		//FigList[index] = FigList[(FigCount--) - 1];
 	}
 	for (int i = 0; i<MaxFigCount; i++) {
 		selectedFigs[i] = nullptr;
-	}
-}
-
-void ApplicationManager::cleanFigList(){
-	for(int i=0;i<FigCount;i++){
-		if (FigList[i] == nullptr){
-			while(FigList[i+1]){
-				FigList[i] = FigList[i++]; 
-			}
-			return;
-		}
 	}
 }
 
@@ -487,6 +484,7 @@ void ApplicationManager::StartNewScrambleGame()
 			OriginalList[i]->Draw(pOut);		//Call Draw function (virtual member fn)
 			RandomizedFigures[i]->Draw(pOut);
 		}
+		i = 0;
 		pIn->GetPointClicked(P.x, P.y);
 		for (int j = 0; j < RandFigsCount; j++)
 		{
