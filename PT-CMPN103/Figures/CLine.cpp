@@ -88,15 +88,25 @@ void CLine::Move(Point p){
 	Point mid;
 	mid.x = abs(start.x - end.x) /2;
 	mid.y = abs(start.y - end.y) /2;
-	if (start.x < end.x){
+	if (start.x <= end.x && start.y <= end.y){
 		end.x = p.x + mid.x;
 		end.y = p.y + mid.y;
 		start.x = p.x - mid.x;
 		start.y = p.y - mid.y;
-	}else {
+	}else if(start.x >= end.x && start.y <= end.y){
+		end.x = p.x - mid.x;
+		end.y = p.y + mid.y;
+		start.x = p.x + mid.x;
+		start.y = p.y - mid.y;
+	}else if(start.x <= end.x && start.y >= end.y){
 		end.x = p.x + mid.x;
 		end.y = p.y - mid.y;
 		start.x = p.x - mid.x;
+		start.y = p.y + mid.y;
+	}else {
+		end.x = p.x - mid.x;
+		end.y = p.y - mid.y;
+		start.x = p.x + mid.x;
 		start.y = p.y + mid.y;
 	}
 }

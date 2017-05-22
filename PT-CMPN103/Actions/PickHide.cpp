@@ -3,7 +3,6 @@
 
 PickHide::PickHide(ApplicationManager* pApp)
 	:Action(pApp){
-	
 }
 
 void PickHide::ReadActionParameters(){
