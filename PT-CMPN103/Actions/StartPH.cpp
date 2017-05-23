@@ -163,7 +163,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 						break;
 					}
 					for(int i = 0;i<originalSize;i++){
-						if (original[i]->getID() == selected->getID())
+						if (original[i]->getID() == selected->getID()){
 							if(dynamic_cast<CRectangle*>(original[i]))
 								recC--;
 							else if(dynamic_cast<CTriangle*>(original[i]))
@@ -174,6 +174,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 								cirC--;
 							original[i] = original[originalSize-- -1];
 							break;
+						}
 					}	
 					break;
 				}else {
@@ -214,7 +215,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 						break;
 					}
 					for(int i = 0;i<originalSize;i++){
-						if (original[i]->getID() == selected->getID())
+						if (original[i]->getID() == selected->getID()){
 							if(dynamic_cast<CRectangle*>(original[i]))
 								recC--;
 							else if(dynamic_cast<CTriangle*>(original[i]))
@@ -225,6 +226,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 								cirC--;
 							original[i] = original[originalSize-- -1];
 							break;
+						}
 					}	
 				}else {
 					wrong++;
