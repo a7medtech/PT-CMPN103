@@ -40,7 +40,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 	pManager->GetOutput()->StartPickHideGame();
 	pManager->UpdateInterfacePH(original,originalSize,right,wrong);
 	srand(unsigned int(time(0)));
-	int mode = rand()%4; //0 area, 1 type, 2 colors, 3 types+colors
+	int mode = 2;//rand()%4; //0 area, 1 type, 2 colors, 3 types+colors
 	if (mode == 1){ // type
 		string arr[4] = {"Rectangle","Triangle","Line","Circle"};
 		int i;
@@ -101,6 +101,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 					for(int j=0;j<originalSize;j++){
 						if (selected->getID() == original[j]->getID()){
 							original[j] = original[originalSize-- -1];
+							break;
 						}
 					}
 					break;
@@ -172,6 +173,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 							else 
 								cirC--;
 							original[i] = original[originalSize-- -1];
+							break;
 					}	
 					break;
 				}else {
@@ -222,6 +224,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 							else 
 								cirC--;
 							original[i] = original[originalSize-- -1];
+							break;
 					}	
 				}else {
 					wrong++;
@@ -323,6 +326,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 					for(int j=0;j<originalSize;j++){
 						if (selected->getID() == original[j]->getID()){
 							original[j] = original[originalSize-- -1];
+							break;
 						}
 					}
 					break;
@@ -348,7 +352,8 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 	pManager->GetOutput()->getWindow()->DrawString(100, 440, "From: ");
 	pManager->GetOutput()->getWindow()->DrawInteger(270, 440, right + wrong);
 	pManager->GetOutput()->getWindow()->DrawString(350, 440, "Clicks");
-	if((double)(right/(right+wrong)) > 0.5)
+	double cond = (double)right/((double)right + (double)wrong);
+	if(cond > 0.5)
 		pManager->GetOutput()->getWindow()->DrawString(100, 520, "You Have WON");
 	else 
 		pManager->GetOutput()->getWindow()->DrawString(100, 520, "Lost!!, what a shame");
