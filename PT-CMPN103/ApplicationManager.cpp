@@ -292,9 +292,7 @@ void ApplicationManager::chngeborder(int n)
 
 	for (int i = 0; i<SelFigCount; i++)
 	{
-
-		selectedFigs[i]->SetBorder(n);
-
+			selectedFigs[i]->SetBorder(n);
 	}
 }
 
@@ -677,7 +675,7 @@ void ApplicationManager::StartNewScrambleGame()
 		pOut->getWindow()->SetPen(GREEN, 2);
 		pOut->getWindow()->DrawInteger(270, 440, Right + Wrong);
 		pOut->getWindow()->SetPen(ORANGE, 2);
-		pOut->getWindow()->DrawString(320, 440, "Clicks");
+		pOut->getWindow()->DrawString(350, 440, "Clicks");
 		}
 	while (UI.InterfaceMode != MODE_PLAY)
 		 {
@@ -690,6 +688,7 @@ void ApplicationManager::StartNewScrambleGame()
 			}
 		if (P.y < UI.ToolBarHeight && P.x / UI.MenuItemWidth == 1)
 			UI.InterfaceMode = MODE_PLAY;
+			UI.BkGrndColor = GREY;
 		}
 	
 

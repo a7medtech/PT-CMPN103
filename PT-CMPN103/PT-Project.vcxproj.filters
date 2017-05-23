@@ -38,10 +38,10 @@
       <Filter>Actions</Filter>
     </ClCompile>
     <ClCompile Include="GUI\Output.cpp">
-      <Filter>GUI</Filter>
+      <Filter>CMUGraphicsLib\GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUI\Input.cpp">
-      <Filter>GUI</Filter>
+      <Filter>CMUGraphicsLib\GUI</Filter>
     </ClCompile>
     <ClCompile Include="CMUgraphicsLib\auxil.cpp">
       <Filter>CMUGraphicsLib</Filter>
@@ -261,13 +261,13 @@
       <Filter>Actions</Filter>
     </ClInclude>
     <ClInclude Include="GUI\Output.h">
-      <Filter>GUI</Filter>
+      <Filter>CMUGraphicsLib\GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUI\Input.h">
-      <Filter>GUI</Filter>
+      <Filter>CMUGraphicsLib\GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUI\UI_Info.h">
-      <Filter>GUI</Filter>
+      <Filter>CMUGraphicsLib\GUI</Filter>
     </ClInclude>
     <ClInclude Include="CMUgraphicsLib\auxil.h">
       <Filter>CMUGraphicsLib</Filter>
@@ -403,11 +403,11 @@
     <Filter Include="Figures">
       <UniqueIdentifier>{adce8881-30f8-41bd-a171-c85745247b15}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GUI">
-      <UniqueIdentifier>{7ed5dc3a-8b34-438f-8d64-dd248347bfc9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ApplicationManager">
       <UniqueIdentifier>{b2ddf4a4-a8e8-4c43-b7d8-554fb27c8807}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CMUGraphicsLib\GUI">
+      <UniqueIdentifier>{7ed5dc3a-8b34-438f-8d64-dd248347bfc9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,7 @@ Input::Input(window* pW, Output*pO)
 {
 	pWind = pW; //point to the passed window
 	pOut = pO;
+	saved = false;
 }
 
 void Input::GetPointClicked(int &x, int &y) const
@@ -208,6 +209,7 @@ ActionType Input::GetUserAction() const
 			case ITM_COPY:      return COPY;			//Copy the figure
 			case ITM_CUT:       return CUT;				//Cut the figure
 			case ITM_PASTE:     return PASTE;
+			case ITM_BORDER:    return BORDER;
 			case ITM_BACKEDIT:		return BACK;
 			default:			return EMPTY;
 			}
