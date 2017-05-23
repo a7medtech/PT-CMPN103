@@ -798,10 +798,27 @@ void ApplicationManager::StartNewScrambleGame()
 	P.y = 700;
 	while ((P.x / UI.MenuItemWidth != 1 || P.y > UI.ToolBarHeight) && 0 < OriginalListCount)
 	{
-		OriginalList[0]->ChngDrawClr(PINK);
+		OriginalList[0]->ChngDrawClr(LIGHTYELLOW);
 		OriginalList[0]->Draw(pOut);
+		/*********************************/
+		for (int i = 0; i<RandFigsCount; i++) {
+			if (RandomizedFigures[i]->getID() == OriginalList[0]->getID()) {
+					int j = i+1;
+					while (j < RandFigsCount)
+					{
+						CFigure*temp;
+						temp = RandomizedFigures[j - 1];
+						RandomizedFigures[j - 1] = RandomizedFigures[j];
+						RandomizedFigures[j] = temp;
+						j++;
+					}
+				}
+			}
+		/********************************/
+
+
 		pOut->ClearDrawArea();
-		for (int i = 0; i < OriginalListCount; i++)
+		for (int i = 0; i < RandFigsCount; i++)
 		{
 			RandomizedFigures[i]->Draw(pOut);
 			
@@ -885,7 +902,7 @@ void ApplicationManager::StartNewScrambleGame()
 	pOut->ClearDrawArea();
 		/**************************************************************************/
 
-	bool GameCase;
+
 		if (P.x / UI.MenuItemWidth != 1 && P.y > UI.ToolBarHeight)
 		 {
 			pOut->getWindow()->SetFont(40, NONE, ROMAN, PLAIN);
@@ -898,13 +915,14 @@ void ApplicationManager::StartNewScrambleGame()
 		pOut->getWindow()->SetPen(GREEN, 2);
 		pOut->getWindow()->DrawInteger(90, 440, Right + Wrong);
 		pOut->getWindow()->SetPen(ORANGE, 2);
-		pOut->getWindow()->DrawString(120, 440, "Clicks");
-		GameCase = ((Right / (Right + Wrong)) >= 0.5);
-		}
+		pOut->getWindow()->DrawString(130, 440, "Clicks");
+		bool GameCase = (((double)Right / (double)(Right + Wrong)) >= 0.5);
 		if (GameCase)
 			pOut->getWindow()->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\win.jpg", 0, 150, 284, 177);
 		else
 			pOut->getWindow()->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\lose.jpg", 0, 150, 468, 193);
+		}
+		
 
 	while (UI.InterfaceMode != MODE_PLAY)
 		 {
