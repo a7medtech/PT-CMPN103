@@ -20,6 +20,7 @@ void LoadAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
    	pOut->PrintMessage("Now Enter the name of the file which you want to LOAD ");
     filename=pManager->GetInput()->GetSrting(pOut);
+	filename += ".txt";
 }
 
 void LoadAction::Execute()
@@ -40,15 +41,14 @@ void LoadAction::Execute()
 	In=new ifstream(filename,ios::in);
    if((*In).is_open()) 
    { 
-		char s[40];char f[40];char d[40];int nom;char space[5];
-		(*In).getline(s,40,'\t');
-		(*In).getline(d,40,'\t');
-		(*In).getline(f,40,'\n');
-		(*In)>>nom;
-		(*In).getline(space,5,'\n');
-		UI.DrawColor=Save::tocolor(s);
-		UI.FillColor=Save::tocolor(d);
-		UI.BkGrndColor=Save::tocolor(f);
+	   int nom; char space[5]; char spacee[5]; int db, dg, dr, fb, fg, fr, bb, bg, br;
+	   (*In) >> db >> dg >> dr >> fb >> fg >> fr >> bb >> bg >> br;
+	   (*In).getline(spacee, 5, '\n');
+	   (*In) >> nom;
+	   (*In).getline(space, 5, '\n');
+	   UI.DrawColor.ucBlue = (char)db; UI.DrawColor.ucGreen = (char)dg; UI.DrawColor.ucRed = (char)dr;
+	   UI.FillColor.ucBlue = (char)fb; UI.FillColor.ucGreen = (char)fg; UI.FillColor.ucRed = (char)fr;
+	   UI.BkGrndColor.ucBlue = (char)bb; UI.BkGrndColor.ucGreen = (char)bg; UI.BkGrndColor.ucRed = (char)br;
 
 		while(!(*In).eof())
 		{

@@ -377,7 +377,8 @@ void ApplicationManager:: SaveAction(ofstream&Outfile)
     int c;
     GetFigCount(c);
 	this->zoomcontrolsave(0);
-	Outfile<<Save::tostringg(UI.DrawColor)<<"\t"<<Save::tostringg(UI.FillColor)<<"\t"<<Save::tostringg(UI.BkGrndColor)<<endl;
+	Outfile << (int)UI.DrawColor.ucBlue << "\t" << (int)UI.DrawColor.ucGreen << "\t" << (int)UI.DrawColor.ucRed << "\t" << (int)UI.FillColor.ucBlue << "\t" << (int)UI.FillColor.ucGreen << "\t" << (int)UI.FillColor.ucRed << "\t" <<
+		(int)UI.BkGrndColor.ucBlue << "\t" << (int)UI.BkGrndColor.ucGreen << "\t" << (int)UI.BkGrndColor.ucRed << endl;
 	Outfile<<c<<"\n";
     for(int i=0;i<c;i++)
     {
@@ -386,6 +387,7 @@ void ApplicationManager:: SaveAction(ofstream&Outfile)
     }
 	this->zoomcontrolsave(1);
 	   	pOut->PrintMessage("You Saved to file Succesfully");
+		Sleep(800);
 
 }
 
@@ -441,41 +443,25 @@ void ApplicationManager::zoomin()
 		{
 			Point c; Point nc; Point m;
 			m = CenterDrawing;
-			FigList[i]->SetBorder(1); // increase border width
+			FigList[i]->SetBorder(2); // increase border width
 			FigList[i]->Resize(15);  // in resize this is the resize by double without validation
 			FigList[i]->getCenter(c);
 			// to know the position of the figure according to the center of the drawing area 
-			if (c.x>CenterDrawing.x) //1st quad
+			if (c.x>CenterDrawing.x)
 			{
-				if (c.y < CenterDrawing.y)
-				{
-					nc.x = (c.x - CenterDrawing.x); m.x = c.x + (0.4142135624)*nc.x;
-					nc.y = (CenterDrawing.y - c.y); m.y = c.y - (0.4142135624)*nc.y;
-				}
+				nc.x = (c.x - CenterDrawing.x); m.x = c.x + (0.4142135624)*nc.x;
 			}
-			if (c.x<CenterDrawing.x)  //3rd quad
+			if (c.x<CenterDrawing.x)
 			{
-				if (c.y > CenterDrawing.y)
-				{
-					nc.y = (c.y - CenterDrawing.y); m.y = c.y + (0.4142135624)*nc.y;
-					nc.x = (CenterDrawing.x - c.x); m.x = c.x - (0.4142135624)*nc.x;
-				}
+				nc.x = (CenterDrawing.x - c.x); m.x = c.x - (0.4142135624)*nc.x;
 			}
-			if (c.x < CenterDrawing.x)  //2nd quad
+			if (c.y>CenterDrawing.y)
 			{
-				if (c.y<CenterDrawing.y)
-				{
-					nc.x = (CenterDrawing.x - c.x); m.x = c.x - (0.4142135624)*nc.x;
-					nc.y = (CenterDrawing.y - c.y); m.y = c.y - (0.4142135624)*nc.y;
-				}
+				nc.y = (c.y - CenterDrawing.y); m.y = c.y + (0.4142135624)*nc.y;
 			}
-			if (c.y>CenterDrawing.y) //4th quad
+			if (c.y<CenterDrawing.y)
 			{
-				if (c.x > CenterDrawing.x)
-				{
-					nc.x = (c.x - CenterDrawing.x); m.x = c.x + (0.4142135624)*nc.x;
-					nc.y = (c.y - CenterDrawing.y); m.y = c.y + (0.4142135624)*nc.y;
-				}
+				nc.y = (CenterDrawing.y - c.y); m.y = c.y - (0.4142135624)*nc.y;
 			}
 			FigList[i]->Move(m);
 		}
@@ -496,40 +482,24 @@ void ApplicationManager::zoomout()
 		{
 			Point c; Point nc; Point m;
 			m = CenterDrawing;
-			FigList[i]->SetBorder(-1); // decrease border width 
+			FigList[i]->SetBorder(-2); // decrease border width 
 			FigList[i]->getCenter(c);
 			// to know the position of the figure according to the center of the drawing area 
-			if (c.x>CenterDrawing.x) //1st quad
+			if (c.x>CenterDrawing.x)
 			{
-				if (c.y < CenterDrawing.y)
-				{
-					nc.x = (c.x - CenterDrawing.x); m.x = c.x - (0.2928932188)*nc.x;
-					nc.y = (CenterDrawing.y - c.y); m.y = c.y + (0.2928932188)*nc.y;
-				}
+				nc.x = (c.x - CenterDrawing.x); m.x = c.x - (0.2928932188)*nc.x;
 			}
-			if (c.x<CenterDrawing.x)  //3rd quad
+			if (c.x<CenterDrawing.x)
 			{
-				if (c.y > CenterDrawing.y)
-				{
-					nc.y = (c.y - CenterDrawing.y); m.y = c.y - (0.2928932188)*nc.y;
-					nc.x = (CenterDrawing.x - c.x); m.x = c.x + (0.2928932188)*nc.x;
-				}
+				nc.x = (CenterDrawing.x - c.x); m.x = c.x + (0.2928932188)*nc.x;
 			}
-			if (c.x < CenterDrawing.x)  //2nd quad
+			if (c.y>CenterDrawing.y)
 			{
-				if (c.y<CenterDrawing.y)
-				{
-					nc.x = (CenterDrawing.x - c.x); m.x = c.x + (0.2928932188)*nc.x;
-					nc.y = (CenterDrawing.y - c.y); m.y = c.y + (0.2928932188)*nc.y;
-				}
+				nc.y = (c.y - CenterDrawing.y); m.y = c.y - (0.2928932188)*nc.y;
 			}
-			if (c.y>CenterDrawing.y) //4th quad
+			if (c.y<CenterDrawing.y)
 			{
-				if (c.x > CenterDrawing.x)
-				{
-					nc.x = (c.x - CenterDrawing.x); m.x = c.x - (0.2928932188)*nc.x;
-					nc.y = (c.y - CenterDrawing.y); m.y = c.y - (0.2928932188)*nc.y;
-				}
+				nc.y = (CenterDrawing.y - c.y); m.y = c.y + (0.2928932188)*nc.y;
 			}
 			// move the figure to the new center and this step to keep the distance between figures coonstant 
 			FigList[i]->Move(m);
