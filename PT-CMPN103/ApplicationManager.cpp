@@ -4,9 +4,9 @@
 #include "Actions/AddCircleAction.h"
 #include "Actions/AddLineAction.h"
 #include "Actions/Select.h"
-#include"Actions\SaveAction.h"
+#include "Actions\SaveAction.h"
 #include "Actions\Copy.h"
-#include"Actions\LoadAction.h"
+#include "Actions\LoadAction.h"
 #include "Actions/Move.h"
 #include "Actions/Copy.h"
 #include "Actions/BackAction.h"
@@ -14,23 +14,26 @@
 #include "Actions/Delete.h"
 #include "Actions/Paste.h"
 #include "Actions/Cut.h"
+#include "Actions\PickHide.h"
 #include "Actions/ChngBkClr.h"
 #include "Actions/ChngDrawClr.h"
 #include "Actions/ChngFillClr.h"
-#include"Actions\Resize.h"
+#include "Actions\Resize.h"
 #include "Actions\SendBack.h"
 #include "Actions/ScrambleAndFind.h"
 #include "Actions\StartScrumble.h"
 #include "Actions\BackPlayAction.h"
-#include"Actions\chngBorderWidth.h"
-#include"Actions\zoom.h"
-#include"Actions\Zoomout.h"
-#include"Actions\Exit.h"
+#include "Actions\chngBorderWidth.h"
+#include "Actions\zoom.h"
+#include "Actions\Zoomout.h"
+#include "Actions\Exit.h"
+#include "Actions\StartPH.h"
 #include "Actions\FigureInteractiveControl.h"
 #include <time.h>
+#include <assert.h>
 #include <windows.h>
 
-int ApplicationManager::counter = 0; //Initialize unique IDs
+int ApplicationManager::counter = 0;  //Initialize unique IDs
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -152,6 +155,11 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				/*PLAY MODE*/
 
 			case PICK_HIDE_MODE:
+				this->zoomcontrolsave(0);
+				pAct = new PickHide(this);
+				break;
+			case START_PICKHIDE:
+				pAct = new StartPH(this);
 				break;
 			case SCRAMBLE_FIND_MODE:
 				this->zoomcontrolsave(0);
@@ -239,8 +247,9 @@ void ApplicationManager::SelectFigs(Point p)
 			if(FigList[i]->IsSelected()){
 				displayFigParam(FigList[i]);
 			}
-			else 
+			else {
 				GetOutput()->ClearStatusBar();
+			}
 			return;
 		}
 	}
@@ -568,14 +577,19 @@ void ApplicationManager::FindSelFigList(CFigure** &s){
 	s = selectedFigs;
 }
 ////////////////////////////////////////////////////////////////////////////////////
-CFigure *ApplicationManager::GetFigure(int x, int y) const
+CFigure *ApplicationManager::GetFigure(CFigure** list,int size, Point p) const
 {
 	//If a figure is found return a pointer to it.
 	//if this point (x,y) does not belong to any figure return NULL
-
-
+	bool check = false;
+	for(int i=0;i<size;i++){
+		check = list[i]->Select(p);
+		list[i]->Select(p);
+		if (check){
+			return list[i];;
+		}
+	}
 	///Add your code here to search for a figure given a point x,y	
-
 	return nullptr;
 }
 
@@ -696,7 +710,7 @@ void ApplicationManager::deleteSelected() {
 
 	for (int i = 0; i<SelFigCount; i++) {
 		temp = getFigureById(selectedFigs[i]->getID(), index);
-		move(FigList + (index+1) , FigList + FigCount-- , FigList + index);
+		move(FigList + (index+1) , FigList + FigCount-- , FigList + index); // move algo in xutility
 		//FigList[index] = FigList[(FigCount--) - 1];
 	}
 	for (int i = 0; i<MaxFigCount; i++) {
@@ -759,7 +773,7 @@ void ApplicationManager::SendToBack()
 
 void ApplicationManager::StartNewScrambleGame()
 {
-
+	
 	pOut->StartScrambleGame();
 	Point P;
 	int Right = 0;
@@ -972,10 +986,26 @@ void ApplicationManager::RandomizeFigures()
 
 //Pick and Hide mode
 
+void ApplicationManager::startPickHide (){
+	pOut->EnterPickHideGame();
+}
 
+CFigure** ApplicationManager::getFigList (int& size){
+	size = FigCount;
+	return FigList;
+}
 
-
-
+void ApplicationManager::UpdateInterfacePH(CFigure* list[],int size,int right, int wrong){
+	pOut->ClearDrawArea();
+	pOut->getWindow()->SetFont(80, NONE, ROMAN, PLAIN);
+	pOut->getWindow()->SetPen(BLACK, 2);
+	pOut->getWindow()->DrawInteger(2 * UI.MenuItemWidth + 100, 10, right);
+	pOut->getWindow()->DrawInteger(4 * UI.MenuItemWidth + 100, 10, wrong);
+	for (int i = 0; i < size; i++){
+		assert(list[i] != nullptr);
+		list[i]->Draw(pOut);
+	}
+}
 
 //==================================================================================//
 //							Interface Management Functions							//
@@ -1002,9 +1032,11 @@ void ApplicationManager::UpdateInterface() const
 	
 	switch (UI.InterfaceMode)
 	{
-	case MODE_DRAW_MAIN: pOut->CreateMainToolBar();
+	case MODE_DRAW_MAIN: 
+		pOut->CreateMainToolBar();
 		break;
-	case MODE_DRAW_DRAW: pOut->CreateDrawMenuToolBar();
+	case MODE_DRAW_DRAW: 
+		pOut->CreateDrawMenuToolBar();
 		break;
 	case MODE_DRAW_EDIT: 
 		if (this->GetInput()->GetZoomCheck())
@@ -1012,11 +1044,13 @@ void ApplicationManager::UpdateInterface() const
 		else
 			pOut->CreateEditToolBar();
 		break;
-	case MODE_PLAY: pOut->CreatePlayToolBar();
+	case MODE_PLAY: 
+		pOut->CreatePlayToolBar();
 		break;
 	case MODE_PLAY_PICK_HIDE:
 		break;
-	case MODE_PLAY_SCRAMBLE_FIND: pOut->ScrambleAndFindMain();
+	case MODE_PLAY_SCRAMBLE_FIND: 
+		pOut->ScrambleAndFindMain();
 		break;
 	default:
 		break;

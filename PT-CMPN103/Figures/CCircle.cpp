@@ -5,6 +5,15 @@ CCircle::CCircle(Point P1, double P2, GfxInfo FigureGfxInfo):CFigure(FigureGfxIn
 	Center = P1;
 	Distance = P2;
 }
+void CCircle::GetFigureParameters(Point&P1, Point&P2, Point&P3, GfxInfo&Gfx){
+	P3.x = 0; 
+	P3.y = 0;
+	P1.x = Center.x;
+	P1.y = Center.y;
+	P2.x = 0;
+	P2.y = 0;
+	Gfx = FigGfxInfo;
+}
 void CCircle::GetFigureParameters(Point&P1, double&P2, Point&P3, GfxInfo&Gfx)
 {
 	P3.x = 0; 
@@ -13,6 +22,9 @@ void CCircle::GetFigureParameters(Point&P1, double&P2, Point&P3, GfxInfo&Gfx)
 	P1.y = Center.y;
 	P2 = Distance;
 	Gfx = FigGfxInfo;
+}
+double CCircle::getRadius(){
+	return Distance;
 }
 void CCircle::Draw(Output* pOut) const
 {
@@ -88,12 +100,6 @@ CFigure* CCircle::Copy()
 double CCircle::getArea(double rad,Point,Point,Point){
 	return 4*atan(1)*pow(rad,2);
 }
-void CCircle::GetFigureParameters(Point&P1, Point&P2, Point&P3, GfxInfo&Gfx){
-	
-}
-
- 
-
 void CCircle::Move(Point p)
 {
 	Center = p;

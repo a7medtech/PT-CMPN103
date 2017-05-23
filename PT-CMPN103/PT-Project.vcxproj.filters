@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Actions\AddCircleAction.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
@@ -13,19 +14,49 @@
     <ClCompile Include="Actions\AddTrianAction.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
+    <ClCompile Include="ApplicationManager.cpp">
+      <Filter>ApplicationManager</Filter>
+    </ClCompile>
     <ClCompile Include="Actions\BackAction.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\Move.cpp">
+    <ClCompile Include="Actions\BackPlayAction.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\PickHide.cpp">
+    <ClCompile Include="Actions\BringFront.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\Select.cpp">
+    <ClCompile Include="Figures\CCircle.cpp">
+      <Filter>Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="Figures\CFigure.cpp">
+      <Filter>Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="Figures\CLine.cpp">
+      <Filter>Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="Figures\CTriangle.cpp">
+      <Filter>Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="Figures\CRectangle.cpp">
+      <Filter>Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Copy.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Cut.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Delete.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Exit.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
     <ClCompile Include="Actions\ChngBkClr.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\chngBorderWidth.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
     <ClCompile Include="Actions\ChngDrawClr.cpp">
@@ -34,7 +65,7 @@
     <ClCompile Include="Actions\ChngFillClr.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\Delete.cpp">
+    <ClCompile Include="Actions\FigureInteractiveControl.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
     <ClCompile Include="GUI\Output.cpp">
@@ -73,10 +104,10 @@
     <ClCompile Include="CMUgraphicsLib\jpeg\jdcolor.c">
       <Filter>CMUGraphicsLib</Filter>
     </ClCompile>
-    <ClCompile Include="CMUgraphicsLib\jpeg\jddctmgr.c">
+    <ClCompile Include="CMUgraphicsLib\jpeg\jdhuff.c">
       <Filter>CMUGraphicsLib</Filter>
     </ClCompile>
-    <ClCompile Include="CMUgraphicsLib\jpeg\jdhuff.c">
+    <ClCompile Include="CMUgraphicsLib\jpeg\jddctmgr.c">
       <Filter>CMUGraphicsLib</Filter>
     </ClCompile>
     <ClCompile Include="CMUgraphicsLib\jpeg\jdinput.c">
@@ -142,78 +173,53 @@
     <ClCompile Include="CMUgraphicsLib\keyqueue.cpp">
       <Filter>CMUGraphicsLib</Filter>
     </ClCompile>
+    <ClCompile Include="Actions\Zoomout.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\zoom.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\StartScrumble.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\StartPH.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\SendBack.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Select.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ScrambleAndFind.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\SaveAction.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Resize.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Paste.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\PickHide.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Move.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\LoadAction.cpp">
+      <Filter>Actions</Filter>
+    </ClCompile>
     <ClCompile Include="CMUgraphicsLib\mousequeue.cpp">
       <Filter>CMUGraphicsLib</Filter>
     </ClCompile>
     <ClCompile Include="CMUgraphicsLib\windowinput.cpp">
       <Filter>CMUGraphicsLib</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Figures\CFigure.cpp">
-      <Filter>Figures</Filter>
-    </ClCompile>
-    <ClCompile Include="Figures\CCircle.cpp">
-      <Filter>Figures</Filter>
-    </ClCompile>
-    <ClCompile Include="Figures\CRectangle.cpp">
-      <Filter>Figures</Filter>
-    </ClCompile>
-    <ClCompile Include="Figures\CTriangle.cpp">
-      <Filter>Figures</Filter>
-    </ClCompile>
-    <ClCompile Include="Figures\CLine.cpp">
-      <Filter>Figures</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\LoadAction.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\SaveAction.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\BringFront.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\SendBack.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="ApplicationManager.cpp">
-      <Filter>ApplicationManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\Copy.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\Cut.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\Paste.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\ScrambleAndFind.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\StartScrumble.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\BackPlayAction.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\chngBorderWidth.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\Exit.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\zoom.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\Zoomout.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\Resize.cpp">
-      <Filter>Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\FigureInteractiveControl.cpp">
-      <Filter>Actions</Filter>
+    <ClCompile Include="GUI\Output.cpp">
+      <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -233,22 +239,49 @@
     <ClInclude Include="Actions\AddTrianAction.h">
       <Filter>Actions</Filter>
     </ClInclude>
+    <ClInclude Include="ApplicationManager.h">
+      <Filter>ApplicationManager</Filter>
+    </ClInclude>
     <ClInclude Include="Actions\BackAction.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\BackPlayAction.h">
       <Filter>Actions</Filter>
     </ClInclude>
     <ClInclude Include="Actions\BringFront.h">
       <Filter>Actions</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\Move.h">
+    <ClInclude Include="Figures\CCircle.h">
+      <Filter>Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="Figures\CFigure.h">
+      <Filter>Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="Figures\CLine.h">
+      <Filter>Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="Figures\CTriangle.h">
+      <Filter>Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="Figures\CRectangle.h">
+      <Filter>Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Copy.h">
       <Filter>Actions</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\PickHide.h">
+    <ClInclude Include="Actions\Cut.h">
       <Filter>Actions</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\Select.h">
+    <ClInclude Include="Actions\Delete.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Exit.h">
       <Filter>Actions</Filter>
     </ClInclude>
     <ClInclude Include="Actions\ChngBkClr.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\chngBorderWidth.h">
       <Filter>Actions</Filter>
     </ClInclude>
     <ClInclude Include="Actions\ChngDrawClr.h">
@@ -257,9 +290,13 @@
     <ClInclude Include="Actions\ChngFillClr.h">
       <Filter>Actions</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\Delete.h">
+    <ClInclude Include="Actions\FigureInteractiveControl.h">
       <Filter>Actions</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="GUI\Input.h">
+      <Filter>GUI</Filter>
+=======
     <ClInclude Include="GUI\Output.h">
       <Filter>GUI</Filter>
     </ClInclude>
@@ -268,6 +305,7 @@
     </ClInclude>
     <ClInclude Include="GUI\UI_Info.h">
       <Filter>GUI</Filter>
+>>>>>>> 17e1dd2e19aef56fa13e6778b7a978e0b6b16593
     </ClInclude>
     <ClInclude Include="CMUgraphicsLib\auxil.h">
       <Filter>CMUGraphicsLib</Filter>
@@ -320,6 +358,45 @@
     <ClInclude Include="CMUgraphicsLib\keyqueue.h">
       <Filter>CMUGraphicsLib</Filter>
     </ClInclude>
+    <ClInclude Include="Actions\Zoomout.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\zoom.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\StartScrumble.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\StartPH.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\SendBack.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Select.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ScrambleAndFind.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\SaveAction.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Resize.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\PickHide.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Paste.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Move.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\LoadAction.h">
+      <Filter>Actions</Filter>
+    </ClInclude>
     <ClInclude Include="CMUgraphicsLib\mousequeue.h">
       <Filter>CMUGraphicsLib</Filter>
     </ClInclude>
@@ -329,90 +406,36 @@
     <ClInclude Include="CMUgraphicsLib\windowinput.h">
       <Filter>CMUGraphicsLib</Filter>
     </ClInclude>
-    <ClInclude Include="Figures\CCircle.h">
-      <Filter>Figures</Filter>
+    <ClInclude Include="GUI\UI_Info.h">
+      <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="Figures\CFigure.h">
-      <Filter>Figures</Filter>
+    <ClInclude Include="GUI\Output.h">
+      <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="Figures\CRectangle.h">
-      <Filter>Figures</Filter>
-    </ClInclude>
-    <ClInclude Include="Figures\CTriangle.h">
-      <Filter>Figures</Filter>
-    </ClInclude>
-    <ClInclude Include="Figures\CLine.h">
-      <Filter>Figures</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\LoadAction.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\SaveAction.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\SendBack.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="ApplicationManager.h">
-      <Filter>ApplicationManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\Copy.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\Cut.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\Paste.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\ScrambleAndFind.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\StartScrumble.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\BackPlayAction.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\chngBorderWidth.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\Exit.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\zoom.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\Zoomout.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\Resize.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\FigureInteractiveControl.h">
-      <Filter>Actions</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Actions">
-      <UniqueIdentifier>{c2da5a7f-d1be-4515-96c4-70715a4a22dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CMUGraphicsLib">
-      <UniqueIdentifier>{c63653a1-17a1-4471-9af5-25d408868a21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Figures">
-      <UniqueIdentifier>{adce8881-30f8-41bd-a171-c85745247b15}</UniqueIdentifier>
+      <UniqueIdentifier>{ebe60457-d911-4bf4-8411-f837efd56de7}</UniqueIdentifier>
     </Filter>
     <Filter Include="ApplicationManager">
-      <UniqueIdentifier>{b2ddf4a4-a8e8-4c43-b7d8-554fb27c8807}</UniqueIdentifier>
+      <UniqueIdentifier>{d184248e-78a5-406f-a1ae-3c79586fa7dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CMUGraphicsLib">
+      <UniqueIdentifier>{9017b85a-3699-4e2a-94a4-ad0d65b8fcc7}</UniqueIdentifier>
     </Filter>
     <Filter Include="GUI">
-      <UniqueIdentifier>{7ed5dc3a-8b34-438f-8d64-dd248347bfc9}</UniqueIdentifier>
+      <UniqueIdentifier>{08fa20cb-d734-4959-9ae0-0ead8dea79c8}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd">
-      <Filter>CMUGraphicsLib</Filter>
-    </None>
+<<<<<<< HEAD
+    <Filter Include="Figures">
+      <UniqueIdentifier>{2c04577e-b328-4e6f-ac76-97f4e014f15a}</UniqueIdentifier>
+=======
+    <Filter Include="GUI">
+      <UniqueIdentifier>{7ed5dc3a-8b34-438f-8d64-dd248347bfc9}</UniqueIdentifier>
+>>>>>>> 17e1dd2e19aef56fa13e6778b7a978e0b6b16593
+    </Filter>
   </ItemGroup>
 </Project>

@@ -20,6 +20,8 @@ public:
 	void EnterScrambleAndFind() const;
 	void ScrambleAndFindMain() const;
 	void StartScrambleGame() const;
+	void EnterPickHideGame() const;
+	void StartPickHideGame() const;
 	void BlockRandomizedFigs() const;
 	void CreateStatusBar() const;	//create the status bar
 	void Output::ClearToolBar() const;

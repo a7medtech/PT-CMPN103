@@ -16,7 +16,7 @@ public:
 	virtual void Drag(Point, Point);
 	virtual double getArea(double,Point,Point,Point);
 	virtual void Move(Point);
-	virtual CFigure*Copy();
+	virtual CFigure* Copy();
 	virtual string printInfo();
 	virtual void getCenter(Point&);
 	virtual void GetFigureParameters(Point&P1, Point&P2, Point&P3, GfxInfo&Gfx);

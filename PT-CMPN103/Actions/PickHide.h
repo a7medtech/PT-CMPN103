@@ -5,7 +5,6 @@
 class PickHide:
 	public Action
 {
-	int types[4];
 public:
 	PickHide(ApplicationManager*);
 	virtual void ReadActionParameters();

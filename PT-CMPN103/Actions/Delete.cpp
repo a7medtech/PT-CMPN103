@@ -8,6 +8,7 @@ Delete::Delete(ApplicationManager* pApp)
 
 void Delete::ReadActionParameters(){
 }
+
 void Delete::Execute()
 {
 	int size;
@@ -23,6 +24,7 @@ void Delete::Execute()
 		pManager->deleteSelected();
 		pManager->UpdateInterface();
 	}
+
 }
 Delete::~Delete()
 {

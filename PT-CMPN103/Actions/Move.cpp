@@ -61,11 +61,13 @@ void Move::Execute(){
 				selected[i]->Move(temp);
 			}
 		}
-		else {
+	}else if(selectedCount == 1){
+
+
 			selected[0]->Move(p);
 		}
 	}
-}
+
 
 Move::~Move(){	
 }

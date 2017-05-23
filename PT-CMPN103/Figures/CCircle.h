@@ -14,6 +14,7 @@ public:
 	virtual void Draw(Output* pOut) const;
 	virtual void GetFigureParameters(Point&P1, Point&P2, Point&P3, GfxInfo&Gfx);
 	virtual void GetFigureParameters(Point&P1, double&P2, Point&P3, GfxInfo&Gfx);
+	double getRadius();
 	virtual bool Select(Point);
 	virtual void Drag(Point, Point);
 	virtual CFigure*Copy();
