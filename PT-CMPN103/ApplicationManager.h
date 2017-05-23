@@ -3,6 +3,10 @@
 
 #include "DEFS.h"
 #include "Figures/CFigure.h"
+#include "Figures\CCircle.h"
+#include "Figures\CLine.h"
+#include "Figures\CRectangle.h"
+#include "Figures\CTriangle.h"
 #include "GUI/Input.h"
 #include "GUI/Output.h"
 
@@ -48,7 +52,6 @@ public:
 	void Drag(Point, Point); //Changes the second point of a figure
 	// -- Figures Management Functions
 	void AddFigure(CFigure* pFig); //Adds a new figure to the FigList
-	CFigure* GetFigure(int x, int y) const; //Search for a figure given a point inside the figure
 	void deleteforload();
 	void GetFigCount(int&size);
 	void GetSelectedFigCount(int&size);
@@ -78,9 +81,10 @@ public:
 	void AdjustOriginalList();
 	void RandomizeFigures();
 	//Pick and Hide operating functions
-	void startPickHide();
-	CFigure** getFigList(int);
-
+	void startPickHide() ;
+	CFigure** getFigList(int) ;
+	void UpdateInterfacePH(CFigure**,int) ;
+	CFigure* GetFigure(CFigure**,int,Point) const; //Search for a figure given a point inside the figure
 	// -- interface management functions
 
 	Input *GetInput() const; //return pointer to the input

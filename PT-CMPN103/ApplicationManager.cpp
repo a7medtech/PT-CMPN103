@@ -235,8 +235,9 @@ void ApplicationManager::SelectFigs(Point p)
 			if(FigList[i]->IsSelected()){
 				displayFigParam(FigList[i]);
 			}
-			else 
+			else {
 				GetOutput()->ClearStatusBar();
+			}
 			return;
 		}
 	}
@@ -495,14 +496,18 @@ void ApplicationManager::FindSelFigList(CFigure** &s){
 	s = selectedFigs;
 }
 ////////////////////////////////////////////////////////////////////////////////////
-CFigure *ApplicationManager::GetFigure(int x, int y) const
+CFigure *ApplicationManager::GetFigure(CFigure** list,int size, Point p) const
 {
 	//If a figure is found return a pointer to it.
 	//if this point (x,y) does not belong to any figure return NULL
-
-
+	bool check = false;
+	for(int i=0;i<size;i++){
+		check = list[i]->Select(p);
+		if (check){
+			return list[i];;
+		}
+	}
 	///Add your code here to search for a figure given a point x,y	
-
 	return nullptr;
 }
 
@@ -859,13 +864,19 @@ void ApplicationManager::RandomizeFigures()
 
 //Pick and Hide mode
 
-void ApplicationManager::startPickHide(){
+void ApplicationManager::startPickHide (){
 	pOut->StartPickHideGame();
 }
 
-CFigure** ApplicationManager::getFigList(int size){
+CFigure** ApplicationManager::getFigList (int size){
 	size = FigCount;
 	return FigList;
+}
+
+void ApplicationManager::UpdateInterfacePH(CFigure** list,int size){
+	pOut->ClearDrawArea();
+		for (int i = 0; i < size; i++)
+			list[i]->Draw(pOut);
 }
 
 //==================================================================================//

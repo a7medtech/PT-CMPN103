@@ -7,6 +7,10 @@ class StartPH :
 {
 	int originalSize; // figure list size
 	int recC,triC,linC,cirC; // counts for each figure type
+	int right,wrong; // counts for right and wrong clicks
+	Point p; // the point the user clicks
+	CFigure* toBeSelected;
+	CFigure* selected; // actual figure the user selected
 	CFigure** original; //figure list
 	CFigure** displayable; // faked list to play on it
 public:
