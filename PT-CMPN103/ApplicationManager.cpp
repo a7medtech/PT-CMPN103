@@ -758,6 +758,10 @@ void ApplicationManager::startPickHide(){
 	pOut->StartPickHideGame();
 }
 
+CFigure** ApplicationManager::getFigList(int size){
+	size = FigCount;
+	return FigList;
+}
 
 //==================================================================================//
 //							Interface Management Functions							//

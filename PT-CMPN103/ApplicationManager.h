@@ -78,6 +78,7 @@ public:
 	void RandomizeFigures();
 	//Pick and Hide operating functions
 	void startPickHide();
+	CFigure** getFigList(int);
 
 	// -- interface management functions
 

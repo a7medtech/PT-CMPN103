@@ -5,8 +5,10 @@
 class StartPH :
 	public Action
 {
-	CFigure* original[ApplicationManager::MaxFigCount];
-	CFigure* displayable[ApplicationManager::MaxFigCount];
+	int originalSize; // figure list size
+	int recC,triC,linC,cirC; // counts for each figure type
+	CFigure** original; //figure list
+	CFigure** displayable; // faked list to play on it
 public:
 	StartPH(ApplicationManager*);
 	virtual void ReadActionParameters();

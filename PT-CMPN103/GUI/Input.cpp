@@ -234,26 +234,34 @@ ActionType Input::GetUserAction() const
 			}
 		}
 		break;
+	case MODE_PLAY_PICK_HIDE:
+		if (y >=0 && y< UI.ToolBarHeight){
+			int ClickedItemOrder = (x / UI.MenuItemWidth);
+			switch (ClickedItemOrder)
+			{
+			case ITM_STARTPH: return START_PICKHIDE;
+			case ITM_BACKPH: return BACKPLAY;
+			default:
+				return EMPTY;
+				break;
+			}
+		}
+		break;
 	case MODE_PLAY_SCRAMBLE_FIND:
-		int ClickedItemOrder = (x / UI.MenuItemWidth);
-		switch (ClickedItemOrder)
-		{
-		case ITM_START: return START_SCRAMBLE;
-		case ITM_BACKSCRAMBLE: return BACKPLAY;
-		default: return EMPTY;
-		}
-
-		break;
-	case PICK_HIDE_MODE:
-		ClickedItemOrder = (x / UI.MenuItemWidth);
-		switch (ClickedItemOrder)
-		{
-		case ITM_START: return START_PICKHIDE;
-		case ITM_BACKPH: return BACKPLAY;
-		default: return EMPTY;
+		if (y >=0 && y< UI.ToolBarHeight){
+			int ClickedItemOrder = (x / UI.MenuItemWidth);
+			switch (ClickedItemOrder)
+			{
+			case ITM_START: return START_SCRAMBLE;
+			case ITM_BACKSCRAMBLE: return BACKPLAY;
+			default:
+				return EMPTY;
+				break;
+			}
 		}
 		break;
-
+	
+	}
 		//[2] User clicks on the drawing area
 		if ( y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
 		{
@@ -262,8 +270,8 @@ ActionType Input::GetUserAction() const
 		
 		//[3] User clicks on the status bar
 		return STATUS;
-	}
 }
+
 
 ////////////////////////////////
 Input::~Input()
