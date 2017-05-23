@@ -100,7 +100,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 					}
 					for(int j=0;j<originalSize;j++){
 						if (selected->getID() == original[j]->getID()){
-							move(original + (j+1) , original + originalSize-- , original + j);
+							original[j] = original[originalSize-- -1];
 						}
 					}
 					break;
@@ -171,7 +171,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 								linC--;
 							else 
 								cirC--;
-							move(original + (i+1) , original + originalSize-- , original + i);
+							original[i] = original[originalSize-- -1];
 					}	
 					break;
 				}else {
@@ -190,8 +190,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 				break;
 			}
 		}
-		int i = rand() %2;
-		if (filled && i ==1){
+		if (filled){
 			pManager->GetOutput()->PrintMessage("Pick a filled figure");
 		}else {
 			pManager->GetOutput()->PrintMessage("Pick a non-filled figure");
@@ -222,7 +221,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 								linC--;
 							else 
 								cirC--;
-							move(original + (i+1) , original + originalSize-- , original + i);
+							original[i] = original[originalSize-- -1];
 					}	
 				}else {
 					wrong++;
@@ -323,7 +322,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 					}
 					for(int j=0;j<originalSize;j++){
 						if (selected->getID() == original[j]->getID()){
-							move(original + (j+1) , original + originalSize-- , original + j);
+							original[j] = original[originalSize-- -1];
 						}
 					}
 					break;
@@ -349,7 +348,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 	pManager->GetOutput()->getWindow()->DrawString(100, 440, "From: ");
 	pManager->GetOutput()->getWindow()->DrawInteger(270, 440, right + wrong);
 	pManager->GetOutput()->getWindow()->DrawString(350, 440, "Clicks");
-	if((right/(right+wrong)) > 0.5)
+	if((double)(right/(right+wrong)) > 0.5)
 		pManager->GetOutput()->getWindow()->DrawString(100, 520, "You Have WON");
 	else 
 		pManager->GetOutput()->getWindow()->DrawString(100, 520, "Lost!!, what a shame");
