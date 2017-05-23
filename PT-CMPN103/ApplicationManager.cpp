@@ -819,11 +819,23 @@ void ApplicationManager::StartNewScrambleGame()
 		pOut->getWindow()->DrawInteger(2 * UI.MenuItemWidth + 100, 10, Right);
 		pOut->getWindow()->DrawInteger(4 * UI.MenuItemWidth + 100, 10, Wrong);
 		pIn->GetPointClicked(P.x, P.y);
-		
+
+		bool check;
+		for (int i = RandFigsCount - 1; i >= 0; i--) {
+			check = RandomizedFigures[i]->Select(P);
+			if (check) {
+				if (RandomizedFigures[i]->IsSelected()) {
+					displayFigParam(RandomizedFigures[i]);
+				}
+				else
+					GetOutput()->ClearStatusBar();
+				break;
+			}
+		}
 			
 			for (int j = 0; j < RandFigsCount; j++)
 			{
-				if (RandomizedFigures[j]->Select(P))
+				if (RandomizedFigures[j]->IsSelected())
 				{
 					if (RandomizedFigures[j]->getID() == OriginalList[0]->getID())
 					{
@@ -872,19 +884,28 @@ void ApplicationManager::StartNewScrambleGame()
 	pOut->getWindow()->DrawInteger(4 * UI.MenuItemWidth + 100, 10, Wrong);
 	pOut->ClearDrawArea();
 		/**************************************************************************/
+
+	bool GameCase;
 		if (P.x / UI.MenuItemWidth != 1 && P.y > UI.ToolBarHeight)
 		 {
+			pOut->getWindow()->SetFont(40, NONE, ROMAN, PLAIN);
 		pOut->getWindow()->SetPen(VIOLET, 2);
-		pOut->getWindow()->DrawString(100, 360, "Final Grade: ");
+		pOut->getWindow()->DrawString(0, 360, "Final Grade: ");
 		pOut->getWindow()->SetPen(SKYBLUE, 2);
-		pOut->getWindow()->DrawInteger(360 + 100, 360, Right);
+		pOut->getWindow()->DrawInteger(180, 360, Right);
 		pOut->getWindow()->SetPen(BLUE, 2);
-		pOut->getWindow()->DrawString(100, 440, "From: ");
+		pOut->getWindow()->DrawString(0, 440, "From: ");
 		pOut->getWindow()->SetPen(GREEN, 2);
-		pOut->getWindow()->DrawInteger(270, 440, Right + Wrong);
+		pOut->getWindow()->DrawInteger(90, 440, Right + Wrong);
 		pOut->getWindow()->SetPen(ORANGE, 2);
-		pOut->getWindow()->DrawString(350, 440, "Clicks");
+		pOut->getWindow()->DrawString(120, 440, "Clicks");
+		GameCase = ((Right / (Right + Wrong)) >= 0.5);
 		}
+		if (GameCase)
+			pOut->getWindow()->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\win.jpg", 0, 150, 284, 177);
+		else
+			pOut->getWindow()->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\lose.jpg", 0, 150, 468, 193);
+
 	while (UI.InterfaceMode != MODE_PLAY)
 		 {
 		pIn->GetPointClicked(P.x, P.y);
