@@ -53,6 +53,44 @@ void CTriangle::Drag(Point p2, Point p3)
 	}
 }
 
+FigReference CTriangle::ReferFigure(Point P)
+{
+	Point temp;
+	getCenter(temp);
+	if (P.x < temp.x + 3 && P.x > temp.x - 3)
+		if (P.y < temp.y + 3 && P.y > temp.y - 3)
+			return CENTER;
+	if (P.x < Corner1.x + 3 && P.x > Corner1.x - 3)
+		if (P.y < Corner1.y + 3 && P.y >  Corner1.y - 3)
+			return CORNER1;
+	if (P.x < Corner2.x + 3 && P.x > Corner2.x - 3)
+		if (P.y < Corner2.y + 3 && P.y > Corner2.y - 3)
+			return CORNER2;
+	if (P.x < Corner3.x + 3 && P.x > Corner3.x - 3)
+		if (P.y < Corner3.y + 3 && P.y > Corner3.y - 3)
+			return CORNER3;
+
+	return NONEREF;
+}
+
+void CTriangle::ResizePoint(Point P, FigReference FigRef)
+{
+	switch (FigRef)
+	{
+	case CORNER1:
+		Corner1 = P;
+		break;
+	case CORNER2:
+		Corner2 = P;
+		break;
+	case CORNER3:
+		Corner3 = P;
+		break;
+	case NONEREF:
+		break;
+	}
+}
+
 CFigure* CTriangle::Copy()
 {
 	CFigure* CopyTriangle = new CTriangle(Corner1, Corner2, Corner3, FigGfxInfo);

@@ -143,6 +143,7 @@
     <ClCompile Include="Actions\Cut.cpp" />
     <ClCompile Include="Actions\Delete.cpp" />
     <ClCompile Include="Actions\Exit.cpp" />
+    <ClCompile Include="Actions\FigureInteractiveControl.cpp" />
     <ClCompile Include="Actions\LoadAction.cpp" />
     <ClCompile Include="Actions\Move.cpp" />
     <ClCompile Include="Actions\Paste.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="Actions\Cut.h" />
     <ClInclude Include="Actions\Delete.h" />
     <ClInclude Include="Actions\Exit.h" />
+    <ClInclude Include="Actions\FigureInteractiveControl.h" />
     <ClInclude Include="Actions\LoadAction.h" />
     <ClInclude Include="Actions\Move.h" />
     <ClInclude Include="Actions\Paste.h" />

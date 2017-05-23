@@ -43,6 +43,16 @@ enum MainMenuItem
 	
 };
 
+enum FigReference   //specify where the user clicked on the figure.
+{
+	CENTER,
+	CORNER1,
+	CORNER2,
+	CORNER3,
+	CORNER4,
+	NONEREF
+};
+
 enum DrawMenuItem //The items of the Draw menu (you should add more items)
 {
 	//Note: Items are ordered here as they appear in menu

@@ -36,6 +36,52 @@ void CRectangle::Drag(Point p, Point f)
 		Corner2 = p;
 }
 
+FigReference CRectangle::ReferFigure(Point P)
+{
+	Point temp;
+	getCenter(temp);
+	if (P.x < temp.x + 3 && P.x > temp.x - 3)
+		if (P.y < temp.y + 3 && P.y > temp.y - 3)
+			return CENTER;
+	if (P.x < Corner1.x + 3 && P.x > Corner1.x - 3)
+		if (P.y < Corner1.y + 3 && P.y > Corner1.y - 3)
+		return CORNER1;
+	if (P.x < Corner2.x + 3 && P.x > Corner2.x - 3)
+		if (P.y < Corner1.y + 3 && P.y > Corner1.y - 3)
+		return CORNER2;
+	if (P.x < Corner2.x + 3 && P.x > Corner2.x - 3)
+		if (P.y < Corner2.y + 3 && P.y > Corner2.y - 3)
+			return CORNER3;
+	if (P.x < Corner1.x + 3 && P.x > Corner1.x - 3)
+		if (P.y < Corner2.y + 3 && P.y > Corner2.y - 3)
+			return CORNER4;
+
+	return NONEREF;
+}
+
+void CRectangle::ResizePoint(Point P, FigReference FigRef)
+{
+	switch (FigRef)
+	{
+	case CORNER1: 
+		Corner1 = P;
+		break;
+	case CORNER2: 
+		Corner1.y = P.y;
+		Corner2.x = P.x;
+		break;
+	case CORNER3:
+		Corner2 = P;
+		break;
+	case CORNER4: 
+		Corner2.y = P.y;
+		Corner1.x = P.x;
+		break;
+	case NONEREF:
+		break;
+	}
+}
+
 CFigure* CRectangle::Copy()
 {
 	CFigure*CopyRect = new CRectangle(Corner1, Corner2, FigGfxInfo);

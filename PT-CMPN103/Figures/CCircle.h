@@ -24,6 +24,8 @@ public:
 	virtual void Load(ifstream &Infile) ;
 	virtual void Resize(int);
 	virtual void Move(Point);
+	virtual FigReference ReferFigure(Point P);
 	void SetBorder(int n);
+	virtual void ResizePoint(Point P, FigReference FigRef);
 };
 

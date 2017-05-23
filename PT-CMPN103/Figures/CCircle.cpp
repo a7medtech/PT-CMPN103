@@ -43,6 +43,35 @@ void CCircle::Drag(Point P2, Point P3)
 	}
 }
 
+
+FigReference CCircle::ReferFigure(Point P)
+{
+	if (P.x < Center.x + 3 && P.x > Center.x - 3)
+		if (P.y < Center.y + 3 && P.y > Center.y - 3)
+			return CENTER;
+	if (P.x < (Center.x - Distance) + 3 && P.x > (Center.x - Distance) - 3)
+		if (P.y < Center.y + 3 && P.y > Center.y - 3)
+			return CORNER1;
+	if (P.x < Center.x + 3 && P.x > Center.x - 3)
+		if (P.y < (Center.y-Distance) + 3 && P.y > (Center.y-Distance) - 3)
+			return CORNER2;
+	if (P.x < (Center.x + Distance) + 3 && P.x > (Center.x + Distance) - 3)
+		if (P.y < Center.y + 3 && P.y > Center.y - 3)
+			return CORNER4;
+	if (P.x < Center.x + 3 && P.x > Center.x - 3)
+		if (P.y <(Center.y + Distance) + 3 && P.y > (Center.y + Distance) - 3)
+			return CORNER2;
+
+	return NONEREF;
+}
+
+void CCircle::ResizePoint(Point P, FigReference FigRef)
+{
+	Point P2;
+	P2.x = P2.y = 0;
+	Drag(P, P2);
+}
+
 string CCircle::printInfo(){
 	Point p1,p2,p3;
 	p1.x = p2.x = p3.x = 0;

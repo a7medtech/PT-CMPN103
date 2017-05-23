@@ -56,6 +56,7 @@ public:
 	void SaveAction(ofstream&Outfile);
 	void minusfigcount();
 	void FindSelFigList(CFigure**&);
+	void ReferenceActionToClick(Point P);
 	void CopySelFigToCP();
 	void CutSelFigToCP();
 	void AddCPToFigList();

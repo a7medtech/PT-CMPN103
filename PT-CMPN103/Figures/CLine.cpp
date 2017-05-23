@@ -46,6 +46,35 @@ void CLine::Drag(Point P2, Point P3)
 		end = P2;
 }
 
+FigReference CLine::ReferFigure(Point P)
+{
+	Point temp;
+	getCenter(temp);
+	if (P.x < temp.x + 3 && P.x > temp.x - 3)
+		if (P.y < temp.y + 3 && P.y > temp.y - 3)
+			return CENTER;
+	if (P.x < start.x + 3 && P.x > start.x - 3)
+		if (P.y < start.y + 3 && P.y > start.y - 3)
+			return CORNER1;
+	if (P.x < end.x + 3 && P.x > end.x - 3)
+		if (P.y < end.y + 3 && P.y > end.y - 3)
+			return CORNER2;
+	return NONEREF;
+
+
+}
+
+void CLine::ResizePoint(Point P, FigReference FigRef)
+{
+	switch (FigRef)
+	{
+	case CORNER1: start = P;
+		break;
+	case CORNER2: end = P;
+		break;
+	}
+}
+
 void CLine::Save(ofstream &OutFile)
 {
 
