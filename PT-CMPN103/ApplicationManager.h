@@ -87,6 +87,8 @@ public:
 
 	Input *GetInput() const; //return pointer to the input
 	Output *GetOutput() const; //return pointer to the output
+
+	void UpdateDrawing() const; //only redraw fidures no update for toolbars
 	void UpdateInterface() const;	//redraws all the drawing window	
 };
 

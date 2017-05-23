@@ -61,7 +61,7 @@ void AddTrianAction::Execute()
 	{
 		tempState = pManager->GetOutput()->getWindow()->GetButtonState(tempB, P3.x, P3.y);
 		pManager->Drag(P2, P3);
-		pManager->UpdateInterface();
+		pManager->UpdateDrawing();
 		Sleep(30);
 	}
 

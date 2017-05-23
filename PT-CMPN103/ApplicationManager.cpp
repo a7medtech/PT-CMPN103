@@ -56,6 +56,9 @@ ApplicationManager::ApplicationManager()
 //==================================================================================//
 //								Actions Related Functions							//
 //==================================================================================//
+
+
+
 ActionType ApplicationManager::GetUserAction() const
 {
 	//Ask the input to get the action from the user.
@@ -213,6 +216,7 @@ void ApplicationManager::Drag(Point P2, Point P3)
 
 	FigList[FigCount-1]->Drag(P2,P3);
 }
+
 void ApplicationManager::deleteforload()
 {
 	int n=0;this->GetFigCount(n);
@@ -222,6 +226,7 @@ void ApplicationManager::deleteforload()
 	 this->minusfigcount();
 	}
 }
+
 void ApplicationManager::minusfigcount()
 { FigCount--; }
 
@@ -241,101 +246,128 @@ void ApplicationManager::SelectFigs(Point p)
 	}
 }
 
-
-
-
-
 void ApplicationManager::ReferenceActionToClick(Point P)
 {
 	button tempB = LEFT_BUTTON;
 	buttonstate tempState = BUTTON_UP;
 	Point p;
 	Point temp;
-	for (int i = 0; i < FigCount; i++)
+	bool SelectOnly = false;
+	bool stop = false;
+
+	if (GetInput()->GetZoomCheck())
 	{
-		if (FigList[i]->IsSelected())
+		Action*pAct = new Select(this, P);
+		pAct->Execute();
+		delete pAct;
+	}
+	else
+	{
+		for (int i = 0; i < FigCount && !stop; i++)
 		{
-			switch (FigList[i]->ReferFigure(P))
+
+
+			if (FigList[i]->Select(P))
 			{
-			case CENTER:
-				Sleep(30);
-				while (tempState == BUTTON_UP)
+				SelectOnly = false;
+
+				FigList[i]->SetSelected(!FigList[i]->IsSelected());
+				if (FigList[i]->IsSelected())
 				{
-					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
-					FigList[i]->Move(p);
-					UpdateInterface();
-					Sleep(30);
+					switch (FigList[i]->ReferFigure(P))
+					{
+					case CENTER:
+						Sleep(30);
+						while (tempState == BUTTON_UP)
+						{
+							tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+							FigList[i]->Move(p);
+							UpdateDrawing();
+							Sleep(30);
+						}
+
+						pOut->ClearStatusBar();
+						pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+						stop = true;
+						break;
+
+					case CORNER1:
+						Sleep(30);
+						while (tempState == BUTTON_UP)
+						{
+							tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+							FigList[i]->ResizePoint(p, CORNER1);
+							UpdateDrawing();
+							Sleep(30);
+						}
+
+						pOut->ClearStatusBar();
+						pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+						SelectOnly = false;
+						stop = true;
+						break;
+
+					case CORNER2:
+						Sleep(30);
+						while (tempState == BUTTON_UP)
+						{
+							tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+							FigList[i]->ResizePoint(p, CORNER2);
+							UpdateDrawing();
+							Sleep(30);
+						}
+
+						pOut->ClearStatusBar();
+						pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+						stop = true;
+						break;
+					case CORNER3:
+						Sleep(30);
+						while (tempState == BUTTON_UP)
+						{
+							tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+							FigList[i]->ResizePoint(p, CORNER3);
+							UpdateDrawing();
+							Sleep(30);
+						}
+
+						pOut->ClearStatusBar();
+						pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+						SelectOnly = false;
+						stop = true;
+						break;
+					case CORNER4:
+						Sleep(30);
+						while (tempState == BUTTON_UP)
+						{
+							tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+							FigList[i]->ResizePoint(p, CORNER4);
+							UpdateDrawing();
+							Sleep(30);
+						}
+
+						pOut->ClearStatusBar();
+						pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+						SelectOnly = false;
+						stop = true;
+						break;
+					case NONEREF:
+						SelectOnly = true;
+						break;
+					}
+				}
+				else
+				{
+					SelectOnly = true;
 				}
 
-				pOut->ClearStatusBar();
-				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
-				break;
-
-			case CORNER1:
-				Sleep(30);
-				while (tempState == BUTTON_UP)
-				{
-					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
-					FigList[i]->ResizePoint(p, CORNER1);
-					UpdateInterface();
-					Sleep(30);
-				}
-
-				pOut->ClearStatusBar();
-				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
-				break;
-				
-			case CORNER2:
-				Sleep(30);
-				while (tempState == BUTTON_UP)
-				{
-					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
-					FigList[i]->ResizePoint(p, CORNER2);
-					UpdateInterface();
-					Sleep(30);
-				}
-
-				pOut->ClearStatusBar();
-				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
-				break;
-			case CORNER3:
-				Sleep(30);
-				while (tempState == BUTTON_UP)
-				{
-					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
-					FigList[i]->ResizePoint(p, CORNER3);
-					UpdateInterface();
-					Sleep(30);
-				}
-
-				pOut->ClearStatusBar();
-				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
-				break;
-			case CORNER4:
-				Sleep(30);
-				while (tempState == BUTTON_UP)
-				{
-					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
-					FigList[i]->ResizePoint(p, CORNER4);
-					UpdateInterface();
-					Sleep(30);
-				}
-
-				pOut->ClearStatusBar();
-				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
-				break;
-			case NONEREF:
-				FigList[i]->Select(P);
-				CFigure** dummy;
-				FindSelFigList(dummy);
-				break;
 			}
 		}
-		else
+		if (SelectOnly)
 		{
-			FigList[i]->Select(P);
-			CFigure** dummy;
-			FindSelFigList(dummy);
+			Action*pAct = new Select(this, P);
+			pAct->Execute();
+			delete pAct;
 		}
 	}
 }
@@ -449,6 +481,7 @@ void ApplicationManager::zoomin()
 		}
 	}
 }
+
 void ApplicationManager::zoomout()
 {
 	int c; 
@@ -506,6 +539,7 @@ void ApplicationManager::zoomout()
 	}
 
 }
+
 void ApplicationManager::zoomcontrolsave(int n)
 {
 	if (n == 0)
@@ -532,6 +566,7 @@ void ApplicationManager::zoomcontrolsave(int n)
 		}
 	}
 }
+
 void ApplicationManager::zoomcontrolinterface() const
 {
 	int zin = Zoom::getzoomcounter();
@@ -539,7 +574,6 @@ void ApplicationManager::zoomcontrolinterface() const
 	if (zin != 0 || zout != 0) { this->GetInput()->setzoomcheck(0); }
 	else this->GetInput()->setzoomcheck(1);
 }
-
 
 void ApplicationManager::FindSelFigList(CFigure** &s){
 	int i;
@@ -937,7 +971,12 @@ void ApplicationManager::RandomizeFigures()
 //							Interface Management Functions							//
 //==================================================================================//
 
-
+void ApplicationManager::UpdateDrawing() const
+{
+	pOut->ClearDrawArea();
+	for (int i = 0; i < FigCount; i++)
+		FigList[i]->Draw(pOut);		//Call Draw function (virtual member fn)
+}
 
 //Draw all figures on the user interface
 void ApplicationManager::UpdateInterface() const

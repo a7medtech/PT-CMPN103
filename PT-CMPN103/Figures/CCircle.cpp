@@ -33,33 +33,33 @@ bool CCircle::Select(Point p){
 void CCircle::Drag(Point P2, Point P3)
 {
 	Distance = sqrt(pow((Center.x - P2.x), 2) + pow((Center.y - P2.y), 2));
-	if ((Center.y- Distance/2) < UI.ToolBarHeight)
+	if ((Center.y- Distance) < UI.ToolBarHeight)
 	{
-		Distance  = 2*(Center.y + UI.ToolBarHeight);
+		Distance  = Center.y - UI.ToolBarHeight;
 	}
-	else if ((Center.y - Distance / 2) >(UI.height - UI.StatusBarHeight))
+	else if ((Center.y + Distance) >(UI.height - UI.StatusBarHeight))
 	{
-		Distance = 2*(Center.y + UI.height - UI.StatusBarHeight);
+		Distance = UI.height - UI.StatusBarHeight - Center.y;
 	}
 }
 
 
 FigReference CCircle::ReferFigure(Point P)
 {
-	if (P.x < Center.x + 3 && P.x > Center.x - 3)
-		if (P.y < Center.y + 3 && P.y > Center.y - 3)
+	if (P.x < Center.x + 5 && P.x > Center.x - 5)
+		if (P.y < Center.y + 5 && P.y > Center.y - 5)
 			return CENTER;
-	if (P.x < (Center.x - Distance) + 3 && P.x > (Center.x - Distance) - 3)
-		if (P.y < Center.y + 3 && P.y > Center.y - 3)
+	if (P.x < (Center.x - Distance) + 5 && P.x > (Center.x - Distance) - 5)
+		if (P.y < Center.y + 5 && P.y > Center.y - 5)
 			return CORNER1;
-	if (P.x < Center.x + 3 && P.x > Center.x - 3)
-		if (P.y < (Center.y-Distance) + 3 && P.y > (Center.y-Distance) - 3)
+	if (P.x < Center.x + 5 && P.x > Center.x - 5)
+		if (P.y < (Center.y-Distance) + 5 && P.y > (Center.y-Distance) - 5)
 			return CORNER2;
-	if (P.x < (Center.x + Distance) + 3 && P.x > (Center.x + Distance) - 3)
-		if (P.y < Center.y + 3 && P.y > Center.y - 3)
+	if (P.x < (Center.x + Distance) + 5 && P.x > (Center.x + Distance) - 5)
+		if (P.y < Center.y + 5 && P.y > Center.y - 5)
 			return CORNER4;
-	if (P.x < Center.x + 3 && P.x > Center.x - 3)
-		if (P.y <(Center.y + Distance) + 3 && P.y > (Center.y + Distance) - 3)
+	if (P.x < Center.x + 5 && P.x > Center.x - 5)
+		if (P.y <(Center.y + Distance) + 5 && P.y > (Center.y + Distance) - 5)
 			return CORNER2;
 
 	return NONEREF;

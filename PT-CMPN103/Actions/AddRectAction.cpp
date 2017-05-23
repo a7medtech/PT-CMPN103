@@ -49,7 +49,7 @@ void AddRectAction::Execute()
 	{
 		tempState = pManager->GetOutput()->getWindow()->GetButtonState(tempB, P2.x, P2.y);
 		pManager->Drag(P2, p);
-		pManager->UpdateInterface();
+		pManager->UpdateDrawing();
 		Sleep(30);
 	}
 
