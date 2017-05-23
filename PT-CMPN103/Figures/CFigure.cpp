@@ -5,7 +5,7 @@ bool CFigure::isFill = false;
 CFigure::CFigure(GfxInfo FigureGfxInfo)
 { 
 	FigGfxInfo = FigureGfxInfo;	//Default status is non-filled.
-	FigGfxInfo.isFilled = isFill;
+	isFill = FigGfxInfo.isFilled;
 	Selected = false;
 }
 

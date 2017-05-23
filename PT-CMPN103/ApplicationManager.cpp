@@ -805,6 +805,7 @@ void ApplicationManager::StartNewScrambleGame()
 		pOut->getWindow()->SetPen(BLACK, 2);
 		pOut->getWindow()->DrawInteger(2 * UI.MenuItemWidth + 100, 10, Right);
 		pOut->getWindow()->DrawInteger(4 * UI.MenuItemWidth + 100, 10, Wrong);
+		pOut->getWindow()->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\blockfig.jpg", 0, 0, 1440, 85);
 		pIn->GetPointClicked(P.x, P.y);
 
 		bool check;
