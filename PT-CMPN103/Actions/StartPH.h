@@ -12,7 +12,6 @@ class StartPH :
 	CFigure* toBeSelected;
 	CFigure* selected; // actual figure the user selected
 	CFigure** original; //figure list
-	CFigure** displayable; // faked list to play on it
 public:
 	StartPH(ApplicationManager*);
 	virtual void ReadActionParameters();

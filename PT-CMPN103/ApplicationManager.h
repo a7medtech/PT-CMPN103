@@ -3,10 +3,10 @@
 
 #include "DEFS.h"
 #include "Figures/CFigure.h"
-#include "Figures\CCircle.h"
-#include "Figures\CLine.h"
-#include "Figures\CRectangle.h"
-#include "Figures\CTriangle.h"
+//#include "Figures\CCircle.h"
+//#include "Figures\CLine.h"
+//#include "Figures\CRectangle.h"
+//#include "Figures\CTriangle.h"
 #include "GUI/Input.h"
 #include "GUI/Output.h"
 
@@ -82,7 +82,7 @@ public:
 	void RandomizeFigures();
 	//Pick and Hide operating functions
 	void startPickHide() ;
-	CFigure** getFigList(int) ;
+	CFigure** getFigList(int&) ;
 	void UpdateInterfacePH(CFigure**,int) ;
 	CFigure* GetFigure(CFigure**,int,Point) const; //Search for a figure given a point inside the figure
 	// -- interface management functions

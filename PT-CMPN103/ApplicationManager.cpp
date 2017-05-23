@@ -30,6 +30,7 @@
 #include "Actions\StartPH.h"
 #include "Actions\FigureInteractiveControl.h"
 #include <time.h>
+#include <assert.h>
 #include <windows.h>
 
 int ApplicationManager::counter = 0;  //Initialize unique IDs
@@ -503,6 +504,7 @@ CFigure *ApplicationManager::GetFigure(CFigure** list,int size, Point p) const
 	bool check = false;
 	for(int i=0;i<size;i++){
 		check = list[i]->Select(p);
+		list[i]->Select(p);
 		if (check){
 			return list[i];;
 		}
@@ -868,15 +870,17 @@ void ApplicationManager::startPickHide (){
 	pOut->StartPickHideGame();
 }
 
-CFigure** ApplicationManager::getFigList (int size){
+CFigure** ApplicationManager::getFigList (int& size){
 	size = FigCount;
 	return FigList;
 }
 
-void ApplicationManager::UpdateInterfacePH(CFigure** list,int size){
+void ApplicationManager::UpdateInterfacePH(CFigure* list[],int size){
 	pOut->ClearDrawArea();
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < size; i++){
+			assert(list[i] != nullptr);
 			list[i]->Draw(pOut);
+		}
 }
 
 //==================================================================================//
