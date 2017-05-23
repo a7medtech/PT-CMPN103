@@ -152,6 +152,7 @@
     <ClCompile Include="Actions\ScrambleAndFind.cpp" />
     <ClCompile Include="Actions\Select.cpp" />
     <ClCompile Include="Actions\SendBack.cpp" />
+    <ClCompile Include="Actions\StartPH.cpp" />
     <ClCompile Include="Actions\StartScrumble.cpp" />
     <ClCompile Include="Actions\zoom.cpp" />
     <ClCompile Include="Actions\Zoomout.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Actions\ScrambleAndFind.h" />
     <ClInclude Include="Actions\Select.h" />
     <ClInclude Include="Actions\SendBack.h" />
+    <ClInclude Include="Actions\StartPH.h" />
     <ClInclude Include="Actions\StartScrumble.h" />
     <ClInclude Include="Actions\zoom.h" />
     <ClInclude Include="Actions\Zoomout.h" />

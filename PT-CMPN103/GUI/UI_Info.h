@@ -107,7 +107,12 @@ enum ScrambleAndFindMenu
 	ITM_WRONG,     //Counter icon for wrong choices
 	SCRAMBLE_ITM_COUNT
 };
-
+enum PickHideMenu {
+	ITM_STARTPH, // start the game
+	ITM_BACKPH,
+	ITM_RIGHTC, //counter Icon for right choices
+	ITM_WRONGC //counter Icon for right choices
+};
 enum BorderItems
 {
 	Item_plus,

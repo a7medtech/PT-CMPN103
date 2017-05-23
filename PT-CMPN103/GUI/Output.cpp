@@ -189,9 +189,6 @@ void Output::EnterScrambleAndFind() const
 		}
 	}
 	UI.InterfaceMode = MODE_PLAY_SCRAMBLE_FIND;
-	
-
-
 }
 
 void Output::ScrambleAndFindMain() const
@@ -224,9 +221,47 @@ void Output::StartScrambleGame() const
 	pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\Right.jpg", 2 * UI.MenuItemWidth, 0, 2 * UI.MenuItemWidth, UI.ToolBarHeight);
 	pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\Wrong.jpg", 4 * UI.MenuItemWidth, 0, 2 * UI.MenuItemWidth, UI.ToolBarHeight);
 	pWind->SetPen(WHITE, 2);
-		pWind->DrawLine(UI.width, UI.ToolBarHeight - 1, UI.width , UI.ToolBarHeight - 1);
+	pWind->DrawLine(UI.width, UI.ToolBarHeight - 1, UI.width , UI.ToolBarHeight - 1);
 }
 
+void Output::StartPickHideGame() const
+{
+	int x = 0;
+	for (int i = 0; i < 145; i++)
+	{
+		pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\image.jpg", x, 0, 111, 85);
+		x += 10;
+		Sleep(10);
+	}
+	int R = 250;
+	int G = 250;
+	int B = 250;
+	color C(R, G, B);
+	while (C.ucBlue != 190)
+	{
+
+		C.ucBlue -= 2;
+		C.ucGreen -= 2;
+		C.ucRed -= 2;
+		UI.BkGrndColor = C;
+		ClearDrawArea();
+		Sleep(1);
+	}
+	Sleep(20);
+	for (int i = 0; i < 6; i++)
+	{
+		pWind->DrawImage("images\\PlayMenuItems\\PickHide\\main.jpg", 1400 - 665, 0, 670, 85);
+		for (int j = 0; j < 5; j++)
+		{
+
+			pWind->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\imageflip.jpg", x - 568, 0, 568, 85);
+			x -= 20;
+			Sleep(5);
+		}
+	}
+	UI.InterfaceMode = MODE_PLAY_PICK_HIDE;
+	ScrambleAndFindMain();
+}
 ////////////////////////////////////////////////////////////////////////////////////////
 void Output::CreateDrawMenuToolBar() const //creates Draw mode menu toolbar
 {

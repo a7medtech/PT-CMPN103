@@ -47,7 +47,8 @@ enum ActionType //The actions supported (you can add more if needed)
 	SCRAMBLE_FIND_MODE,  //Start scramble and fing mode
 	START_SCRAMBLE,      //Start new game
 	BACKPLAY,
-	TO_DRAW              //Switch interface to Draw mode
+	TO_DRAW,              //Switch interface to Draw mode
+	START_PICKHIDE
 	//SEL_FIG        //Select figure from the drawing area
 	///TODO: Add more action types (if needed)
 };

@@ -6,12 +6,10 @@ PickHide::PickHide(ApplicationManager* pApp)
 }
 
 void PickHide::ReadActionParameters(){
-
 }
 
 void PickHide::Execute(){
-	ReadActionParameters();
-
+	pManager->startPickHide();
 }
 
 PickHide::~PickHide(){

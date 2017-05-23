@@ -4,9 +4,9 @@
 #include "Actions/AddCircleAction.h"
 #include "Actions/AddLineAction.h"
 #include "Actions/Select.h"
-#include"Actions\SaveAction.h"
+#include "Actions\SaveAction.h"
 #include "Actions\Copy.h"
-#include"Actions\LoadAction.h"
+#include "Actions\LoadAction.h"
 #include "Actions/Move.h"
 #include "Actions/Copy.h"
 #include "Actions/BackAction.h"
@@ -14,22 +14,24 @@
 #include "Actions/Delete.h"
 #include "Actions/Paste.h"
 #include "Actions/Cut.h"
+#include "Actions\PickHide.h"
 #include "Actions/ChngBkClr.h"
 #include "Actions/ChngDrawClr.h"
 #include "Actions/ChngFillClr.h"
-#include"Actions\Resize.h"
+#include "Actions\Resize.h"
 #include "Actions\SendBack.h"
 #include "Actions/ScrambleAndFind.h"
 #include "Actions\StartScrumble.h"
 #include "Actions\BackPlayAction.h"
-#include"Actions\chngBorderWidth.h"
-#include"Actions\zoom.h"
-#include"Actions\Zoomout.h"
-#include"Actions\Exit.h"
+#include "Actions\chngBorderWidth.h"
+#include "Actions\zoom.h"
+#include "Actions\Zoomout.h"
+#include "Actions\Exit.h"
+#include "Actions\StartPH.h"
 #include <time.h>
 #include <windows.h>
 
-int ApplicationManager::counter = 0; //Initialize unique IDs
+int ApplicationManager::counter = 0;  //Initialize unique IDs
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -144,6 +146,10 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				/*PLAY MODE*/
 
 			case PICK_HIDE_MODE:
+				pAct = new PickHide(this);
+				break;
+			case START_PICKHIDE:
+				pAct = new StartPH(this);
 				break;
 			case SCRAMBLE_FIND_MODE:
 				pAct = new ScrambleAndFind(this);
@@ -749,9 +755,9 @@ void ApplicationManager::RandomizeFigures()
 
 //Pick and Hide mode
 
-
-
-
+void ApplicationManager::startPickHide(){
+	pOut->StartPickHideGame();
+}
 
 
 //==================================================================================//
@@ -769,17 +775,22 @@ void ApplicationManager::UpdateInterface() const
 	
 	switch (UI.InterfaceMode)
 	{
-	case MODE_DRAW_MAIN: pOut->CreateMainToolBar();
+	case MODE_DRAW_MAIN: 
+		pOut->CreateMainToolBar();
 		break;
-	case MODE_DRAW_DRAW: pOut->CreateDrawMenuToolBar();
+	case MODE_DRAW_DRAW: 
+		pOut->CreateDrawMenuToolBar();
 		break;
-	case MODE_DRAW_EDIT: pOut->CreateEditToolBar();
+	case MODE_DRAW_EDIT: 
+		pOut->CreateEditToolBar();
 		break;
-	case MODE_PLAY: pOut->CreatePlayToolBar();
+	case MODE_PLAY: 
+		pOut->CreatePlayToolBar();
 		break;
 	case MODE_PLAY_PICK_HIDE:
 		break;
-	case MODE_PLAY_SCRAMBLE_FIND: pOut->ScrambleAndFindMain();
+	case MODE_PLAY_SCRAMBLE_FIND: 
+		pOut->ScrambleAndFindMain();
 		break;
 	default:
 		break;

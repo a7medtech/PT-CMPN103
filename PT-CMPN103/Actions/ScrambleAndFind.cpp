@@ -13,7 +13,6 @@ void ScrambleAndFind::ReadActionParameters()
 void ScrambleAndFind::Execute()
 {
 	pManager->GetOutput()->EnterScrambleAndFind();
-	
 }
 
 ScrambleAndFind::~ScrambleAndFind()

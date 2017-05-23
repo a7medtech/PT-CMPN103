@@ -77,7 +77,7 @@ public:
 	void AdjustOriginalList();
 	void RandomizeFigures();
 	//Pick and Hide operating functions
-	void countFigs(int,int,int,int);
+	void startPickHide();
 
 	// -- interface management functions
 
