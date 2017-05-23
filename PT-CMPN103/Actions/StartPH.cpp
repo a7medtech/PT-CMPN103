@@ -40,7 +40,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 	pManager->GetOutput()->StartPickHideGame();
 	pManager->UpdateInterfacePH(original,originalSize,right,wrong);
 	srand(unsigned int(time(0)));
-	int mode = 2;//rand()%4; //0 area, 1 type, 2 colors, 3 types+colors
+	int mode = rand()%4; //0 area, 1 type, 2 colors, 3 types+colors
 	if (mode == 1){ // type
 		string arr[4] = {"Rectangle","Triangle","Line","Circle"};
 		int i;
