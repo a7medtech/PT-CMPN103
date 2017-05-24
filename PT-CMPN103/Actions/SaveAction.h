@@ -10,7 +10,5 @@ private:
 public:
     Save(ApplicationManager *pApp);
     virtual void ReadActionParameters();
-    virtual void Execute() ;
-    static string tostringg (color c) ;
-	static color tocolor (string c) ;
+    virtual void Execute();
 };

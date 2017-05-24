@@ -1,5 +1,6 @@
 #include "..\GUI\Output.h"
 #include <math.h>
+#include"../Actions/Zoom.h"
 
 Output::Output()
 {
@@ -393,9 +394,14 @@ color Output::getCrntFillColor() const	//get current filling color
 {	return UI.FillColor;	}
 //////////////////////////////////////////////////////////////////////////////////////////
 	
-int Output::getCrntPenWidth() const		//get current pen width
-{	return UI.PenWidth;	}
-
+int Output::getCrntPenWidth() const        //get current pen width
+{
+	int UIPEN = UI.PenWidth;
+	int zin = Zoom::getzoomcounter();
+	if (zin>0) { for (int i = 0; i<zin; i++) { UIPEN += 2; } }
+	if (zin<0) { for (int i = 0; i<(-zin); i++) { UIPEN -= 2; } }
+	return UIPEN;
+}
 //======================================================================================//
 //								Figures Drawing Functions								//
 //======================================================================================//

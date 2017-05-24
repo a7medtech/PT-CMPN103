@@ -15,7 +15,7 @@ void ResizeAction::ReadActionParameters()
 	if (size == 0)
 	{
 		pOut->PrintMessage("ERROR !!! the chosen operation will make no change ");
-		Sleep(1500);
+		Sleep(800);
 	}
 	else
 	{

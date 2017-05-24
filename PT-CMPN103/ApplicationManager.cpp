@@ -59,6 +59,9 @@ ApplicationManager::ApplicationManager()
 //==================================================================================//
 //								Actions Related Functions							//
 //==================================================================================//
+
+
+
 ActionType ApplicationManager::GetUserAction() const
 {
 	//Ask the input to get the action from the user.
@@ -221,6 +224,7 @@ void ApplicationManager::Drag(Point P2, Point P3)
 
 	FigList[FigCount-1]->Drag(P2,P3);
 }
+
 void ApplicationManager::deleteforload()
 {
 	int n=0;this->GetFigCount(n);
@@ -230,6 +234,7 @@ void ApplicationManager::deleteforload()
 	 this->minusfigcount();
 	}
 }
+
 void ApplicationManager::minusfigcount()
 { FigCount--; }
 
@@ -250,101 +255,128 @@ void ApplicationManager::SelectFigs(Point p)
 	}
 }
 
-
-
-
-
 void ApplicationManager::ReferenceActionToClick(Point P)
 {
 	button tempB = LEFT_BUTTON;
 	buttonstate tempState = BUTTON_UP;
 	Point p;
 	Point temp;
-	for (int i = 0; i < FigCount; i++)
+	bool SelectOnly = false;
+	bool stop = false;
+
+	if (GetInput()->GetZoomCheck())
 	{
-		if (FigList[i]->IsSelected())
+		Action*pAct = new Select(this, P);
+		pAct->Execute();
+		delete pAct;
+	}
+	else
+	{
+		for (int i = 0; i < FigCount && !stop; i++)
 		{
-			switch (FigList[i]->ReferFigure(P))
+
+
+			if (FigList[i]->Select(P))
 			{
-			case CENTER:
-				Sleep(30);
-				while (tempState == BUTTON_UP)
+				SelectOnly = false;
+
+				FigList[i]->SetSelected(!FigList[i]->IsSelected());
+				if (FigList[i]->IsSelected())
 				{
-					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
-					FigList[i]->Move(p);
-					UpdateInterface();
-					Sleep(30);
+					switch (FigList[i]->ReferFigure(P))
+					{
+					case CENTER:
+						Sleep(30);
+						while (tempState == BUTTON_UP)
+						{
+							tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+							FigList[i]->Move(p);
+							UpdateDrawing();
+							Sleep(30);
+						}
+
+						pOut->ClearStatusBar();
+						pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+						stop = true;
+						break;
+
+					case CORNER1:
+						Sleep(30);
+						while (tempState == BUTTON_UP)
+						{
+							tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+							FigList[i]->ResizePoint(p, CORNER1);
+							UpdateDrawing();
+							Sleep(30);
+						}
+
+						pOut->ClearStatusBar();
+						pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+						SelectOnly = false;
+						stop = true;
+						break;
+
+					case CORNER2:
+						Sleep(30);
+						while (tempState == BUTTON_UP)
+						{
+							tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+							FigList[i]->ResizePoint(p, CORNER2);
+							UpdateDrawing();
+							Sleep(30);
+						}
+
+						pOut->ClearStatusBar();
+						pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+						stop = true;
+						break;
+					case CORNER3:
+						Sleep(30);
+						while (tempState == BUTTON_UP)
+						{
+							tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+							FigList[i]->ResizePoint(p, CORNER3);
+							UpdateDrawing();
+							Sleep(30);
+						}
+
+						pOut->ClearStatusBar();
+						pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+						SelectOnly = false;
+						stop = true;
+						break;
+					case CORNER4:
+						Sleep(30);
+						while (tempState == BUTTON_UP)
+						{
+							tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
+							FigList[i]->ResizePoint(p, CORNER4);
+							UpdateDrawing();
+							Sleep(30);
+						}
+
+						pOut->ClearStatusBar();
+						pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
+						SelectOnly = false;
+						stop = true;
+						break;
+					case NONEREF:
+						SelectOnly = true;
+						break;
+					}
+				}
+				else
+				{
+					SelectOnly = true;
 				}
 
-				pOut->ClearStatusBar();
-				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
-				break;
-
-			case CORNER1:
-				Sleep(30);
-				while (tempState == BUTTON_UP)
-				{
-					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
-					FigList[i]->ResizePoint(p, CORNER1);
-					UpdateInterface();
-					Sleep(30);
-				}
-
-				pOut->ClearStatusBar();
-				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
-				break;
-				
-			case CORNER2:
-				Sleep(30);
-				while (tempState == BUTTON_UP)
-				{
-					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
-					FigList[i]->ResizePoint(p, CORNER2);
-					UpdateInterface();
-					Sleep(30);
-				}
-
-				pOut->ClearStatusBar();
-				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
-				break;
-			case CORNER3:
-				Sleep(30);
-				while (tempState == BUTTON_UP)
-				{
-					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
-					FigList[i]->ResizePoint(p, CORNER3);
-					UpdateInterface();
-					Sleep(30);
-				}
-
-				pOut->ClearStatusBar();
-				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
-				break;
-			case CORNER4:
-				Sleep(30);
-				while (tempState == BUTTON_UP)
-				{
-					tempState = pOut->getWindow()->GetButtonState(tempB, p.x, p.y);
-					FigList[i]->ResizePoint(p, CORNER4);
-					UpdateInterface();
-					Sleep(30);
-				}
-
-				pOut->ClearStatusBar();
-				pOut->getWindow()->WaitMouseClick(temp.x, temp.y);
-				break;
-			case NONEREF:
-				FigList[i]->Select(P);
-				CFigure** dummy;
-				FindSelFigList(dummy);
-				break;
 			}
 		}
-		else
+		if (SelectOnly)
 		{
-			FigList[i]->Select(P);
-			CFigure** dummy;
-			FindSelFigList(dummy);
+			Action*pAct = new Select(this, P);
+			pAct->Execute();
+			delete pAct;
 		}
 	}
 }
@@ -354,7 +386,8 @@ void ApplicationManager:: SaveAction(ofstream&Outfile)
     int c;
     GetFigCount(c);
 	this->zoomcontrolsave(0);
-	Outfile<<Save::tostringg(UI.DrawColor)<<"\t"<<Save::tostringg(UI.FillColor)<<"\t"<<Save::tostringg(UI.BkGrndColor)<<endl;
+	Outfile << (int)UI.DrawColor.ucBlue << "\t" << (int)UI.DrawColor.ucGreen << "\t" << (int)UI.DrawColor.ucRed << "\t" << (int)UI.FillColor.ucBlue << "\t" << (int)UI.FillColor.ucGreen << "\t" << (int)UI.FillColor.ucRed << "\t" <<
+		(int)UI.BkGrndColor.ucBlue << "\t" << (int)UI.BkGrndColor.ucGreen << "\t" << (int)UI.BkGrndColor.ucRed << endl;
 	Outfile<<c<<"\n";
     for(int i=0;i<c;i++)
     {
@@ -363,6 +396,7 @@ void ApplicationManager:: SaveAction(ofstream&Outfile)
     }
 	this->zoomcontrolsave(1);
 	   	pOut->PrintMessage("You Saved to file Succesfully");
+		Sleep(800);
 
 }
 
@@ -418,46 +452,31 @@ void ApplicationManager::zoomin()
 		{
 			Point c; Point nc; Point m;
 			m = CenterDrawing;
-			FigList[i]->SetBorder(1); // increase border width
+			FigList[i]->SetBorder(2); // increase border width
 			FigList[i]->Resize(15);  // in resize this is the resize by double without validation
 			FigList[i]->getCenter(c);
 			// to know the position of the figure according to the center of the drawing area 
-			if (c.x>CenterDrawing.x) //1st quad
+			if (c.x>CenterDrawing.x)
 			{
-				if (c.y < CenterDrawing.y)
-				{
-					nc.x = (c.x - CenterDrawing.x); m.x = c.x + (0.4142135624)*nc.x;
-					nc.y = (CenterDrawing.y - c.y); m.y = c.y - (0.4142135624)*nc.y;
-				}
+				nc.x = (c.x - CenterDrawing.x); m.x = c.x + (0.4142135624)*nc.x;
 			}
-			if (c.x<CenterDrawing.x)  //3rd quad
+			if (c.x<CenterDrawing.x)
 			{
-				if (c.y > CenterDrawing.y)
-				{
-					nc.y = (c.y - CenterDrawing.y); m.y = c.y + (0.4142135624)*nc.y;
-					nc.x = (CenterDrawing.x - c.x); m.x = c.x - (0.4142135624)*nc.x;
-				}
+				nc.x = (CenterDrawing.x - c.x); m.x = c.x - (0.4142135624)*nc.x;
 			}
-			if (c.x < CenterDrawing.x)  //2nd quad
+			if (c.y>CenterDrawing.y)
 			{
-				if (c.y<CenterDrawing.y)
-				{
-					nc.x = (CenterDrawing.x - c.x); m.x = c.x - (0.4142135624)*nc.x;
-					nc.y = (CenterDrawing.y - c.y); m.y = c.y - (0.4142135624)*nc.y;
-				}
+				nc.y = (c.y - CenterDrawing.y); m.y = c.y + (0.4142135624)*nc.y;
 			}
-			if (c.y>CenterDrawing.y) //4th quad
+			if (c.y<CenterDrawing.y)
 			{
-				if (c.x > CenterDrawing.x)
-				{
-					nc.x = (c.x - CenterDrawing.x); m.x = c.x + (0.4142135624)*nc.x;
-					nc.y = (c.y - CenterDrawing.y); m.y = c.y + (0.4142135624)*nc.y;
-				}
+				nc.y = (CenterDrawing.y - c.y); m.y = c.y - (0.4142135624)*nc.y;
 			}
 			FigList[i]->Move(m);
 		}
 	}
 }
+
 void ApplicationManager::zoomout()
 {
 	int c; 
@@ -472,40 +491,24 @@ void ApplicationManager::zoomout()
 		{
 			Point c; Point nc; Point m;
 			m = CenterDrawing;
-			FigList[i]->SetBorder(-1); // decrease border width 
+			FigList[i]->SetBorder(-2); // decrease border width 
 			FigList[i]->getCenter(c);
 			// to know the position of the figure according to the center of the drawing area 
-			if (c.x>CenterDrawing.x) //1st quad
+			if (c.x>CenterDrawing.x)
 			{
-				if (c.y < CenterDrawing.y)
-				{
-					nc.x = (c.x - CenterDrawing.x); m.x = c.x - (0.2928932188)*nc.x;
-					nc.y = (CenterDrawing.y - c.y); m.y = c.y + (0.2928932188)*nc.y;
-				}
+				nc.x = (c.x - CenterDrawing.x); m.x = c.x - (0.2928932188)*nc.x;
 			}
-			if (c.x<CenterDrawing.x)  //3rd quad
+			if (c.x<CenterDrawing.x)
 			{
-				if (c.y > CenterDrawing.y)
-				{
-					nc.y = (c.y - CenterDrawing.y); m.y = c.y - (0.2928932188)*nc.y;
-					nc.x = (CenterDrawing.x - c.x); m.x = c.x + (0.2928932188)*nc.x;
-				}
+				nc.x = (CenterDrawing.x - c.x); m.x = c.x + (0.2928932188)*nc.x;
 			}
-			if (c.x < CenterDrawing.x)  //2nd quad
+			if (c.y>CenterDrawing.y)
 			{
-				if (c.y<CenterDrawing.y)
-				{
-					nc.x = (CenterDrawing.x - c.x); m.x = c.x + (0.2928932188)*nc.x;
-					nc.y = (CenterDrawing.y - c.y); m.y = c.y + (0.2928932188)*nc.y;
-				}
+				nc.y = (c.y - CenterDrawing.y); m.y = c.y - (0.2928932188)*nc.y;
 			}
-			if (c.y>CenterDrawing.y) //4th quad
+			if (c.y<CenterDrawing.y)
 			{
-				if (c.x > CenterDrawing.x)
-				{
-					nc.x = (c.x - CenterDrawing.x); m.x = c.x - (0.2928932188)*nc.x;
-					nc.y = (c.y - CenterDrawing.y); m.y = c.y - (0.2928932188)*nc.y;
-				}
+				nc.y = (CenterDrawing.y - c.y); m.y = c.y + (0.2928932188)*nc.y;
 			}
 			// move the figure to the new center and this step to keep the distance between figures coonstant 
 			FigList[i]->Move(m);
@@ -515,6 +518,7 @@ void ApplicationManager::zoomout()
 	}
 
 }
+
 void ApplicationManager::zoomcontrolsave(int n)
 {
 	if (n == 0)
@@ -541,6 +545,7 @@ void ApplicationManager::zoomcontrolsave(int n)
 		}
 	}
 }
+
 void ApplicationManager::zoomcontrolinterface() const
 {
 	int zin = Zoom::getzoomcounter();
@@ -548,7 +553,6 @@ void ApplicationManager::zoomcontrolinterface() const
 	if (zin != 0 || zout != 0) { this->GetInput()->setzoomcheck(0); }
 	else this->GetInput()->setzoomcheck(1);
 }
-
 
 void ApplicationManager::FindSelFigList(CFigure** &s){
 	int i;
@@ -778,10 +782,27 @@ void ApplicationManager::StartNewScrambleGame()
 	P.y = 700;
 	while ((P.x / UI.MenuItemWidth != 1 || P.y > UI.ToolBarHeight) && 0 < OriginalListCount)
 	{
-		OriginalList[0]->ChngDrawClr(PINK);
+		OriginalList[0]->ChngDrawClr(LIGHTYELLOW);
 		OriginalList[0]->Draw(pOut);
+		/*********************************/
+		for (int i = 0; i<RandFigsCount; i++) {
+			if (RandomizedFigures[i]->getID() == OriginalList[0]->getID()) {
+					int j = i+1;
+					while (j < RandFigsCount)
+					{
+						CFigure*temp;
+						temp = RandomizedFigures[j - 1];
+						RandomizedFigures[j - 1] = RandomizedFigures[j];
+						RandomizedFigures[j] = temp;
+						j++;
+					}
+				}
+			}
+		/********************************/
+
+
 		pOut->ClearDrawArea();
-		for (int i = 0; i < OriginalListCount; i++)
+		for (int i = 0; i < RandFigsCount; i++)
 		{
 			RandomizedFigures[i]->Draw(pOut);
 			
@@ -799,11 +820,23 @@ void ApplicationManager::StartNewScrambleGame()
 		pOut->getWindow()->DrawInteger(2 * UI.MenuItemWidth + 100, 10, Right);
 		pOut->getWindow()->DrawInteger(4 * UI.MenuItemWidth + 100, 10, Wrong);
 		pIn->GetPointClicked(P.x, P.y);
-		
+
+		bool check;
+		for (int i = RandFigsCount - 1; i >= 0; i--) {
+			check = RandomizedFigures[i]->Select(P);
+			if (check) {
+				if (RandomizedFigures[i]->IsSelected()) {
+					displayFigParam(RandomizedFigures[i]);
+				}
+				else
+					GetOutput()->ClearStatusBar();
+				break;
+			}
+		}
 			
 			for (int j = 0; j < RandFigsCount; j++)
 			{
-				if (RandomizedFigures[j]->Select(P))
+				if (RandomizedFigures[j]->IsSelected())
 				{
 					if (RandomizedFigures[j]->getID() == OriginalList[0]->getID())
 					{
@@ -852,19 +885,29 @@ void ApplicationManager::StartNewScrambleGame()
 	pOut->getWindow()->DrawInteger(4 * UI.MenuItemWidth + 100, 10, Wrong);
 	pOut->ClearDrawArea();
 		/**************************************************************************/
+
+
 		if (P.x / UI.MenuItemWidth != 1 && P.y > UI.ToolBarHeight)
 		 {
+			pOut->getWindow()->SetFont(40, NONE, ROMAN, PLAIN);
 		pOut->getWindow()->SetPen(VIOLET, 2);
-		pOut->getWindow()->DrawString(100, 360, "Final Grade: ");
+		pOut->getWindow()->DrawString(0, 360, "Final Grade: ");
 		pOut->getWindow()->SetPen(SKYBLUE, 2);
-		pOut->getWindow()->DrawInteger(360 + 100, 360, Right);
+		pOut->getWindow()->DrawInteger(180, 360, Right);
 		pOut->getWindow()->SetPen(BLUE, 2);
-		pOut->getWindow()->DrawString(100, 440, "From: ");
+		pOut->getWindow()->DrawString(0, 440, "From: ");
 		pOut->getWindow()->SetPen(GREEN, 2);
-		pOut->getWindow()->DrawInteger(270, 440, Right + Wrong);
+		pOut->getWindow()->DrawInteger(90, 440, Right + Wrong);
 		pOut->getWindow()->SetPen(ORANGE, 2);
-		pOut->getWindow()->DrawString(350, 440, "Clicks");
+		pOut->getWindow()->DrawString(130, 440, "Clicks");
+		bool GameCase = (((double)Right / (double)(Right + Wrong)) >= 0.5);
+		if (GameCase)
+			pOut->getWindow()->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\win.jpg", 0, 150, 284, 177);
+		else
+			pOut->getWindow()->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\lose.jpg", 0, 150, 468, 193);
 		}
+		
+
 	while (UI.InterfaceMode != MODE_PLAY)
 		 {
 		pIn->GetPointClicked(P.x, P.y);
@@ -967,7 +1010,12 @@ void ApplicationManager::UpdateInterfacePH(CFigure* list[],int size,int right, i
 //							Interface Management Functions							//
 //==================================================================================//
 
-
+void ApplicationManager::UpdateDrawing() const
+{
+	pOut->ClearDrawArea();
+	for (int i = 0; i < FigCount; i++)
+		FigList[i]->Draw(pOut);		//Call Draw function (virtual member fn)
+}
 
 //Draw all figures on the user interface
 void ApplicationManager::UpdateInterface() const

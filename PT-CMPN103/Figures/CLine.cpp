@@ -50,14 +50,14 @@ FigReference CLine::ReferFigure(Point P)
 {
 	Point temp;
 	getCenter(temp);
-	if (P.x < temp.x + 3 && P.x > temp.x - 3)
-		if (P.y < temp.y + 3 && P.y > temp.y - 3)
+	if (P.x < temp.x + 5 && P.x > temp.x - 5)
+		if (P.y < temp.y + 5 && P.y > temp.y - 5)
 			return CENTER;
-	if (P.x < start.x + 3 && P.x > start.x - 3)
-		if (P.y < start.y + 3 && P.y > start.y - 3)
+	if (P.x < start.x + 5 && P.x > start.x - 5)
+		if (P.y < start.y + 5 && P.y > start.y - 5)
 			return CORNER1;
-	if (P.x < end.x + 3 && P.x > end.x - 3)
-		if (P.y < end.y + 3 && P.y > end.y - 3)
+	if (P.x < end.x + 5 && P.x > end.x - 5)
+		if (P.y < end.y + 5 && P.y > end.y - 5)
 			return CORNER2;
 	return NONEREF;
 

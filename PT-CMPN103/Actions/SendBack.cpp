@@ -10,8 +10,19 @@ void SendBack::ReadActionParameters()
 
 void SendBack::Execute()
 {
-	pManager->SendToBack();
-	pManager->UpdateInterface();
+	int size;
+	Output* pOut = pManager->GetOutput();
+	pManager->GetSelectedFigCount(size);
+	if (size == 0)
+	{
+		pOut->PrintMessage("ERROR !!! the chosen operation will make no change ");
+		Sleep(800);
+	}
+	else
+	{
+		pManager->SendToBack();
+		pManager->UpdateInterface();
+	}
 }
 
 SendBack::~SendBack()

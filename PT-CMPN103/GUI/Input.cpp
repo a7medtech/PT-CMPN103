@@ -34,8 +34,13 @@ string Input::GetSrting(Output *pO) const
 			return "";	//returns nothing as user has cancelled label
 		if(Key == 13 )	//ENTER key is pressed
 			return Label;
-		if(Key == 8 )	//BackSpace is pressed
-			Label.resize(Label.size() -1 );			
+		if (Key == 8)    //BackSpace is pressed
+		{
+			if (Label.size() != 0)
+				Label.resize(Label.size() - 1);
+			else
+				Label.resize(Label.size());
+		}
 		else
 			Label+= Key;
 		pO->PrintMessage(Label);
