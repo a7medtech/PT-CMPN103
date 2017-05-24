@@ -751,8 +751,6 @@ void ApplicationManager::SendToBack()
 		j = sel[i]->getID();
 		while (j > 1)
 		{
-			FigList[j - 1]->setID(j - 1);
-			FigList[j - 2]->setID(j);
 			CFigure*temp;
 			temp = FigList[j - 1];
 			FigList[j - 1] = FigList[j - 2];

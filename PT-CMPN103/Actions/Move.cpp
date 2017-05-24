@@ -25,7 +25,7 @@ void Move::ReadActionParameters() {
 		}
 }
 
-void Move::Execute(){
+void Move::Execute() {
 	ReadActionParameters();
 	int size;
 	pManager->GetSelectedFigCount(size);
@@ -61,13 +61,13 @@ void Move::Execute(){
 				selected[i]->Move(temp);
 			}
 		}
-	}else if(selectedCount == 1){
+		else if (selectedCount == 1) {
 
 
 			selected[0]->Move(p);
 		}
 	}
-
+}
 
 Move::~Move(){	
 }
