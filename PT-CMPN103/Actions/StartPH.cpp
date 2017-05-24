@@ -100,7 +100,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 					}
 					for(int j=0;j<originalSize;j++){
 						if (selected->getID() == original[j]->getID()){
-							move(original + (j+1) , original + originalSize-- , original + j);
+							original[j] = original[originalSize-- -1];
 						}
 					}
 					break;
@@ -171,7 +171,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 								linC--;
 							else 
 								cirC--;
-							move(original + (i+1) , original + originalSize-- , original + i);
+							original[i] = original[originalSize-- -1];
 					}	
 					break;
 				}else {
@@ -221,7 +221,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 								linC--;
 							else 
 								cirC--;
-							move(original + (i+1) , original + originalSize-- , original + i);
+							original[i] = original[originalSize-- -1];
 					}	
 				}else {
 					wrong++;
@@ -322,7 +322,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 					}
 					for(int j=0;j<originalSize;j++){
 						if (selected->getID() == original[j]->getID()){
-							move(original + (j+1) , original + originalSize-- , original + j);
+							original[j] = original[originalSize-- -1];
 						}
 					}
 					break;
