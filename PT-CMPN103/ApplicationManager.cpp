@@ -815,6 +815,7 @@ void ApplicationManager::StartNewScrambleGame()
 		
 			pOut->ClearStatusBar();
 		pOut->StartScrambleGame();
+		pOut->getWindow()->DrawImage("images\\PlayMenuItems\\ScrambleAndFind\\blockfig.jpg", 0, 0, 1440, 85);
 		pOut->getWindow()->SetFont(80, NONE, ROMAN, PLAIN);
 		pOut->getWindow()->SetPen(BLACK, 2);
 		pOut->getWindow()->DrawInteger(2 * UI.MenuItemWidth + 100, 10, Right);
