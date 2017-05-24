@@ -40,7 +40,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 	pManager->GetOutput()->StartPickHideGame();
 	pManager->UpdateInterfacePH(original,originalSize,right,wrong);
 	srand(unsigned int(time(0)));
-	int mode = rand()%4; //0 area, 1 type, 2 colors, 3 types+colors
+	int mode = rand()%4; // 0 area, 1 type, 2 colors, 3 types+colors
 	if (mode == 1){ // type
 		string arr[4] = {"Rectangle","Triangle","Line","Circle"};
 		int i;
@@ -130,13 +130,13 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 					toBeSelected = original[i];
 				}else {
 					if(smallOrLarge){
-						if(maxArea > area){
+						if(maxArea < area){
 							maxArea = area;
 							toBeSelected = original[i];
 						}
 					}
 					else{
-						if(maxArea < area){
+						if(maxArea > area){
 							maxArea = area;
 							toBeSelected = original[i];
 						}
@@ -179,6 +179,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 					break;
 				}else {
 					wrong++;
+					break;
 				}
 			}
 		}while(selected == nullptr);
@@ -256,7 +257,7 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 			}
 			else if(dynamic_cast<CLine*>(original[i]) && linC !=0){
 				type = "Line";
-				 i = 2;
+				i = 2;
 				toBeSelected->GetFigureParameters(p1,p2,p3,gfx);
 				break;
 			}
@@ -291,28 +292,31 @@ while (originalSize != 0 && (p.x / UI.MenuItemWidth != 1 || p.y > UI.ToolBarHeig
 				goto restartofPH;
 			selected = pManager->GetFigure(original,originalSize,p);
 			if(selected != nullptr){
+				GfxInfo gfxx;
 				bool checkRight = false;
+				toBeSelected->GetFigureParameters(p1,p2,p3,gfx);
+				selected->GetFigureParameters(p1,p2,p3,gfxx);
 				switch(i){
 				case 0:
-					if(dynamic_cast<CRectangle*>(selected)){
+					if(dynamic_cast<CRectangle*>(selected) && gfx.FillClr == gfxx.FillClr){
 						checkRight = true;
 						recC--;
 					}
 					break;
 				case 1:
-					if(dynamic_cast<CTriangle*>(selected)){
+					if(dynamic_cast<CTriangle*>(selected) && gfx.FillClr == gfxx.FillClr){
 						checkRight = true;
 						triC--;
 					}
 					break;
 				case 2:
-					if(dynamic_cast<CLine*>(selected)){
+					if(dynamic_cast<CLine*>(selected) && gfx.FillClr == gfxx.FillClr){
 						checkRight = true;
 						linC--;
 					}
 					break;
 				case 3:
-					if(dynamic_cast<CCircle*>(selected)){
+					if(dynamic_cast<CCircle*>(selected) && gfx.FillClr == gfxx.FillClr){
 						checkRight = true;
 						cirC--;
 					}
