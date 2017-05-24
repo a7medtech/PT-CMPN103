@@ -10,7 +10,6 @@ void Delete::ReadActionParameters(){
 }
 void Delete::Execute(){
 	pManager->deleteSelected();
-	pManager->UpdateInterface();
 }
 Delete::~Delete()
 {

@@ -68,6 +68,9 @@
     <ClCompile Include="Actions\FigureInteractiveControl.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
+    <ClCompile Include="GUI\Output.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
     <ClCompile Include="GUI\Input.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -290,8 +293,19 @@
     <ClInclude Include="Actions\FigureInteractiveControl.h">
       <Filter>Actions</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="GUI\Input.h">
       <Filter>GUI</Filter>
+=======
+    <ClInclude Include="GUI\Output.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Input.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\UI_Info.h">
+      <Filter>GUI</Filter>
+>>>>>>> 17e1dd2e19aef56fa13e6778b7a978e0b6b16593
     </ClInclude>
     <ClInclude Include="CMUgraphicsLib\auxil.h">
       <Filter>CMUGraphicsLib</Filter>
@@ -415,8 +429,13 @@
     <Filter Include="GUI">
       <UniqueIdentifier>{08fa20cb-d734-4959-9ae0-0ead8dea79c8}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="Figures">
       <UniqueIdentifier>{2c04577e-b328-4e6f-ac76-97f4e014f15a}</UniqueIdentifier>
+=======
+    <Filter Include="GUI">
+      <UniqueIdentifier>{7ed5dc3a-8b34-438f-8d64-dd248347bfc9}</UniqueIdentifier>
+>>>>>>> 17e1dd2e19aef56fa13e6778b7a978e0b6b16593
     </Filter>
   </ItemGroup>
 </Project>

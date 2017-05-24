@@ -13,4 +13,5 @@ public:
 	static int getzoomcounter();
 	static void minuszoomcounter();
 	static void pluszoomcounter();
+	static void resetzoomcounter(); // to use it when i load a new graph
 };

@@ -24,5 +24,9 @@
  {
 	 zoomcounter++;
  }
+ void Zoom::resetzoomcounter()
+ {
+	 zoomcounter = 0;
+ }
 
  int Zoom::zoomcounter=0;

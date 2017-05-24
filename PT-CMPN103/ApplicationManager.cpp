@@ -47,8 +47,10 @@ ApplicationManager::ApplicationManager()
 	SelFigCount = 0;
 	CPIndex = 0;
 	OriginalListCount = 0;
+	CenterDrawing.x = 720;
+	CenterDrawing.y = 292;
 	RandFigsCount = 0;
-
+	zoomcontrol = 0; // to change the data before saving to save the original data of the figure
 	//Create an array of figure pointers and set them to NULL		
 	for (int i=0; i<MaxFigCount; i++)
 		FigList[i] = NULL;	
@@ -60,7 +62,9 @@ ApplicationManager::ApplicationManager()
 ActionType ApplicationManager::GetUserAction() const
 {
 	//Ask the input to get the action from the user.
-	return pIn->GetUserAction();		
+	this->zoomcontrolinterface();
+	return pIn->GetUserAction();	
+
 }
 ////////////////////////////////////////////////////////////////////////////////////
 //Creates an action and executes it
@@ -148,12 +152,14 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				/*PLAY MODE*/
 
 			case PICK_HIDE_MODE:
+				this->zoomcontrolsave(0);
 				pAct = new PickHide(this);
 				break;
 			case START_PICKHIDE:
 				pAct = new StartPH(this);
 				break;
 			case SCRAMBLE_FIND_MODE:
+				this->zoomcontrolsave(0);
 				pAct = new ScrambleAndFind(this);
 				break;
 			case START_SCRAMBLE:
@@ -343,15 +349,11 @@ void ApplicationManager::ReferenceActionToClick(Point P)
 	}
 }
 
-
-
-
-
-
 void ApplicationManager:: SaveAction(ofstream&Outfile)
 {
     int c;
     GetFigCount(c);
+	this->zoomcontrolsave(0);
 	Outfile<<Save::tostringg(UI.DrawColor)<<"\t"<<Save::tostringg(UI.FillColor)<<"\t"<<Save::tostringg(UI.BkGrndColor)<<endl;
 	Outfile<<c<<"\n";
     for(int i=0;i<c;i++)
@@ -359,6 +361,7 @@ void ApplicationManager:: SaveAction(ofstream&Outfile)
 		FigList[i]->Save(Outfile);
         
     }
+	this->zoomcontrolsave(1);
 	   	pOut->PrintMessage("You Saved to file Succesfully");
 
 }
@@ -407,31 +410,49 @@ void ApplicationManager::zoomin()
 {
 	int c;
 	c = Zoom::getzoomcounter();
-	if (c<2)
+	if (c<2) //max number of zoom in is two and this is the only validation on zoom
 	{
-		Zoom::pluszoomcounter();
+		Zoom::pluszoomcounter(); // increase zoom in counter 
 		Zoomout::minuszoomoutcounter();
 		for (int i = 0; i<FigCount; i++)
 		{
 			Point c; Point nc; Point m;
-			FigList[i]->SetBorder(2);
-			FigList[i]->Resize(200);
+			m = CenterDrawing;
+			FigList[i]->SetBorder(1); // increase border width
+			FigList[i]->Resize(15);  // in resize this is the resize by double without validation
 			FigList[i]->getCenter(c);
-			if (c.x>CenterDrawing.x)
+			// to know the position of the figure according to the center of the drawing area 
+			if (c.x>CenterDrawing.x) //1st quad
 			{
-				nc.x = (c.x - CenterDrawing.x); m.x = c.x + (0.25)*nc.x;
+				if (c.y < CenterDrawing.y)
+				{
+					nc.x = (c.x - CenterDrawing.x); m.x = c.x + (0.4142135624)*nc.x;
+					nc.y = (CenterDrawing.y - c.y); m.y = c.y - (0.4142135624)*nc.y;
+				}
 			}
-			if (c.x<CenterDrawing.x)
+			if (c.x<CenterDrawing.x)  //3rd quad
 			{
-				nc.x = (CenterDrawing.x - c.x); m.x = c.x - (0.25)*nc.x;
+				if (c.y > CenterDrawing.y)
+				{
+					nc.y = (c.y - CenterDrawing.y); m.y = c.y + (0.4142135624)*nc.y;
+					nc.x = (CenterDrawing.x - c.x); m.x = c.x - (0.4142135624)*nc.x;
+				}
 			}
-			if (c.y>CenterDrawing.y)
+			if (c.x < CenterDrawing.x)  //2nd quad
 			{
-				nc.y = (c.y - CenterDrawing.y); m.y = c.y + (0.25)* nc.y;
+				if (c.y<CenterDrawing.y)
+				{
+					nc.x = (CenterDrawing.x - c.x); m.x = c.x - (0.4142135624)*nc.x;
+					nc.y = (CenterDrawing.y - c.y); m.y = c.y - (0.4142135624)*nc.y;
+				}
 			}
-			if (c.y<CenterDrawing.y)
+			if (c.y>CenterDrawing.y) //4th quad
 			{
-				nc.y = (CenterDrawing.y - c.y); m.y = c.y - (0.25)* nc.y;
+				if (c.x > CenterDrawing.x)
+				{
+					nc.x = (c.x - CenterDrawing.x); m.x = c.x + (0.4142135624)*nc.x;
+					nc.y = (c.y - CenterDrawing.y); m.y = c.y + (0.4142135624)*nc.y;
+				}
 			}
 			FigList[i]->Move(m);
 		}
@@ -439,38 +460,93 @@ void ApplicationManager::zoomin()
 }
 void ApplicationManager::zoomout()
 {
-	int c;
+	int c; 
 	c = Zoomout::getzoomoutcounter();
-	if (c<2)
+	int cc = Zoom::getzoomcounter();
+	if (c<2) //max number of zoom out is two and this is the only validation on zoom
 	{
-		Zoomout::pluszoomoutcounter();
+		Zoomout::pluszoomoutcounter();// increase zoom out counter by one
 		Zoom::minuszoomcounter();
+
 		for (int i = 0; i<FigCount; i++)
 		{
 			Point c; Point nc; Point m;
-			FigList[i]->SetBorder(-2);
-			FigList[i]->Resize(50);
+			m = CenterDrawing;
+			FigList[i]->SetBorder(-1); // decrease border width 
 			FigList[i]->getCenter(c);
-			if (c.x>CenterDrawing.x)
+			// to know the position of the figure according to the center of the drawing area 
+			if (c.x>CenterDrawing.x) //1st quad
 			{
-				nc.x = (c.x - CenterDrawing.x); m.x = c.x - (0.25)*nc.x;
+				if (c.y < CenterDrawing.y)
+				{
+					nc.x = (c.x - CenterDrawing.x); m.x = c.x - (0.2928932188)*nc.x;
+					nc.y = (CenterDrawing.y - c.y); m.y = c.y + (0.2928932188)*nc.y;
+				}
 			}
-			if (c.x<CenterDrawing.x)
+			if (c.x<CenterDrawing.x)  //3rd quad
 			{
-				nc.x = (CenterDrawing.x - c.x); m.x = c.x + (0.25)*nc.x;
+				if (c.y > CenterDrawing.y)
+				{
+					nc.y = (c.y - CenterDrawing.y); m.y = c.y - (0.2928932188)*nc.y;
+					nc.x = (CenterDrawing.x - c.x); m.x = c.x + (0.2928932188)*nc.x;
+				}
 			}
-			if (c.y>CenterDrawing.y)
+			if (c.x < CenterDrawing.x)  //2nd quad
 			{
-				nc.y = (c.y - CenterDrawing.y); m.y = c.y - (0.25)*nc.y;
+				if (c.y<CenterDrawing.y)
+				{
+					nc.x = (CenterDrawing.x - c.x); m.x = c.x + (0.2928932188)*nc.x;
+					nc.y = (CenterDrawing.y - c.y); m.y = c.y + (0.2928932188)*nc.y;
+				}
 			}
-			if (c.y<CenterDrawing.y)
+			if (c.y>CenterDrawing.y) //4th quad
 			{
-				nc.y = (CenterDrawing.y - c.y); m.y = c.y + (0.25)*nc.y;
+				if (c.x > CenterDrawing.x)
+				{
+					nc.x = (c.x - CenterDrawing.x); m.x = c.x - (0.2928932188)*nc.x;
+					nc.y = (c.y - CenterDrawing.y); m.y = c.y - (0.2928932188)*nc.y;
+				}
 			}
+			// move the figure to the new center and this step to keep the distance between figures coonstant 
 			FigList[i]->Move(m);
+			FigList[i]->Resize(50); // we use standard resize half 
+
 		}
 	}
 
+}
+void ApplicationManager::zoomcontrolsave(int n)
+{
+	if (n == 0)
+	{
+		int zin = Zoom::getzoomcounter();
+		if (zin>0)
+		{
+			for (int i = 0; i<zin; i++) { this->zoomout(); zoomcontrol++; }
+		}
+		if (zin<0)
+		{
+			for (int i = 0; i<(-zin); i++) { this->zoomin(); zoomcontrol--; }
+		}
+	}
+	if (n == 1)
+	{
+		if (zoomcontrol>0)
+		{
+			for (int i = 0; i<zoomcontrol; i++) { this->zoomin(); }
+		}
+		if (zoomcontrol<0)
+		{
+			for (int i = 0; i<(-zoomcontrol); i++) { this->zoomout(); }
+		}
+	}
+}
+void ApplicationManager::zoomcontrolinterface() const
+{
+	int zin = Zoom::getzoomcounter();
+	int zout = Zoomout::getzoomoutcounter();
+	if (zin != 0 || zout != 0) { this->GetInput()->setzoomcheck(0); }
+	else this->GetInput()->setzoomcheck(1);
 }
 
 
@@ -630,7 +706,7 @@ void ApplicationManager::deleteSelected() {
 
 	for (int i = 0; i<SelFigCount; i++) {
 		temp = getFigureById(selectedFigs[i]->getID(), index);
-		move(FigList + (index+1) , FigList + FigCount-- , FigList + index);
+		move(FigList + (index+1) , FigList + FigCount-- , FigList + index); // move algo in xutility
 		//FigList[index] = FigList[(FigCount--) - 1];
 	}
 	for (int i = 0; i<MaxFigCount; i++) {
@@ -693,7 +769,7 @@ void ApplicationManager::SendToBack()
 
 void ApplicationManager::StartNewScrambleGame()
 {
-
+	
 	pOut->StartScrambleGame();
 	Point P;
 	int Right = 0;
@@ -867,7 +943,7 @@ void ApplicationManager::RandomizeFigures()
 //Pick and Hide mode
 
 void ApplicationManager::startPickHide (){
-	pOut->StartPickHideGame();
+	pOut->EnterPickHideGame();
 }
 
 CFigure** ApplicationManager::getFigList (int& size){
@@ -875,12 +951,16 @@ CFigure** ApplicationManager::getFigList (int& size){
 	return FigList;
 }
 
-void ApplicationManager::UpdateInterfacePH(CFigure* list[],int size){
+void ApplicationManager::UpdateInterfacePH(CFigure* list[],int size,int right, int wrong){
 	pOut->ClearDrawArea();
-		for (int i = 0; i < size; i++){
-			assert(list[i] != nullptr);
-			list[i]->Draw(pOut);
-		}
+	pOut->getWindow()->SetFont(80, NONE, ROMAN, PLAIN);
+	pOut->getWindow()->SetPen(BLACK, 2);
+	pOut->getWindow()->DrawInteger(2 * UI.MenuItemWidth + 100, 10, right);
+	pOut->getWindow()->DrawInteger(4 * UI.MenuItemWidth + 100, 10, wrong);
+	for (int i = 0; i < size; i++){
+		assert(list[i] != nullptr);
+		list[i]->Draw(pOut);
+	}
 }
 
 //==================================================================================//
@@ -892,6 +972,11 @@ void ApplicationManager::UpdateInterfacePH(CFigure* list[],int size){
 //Draw all figures on the user interface
 void ApplicationManager::UpdateInterface() const
 {
+	if (FigCount == 0)
+	{
+		Zoom::resetzoomcounter();
+		Zoomout::resetzoomoutcounter();
+	}
 		pOut->ClearDrawArea();
 		for (int i = 0; i < FigCount; i++)
 			FigList[i]->Draw(pOut);		//Call Draw function (virtual member fn)
@@ -905,7 +990,10 @@ void ApplicationManager::UpdateInterface() const
 		pOut->CreateDrawMenuToolBar();
 		break;
 	case MODE_DRAW_EDIT: 
-		pOut->CreateEditToolBar();
+		if (this->GetInput()->GetZoomCheck())
+			pOut->CreateEditToolBarZoom();
+		else
+			pOut->CreateEditToolBar();
 		break;
 	case MODE_PLAY: 
 		pOut->CreatePlayToolBar();

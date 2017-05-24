@@ -89,6 +89,23 @@ enum EditMenuItrem
 
 
 };
+enum EditMenuItemZoom
+{
+	ITM_DELZOOM,
+	ITM_MOVEZOOM,
+	ITM_RESIZEZOOM,
+	ITM_ROTATEZOOM,
+	ITM_SEND_BACKZOOM,
+	ITM_BRNG_FRNTZOOM,
+	ITM_COPYZOOM,
+	ITM_CUTZOOM,
+	ITM_PASTEZOOM,
+	ITM_BORDERZOOM,
+	ITM_BACKEDITZOOM,
+	EDIT_ITM_COUNTZOOM
+
+};
+
 
 enum PlayMenuItem //The items of the Play menu (you should add more items)
 {
